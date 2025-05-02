@@ -1,0 +1,157 @@
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState } from "react";
+import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
+import { useNavigate } from "react-router-dom";
+
+export const GeneralContext = createContext();
+
+export const GeneralContextProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const handleGoBack = () => navigate(-1);
+
+  const [cart, setCart] = useState([]);
+
+  //Función que verifica si hay suficiente stock
+  const outOfStock = (product, action) => {
+    const productInCart = cart.find((item) => item.id === product.id);
+    const productQuantityInCart = productInCart ? productInCart.quantity : 0;
+
+    //Verifica si hay suficiente stock desde el botón de "Agregar al carrito"
+    const exceedsStockInCart =
+      action === "addProductToCart" &&
+      product.counter + productQuantityInCart > product.stock;
+
+    //Verifica si hay suficiente stock desde el botón de "Agregar"
+    const exceedsStockDirect =
+      action === "addProduct" &&
+      (product.counter ?? 0) + productQuantityInCart >= product.stock;
+
+    if (exceedsStockInCart || exceedsStockDirect) {
+      errorToastifyAlert("No hay suficiente stock");
+      return true;
+    }
+
+    return false;
+  };
+
+  //Función que veirifica si el producto seleccionado se encuentra en el carrito
+  const existingProductInCart = (product) => {
+    return cart.some((item) => item.id === product.id);
+  };
+
+  //Función para incrementar el contador del producto
+  const addProduct = (product, setProducts = null) => {
+    const action = "addProduct";
+    if (outOfStock(product, action)) return;
+
+    //Incrementa el contador del producto estando en la página de productos
+    if (setProducts) {
+      setProducts((prevProducts) =>
+        prevProducts.map((prevProduct) =>
+          prevProduct.id === product.id
+            ? { ...prevProduct, counter: prevProduct.counter + 1 }
+            : prevProduct
+        )
+      );
+    }
+    //Incrementa el contador del producto estando en la página del carrito
+    //setProducts será "undefined" en la página del carrito
+    else {
+      setCart((prevCart) =>
+        prevCart.map((prevProduct) =>
+          prevProduct.id === product.id
+            ? { ...prevProduct, quantity: product.quantity + 1 }
+            : prevProduct
+        )
+      );
+    }
+  };
+
+  //Función para decrementar el contador del producto
+  const removeProduct = (product, setProducts = null) => {
+    if ((product.counter || product.quantity) === 1) return;
+
+    //Decrementa el contador del producto estando en la página de productos
+    if (setProducts) {
+      setProducts((prevProducts) =>
+        prevProducts.map((prevProduct) =>
+          prevProduct.id === product.id
+            ? { ...prevProduct, counter: prevProduct.counter - 1 }
+            : prevProduct
+        )
+      );
+    }
+    //Decrementa el contador del producto estando en la página del carrito
+    //setProducts será "undefined" en la página del carrito
+    else {
+      setCart((prevCart) =>
+        prevCart.map((prevProduct) =>
+          prevProduct.id === product.id
+            ? { ...prevProduct, quantity: product.quantity - 1 }
+            : prevProduct
+        )
+      );
+    }
+  };
+
+  //Función para agregar el producto al carrito
+  const addProductToCart = (product, products, setProducts) => {
+    const action = "addProductToCart";
+    //Verifica si hay suficiente stock
+    if (outOfStock(product, action)) return;
+
+    const quantity = product.counter;
+    const exists = existingProductInCart(product);
+
+    //Verifica si el producto seleccionado se encuentra en el carrito
+    const updatedCart = exists
+      ? cart.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + quantity,
+              }
+            : item
+        )
+      : [
+          ...cart,
+          {
+            id: product.id,
+            quantity,
+            description: product.description,
+            brand: product.brand,
+            category: product.category,
+            price: product.price,
+            stock: product.stock,
+          },
+        ];
+
+    //Actualiza el carrito
+    setCart(updatedCart);
+    successToastifyAlert("Agregado al carrito");
+
+    //Reinicia el contador del producto a 1
+    const updatedProducts = products.map((item) =>
+      item.id === product.id ? { ...item, counter: 1 } : item
+    );
+    setProducts(updatedProducts);
+  };
+
+  const removeProductFromCart = (product) => {
+    const updatedCart = cart.filter((item) => item.id !== product.id);
+    setCart(updatedCart);
+  };
+
+  const data = {
+    cart,
+    addProduct,
+    removeProduct,
+    addProductToCart,
+    handleGoBack,
+    removeProductFromCart,
+  };
+
+  return (
+    <GeneralContext.Provider value={data}>{children}</GeneralContext.Provider>
+  );
+};
