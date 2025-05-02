@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, Box, IconButton, Tooltip } from "@mui/material";
 import { Icons } from "../../../assets/Icons";
-import "./navBar.css";
+import "./navbar.css";
 import { BurguerMenuContainer } from "../../common/burguerMenu/BurguerMenuContainer";
 import { generalBackGroundColor } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
