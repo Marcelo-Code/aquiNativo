@@ -117,6 +117,7 @@ export const CartList = (cartLostProps) => {
                   <td
                     style={{
                       textAlign: "center",
+                      padding: "5px",
                     }}
                   >
                     <Tooltip
@@ -129,7 +130,7 @@ export const CartList = (cartLostProps) => {
                       >
                         <Icons.DeleteIcon
                           color="error"
-                          sx={{ fontSize: "20px" }}
+                          sx={{ fontSize: "30px" }}
                         />
                       </IconButton>
                     </Tooltip>
