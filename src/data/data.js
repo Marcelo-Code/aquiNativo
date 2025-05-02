@@ -10,7 +10,7 @@ export const productosDietetica = [
   {
     id: 2,
     description: "Harina de almendras 500g",
-    price: 3200,
+    price: 320000,
     stock: 30,
     brand: "NaturalFood",
     category: "Harinas",

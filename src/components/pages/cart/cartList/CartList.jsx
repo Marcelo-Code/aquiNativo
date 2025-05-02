@@ -35,108 +35,123 @@ export const CartList = (cartLostProps) => {
         de tu pedido:{" "}
       </Box>
       <Box className="generalList">
-        <table
+        <Box
           style={{
-            borderCollapse: "collapse",
-            border: `1px solid ${generalBackGroundColor}`,
+            overflowX: "auto",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <thead style={{ backgroundColor: generalBackGroundColor }}>
-            <tr>
-              <th style={{ padding: "5px" }}>Descripción</th>
-              <th style={{ padding: "5px" }}>Cantidad</th>
-              <th style={{ padding: "5px" }}>Precio</th>
-              <th style={{ padding: "5px" }}>Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.map((product) => (
-              <tr key={product.id}>
-                <td
-                  style={{
-                    padding: "5px",
-                    minWidth: "100px",
-                    WrapText: "wrap",
-                    textAlign: "justify",
-                  }}
-                >
-                  {product.description}
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    textAlign: "center",
-                    width: "100px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "1px solid black",
-                      padding: "4px",
-                      borderRadius: "20px",
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      backgroundColor: "rgba(255, 255, 255, 0.5)",
+          <table
+            style={{
+              borderCollapse: "collapse",
+              border: `1px solid ${generalBackGroundColor}`,
+            }}
+          >
+            <thead style={{ backgroundColor: generalBackGroundColor }}>
+              <tr>
+                <th style={{ padding: "5px" }}>Descripción</th>
+                <th style={{ padding: "5px" }}>Cantidad</th>
+                <th>Precio</th>
+                <th style={{ padding: "5px" }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((product) => (
+                <tr key={product.id}>
+                  <td
+                    style={{
+                      paddingTop: "15px",
+                      minWidth: "120px",
+                      WrapText: "wrap",
+                      textAlign: "justify",
                     }}
                   >
-                    <IconButton
-                      aria-label="remove product"
-                      onClick={() => removeProduct(product)}
-                      sx={addRemoveButtonStyle}
+                    {product.description}
+                  </td>
+                  <td
+                    style={{
+                      padding: "5px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        border: "1px solid black",
+                        padding: "4px",
+                        borderRadius: "20px",
+                        width: "100px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
+                      }}
                     >
-                      <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
-                    </IconButton>
-                    <Box>{product.quantity}</Box>
-                    <IconButton
-                      aria-label="add product"
-                      onClick={() => addProduct(product)}
-                      sx={addRemoveButtonStyle}
+                      <IconButton
+                        aria-label="remove product"
+                        onClick={() => removeProduct(product)}
+                        sx={addRemoveButtonStyle}
+                      >
+                        <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                      <Box>{product.quantity}</Box>
+                      <IconButton
+                        aria-label="add product"
+                        onClick={() => addProduct(product)}
+                        sx={addRemoveButtonStyle}
+                      >
+                        <Icons.AddIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                    </Box>
+                  </td>
+                  <td
+                    style={{
+                      // padding: "5px",
+                      textAlign: "right",
+                      minWidth: "115px",
+                    }}
+                  >
+                    {currencyFormat(product.price * product.quantity, "15px")}
+                  </td>
+                  <td
+                    style={{
+                      // padding: "5px",
+                      textAlign: "center",
+                      // minWidth: "80px",
+                    }}
+                  >
+                    <Tooltip
+                      title="Eliminar producto"
+                      placement="top-end"
+                      arrow
                     >
-                      <Icons.AddIcon sx={{ fontSize: "20px" }} />
-                    </IconButton>
-                  </Box>
+                      <IconButton
+                        onClick={() => removeProductFromCart(product)}
+                      >
+                        <Icons.DeleteIcon
+                          color="error"
+                          sx={{ fontSize: "20px" }}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
+              <tr>
+                <td style={{ padding: "5px", textAlign: "center" }} colSpan={2}>
+                  <b>Total:</b>
                 </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    textAlign: "right",
-                    minWidth: "80px",
-                  }}
-                >
-                  {currencyFormat(product.price * product.quantity, "15px")}
-                </td>
-                <td
-                  style={{
-                    padding: "5px",
-                    textAlign: "center",
-                    minWidth: "80px",
-                  }}
-                >
-                  <Tooltip title="Eliminar producto" placement="top-end" arrow>
-                    <IconButton onClick={() => removeProductFromCart(product)}>
-                      <Icons.DeleteIcon
-                        color="error"
-                        sx={{ fontSize: "20px" }}
-                      />
-                    </IconButton>
-                  </Tooltip>
+                <td style={{ padding: "5px", textAlign: "right" }}>
+                  {currencyFormat(totalPrice)}
                 </td>
               </tr>
-            ))}
-          </tbody>
-          <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
-            <tr>
-              <td style={{ padding: "5px", textAlign: "center" }} colSpan={2}>
-                <b>Total:</b>
-              </td>
-              <td style={{ padding: "5px", textAlign: "right" }}>
-                {currencyFormat(totalPrice)}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+            </tfoot>
+          </table>
+        </Box>
+
         <Button
           variant="contained"
           size="small"
