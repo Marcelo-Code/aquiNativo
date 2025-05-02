@@ -62,10 +62,10 @@ export const CartList = (cartLostProps) => {
                 <tr key={product.id}>
                   <td
                     style={{
-                      paddingTop: "15px",
                       minWidth: "120px",
                       WrapText: "wrap",
                       textAlign: "justify",
+                      verticalAlign: "middle",
                     }}
                   >
                     {product.description}
@@ -107,18 +107,16 @@ export const CartList = (cartLostProps) => {
                   </td>
                   <td
                     style={{
-                      // padding: "5px",
                       textAlign: "right",
                       minWidth: "115px",
+                      verticalAlign: "middle",
                     }}
                   >
                     {currencyFormat(product.price * product.quantity, "15px")}
                   </td>
                   <td
                     style={{
-                      // padding: "5px",
                       textAlign: "center",
-                      // minWidth: "80px",
                     }}
                   >
                     <Tooltip
