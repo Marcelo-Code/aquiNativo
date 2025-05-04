@@ -1,9 +1,12 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { ProductsList } from "./ProductsList";
-import { productosDietetica } from "../../../../data/data";
-import "./productsList.css";
 import { GeneralContext } from "../../../../context/GeneralContext";
+import { getProducts } from "../../../../services/api/products";
+import { LoadingContainer } from "../../loading/LoadingContainer";
+import { getUniqueSortedOptions } from "../../../../utils/helpers";
+import { ErrorContainer } from "../../error/ErrorContainer";
+import "./productsList.css";
 
 export const ProductsListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -17,38 +20,64 @@ export const ProductsListContainer = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const counteredProducts = productosDietetica.map((product) => ({
-      ...product,
-      counter: 1,
-    }));
-    setProducts(counteredProducts);
-    setFilteredProducts(counteredProducts);
-    setIsLoading(false);
+
+    Promise.all([getProducts()])
+      .then(([productsResponse]) => {
+        //Verifica si hubo un error
+        if (productsResponse.status !== 200) {
+          throw new Error(
+            productsResponse.message + ": " + productsResponse.error
+          );
+        }
+        //Agrega el contador de cada producto
+        const productsResponseData = productsResponse.data;
+        const counteredProducts = productsResponseData.map((product) => ({
+          ...product,
+          counter: 1,
+        }));
+
+        setProducts(counteredProducts);
+        setFilteredProducts(counteredProducts);
+        console.log(productsResponse);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   //Array de opciones de filtros por marca
   const STATUS_OPTIONS_1 = useMemo(
-    () => [
-      { value: "all", label: "Todas las marcas" },
-      ...Array.from(new Set(products.map((p) => p.brand)))
-        .sort()
-        .map((brand) => ({ value: brand, label: brand })),
-    ],
+    () =>
+      getUniqueSortedOptions(products, "brand", {
+        value: "all",
+        label: "Todas las marcas",
+      }),
+
     [products]
   );
 
   //Array de opciones de filtros por categoria
   const STATUS_OPTIONS_2 = useMemo(
-    () => [
-      { value: "all", label: "Todas las categorías" },
-      ...Array.from(new Set(products.map((p) => p.category)))
-        .sort()
-        .map((category) => ({ value: category, label: category })),
-    ],
+    () =>
+      getUniqueSortedOptions(products, "category", {
+        value: "all",
+        label: "Todas las categorías",
+      }),
     [products]
   );
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <LoadingContainer />;
+  if (error) {
+    const errorContainerProps = {
+      error: error.message,
+    };
+    console.log(errorContainerProps);
+    return <ErrorContainer {...errorContainerProps} />;
+  }
 
   //Array de opciones de ordenamiento
   const SORT_OPTIONS = [
@@ -83,17 +112,6 @@ export const ProductsListContainer = () => {
       label: "Marca (Z-A)",
       name: "Marca",
     },
-
-    // {
-    //   value: "date-desc",
-    //   label: "Fecha reclamo (más recientes)",
-    //   name: "fechareclamo",
-    // },
-    // {
-    //   value: "date-asc",
-    //   label: "Fecha reclamo (más antiguos)",
-    //   name: "fechareclamo",
-    // },
   ];
 
   const FILTER_OPTIONS = [STATUS_OPTIONS_1, STATUS_OPTIONS_2];
