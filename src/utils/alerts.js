@@ -7,13 +7,13 @@ export const successToastifyAlert = (message) => {
     toast: true,
     position: "top-end",
     icon: "success",
-    title: `${message}`,
+    html: `<span style="font-weight: normal; font-size: 20px">${message}</span>`, // 👈 esto reemplaza el título en negrita
     showCloseButton: true,
     showConfirmButton: false,
     timer: 4000, // duración total del toast
     timerProgressBar: false,
     background: generalBackGroundColor,
-    color: "white",
+    color: "black",
     customClass: {
       popup: "custom-toast",
       icon: "custom-icon", // Clase para el ícono
@@ -24,7 +24,11 @@ export const successToastifyAlert = (message) => {
       if (icon) {
         icon.style.color = "white"; // Color del ícono
       }
-      // Animación de entrada
+      const closeButton = toast.querySelector(".swal2-close");
+      if (closeButton) {
+        closeButton.style.color = "white"; // Ícono de cierre blanco
+      }
+
       toast.style.transition = "opacity 1s ease";
       toast.style.opacity = "1";
     },
@@ -50,7 +54,7 @@ export const errorToastifyAlert = (message) => {
     toast: true,
     position: "top-end",
     icon: "error",
-    title: `${message}`,
+    html: `<span style="font-weight: normal; font-size: 20px">${message}</span>`, // 👈 esto reemplaza el título en negrita
     showCloseButton: true,
     showConfirmButton: false,
     timer: 4000,
@@ -67,6 +71,11 @@ export const errorToastifyAlert = (message) => {
       if (icon) {
         icon.style.color = "white";
       }
+      const closeButton = toast.querySelector(".swal2-close");
+      if (closeButton) {
+        closeButton.style.color = "white"; // Ícono de cierre blanco
+      }
+
       toast.style.transition = "opacity 1s ease";
       toast.style.opacity = "1";
     },
@@ -80,4 +89,24 @@ export const errorToastifyAlert = (message) => {
       toast.style.opacity = "0";
     }
   }, 3500);
+};
+
+export const confirmationAlert = async (message) => {
+  const result = await Swal.fire({
+    title: `${message}`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "red",
+    cancelButtonColor: "black",
+    confirmButtonText: "Confirmar",
+    cancelButtonText: "Cancelar",
+    background: `${generalBackGroundColor}`,
+    backdrop: false,
+    color: "black",
+    customClass: {
+      title: "alertTitle",
+      popup: "confirmationAlertPopup",
+    },
+  });
+  return result.isConfirmed;
 };

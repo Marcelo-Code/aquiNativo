@@ -9,6 +9,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     disableEditionBarButton = false,
     tooltipMessage,
     selectedRecords,
+    to,
     patient,
     professionals,
     FIELDS_TO_SEARCH,

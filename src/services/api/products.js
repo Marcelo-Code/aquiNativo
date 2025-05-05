@@ -2,10 +2,12 @@ import { supabaseClient } from "../config/config";
 
 export const getProducts = async () => {
   try {
-    const { data } = await supabaseClient
+    const { data, error } = await supabaseClient
       .from("products")
       .select("*")
       .order("description", { ascending: true });
+
+    if (error) throw error;
 
     return { status: 200, message: "registros obtenidos con éxito", data };
   } catch (error) {

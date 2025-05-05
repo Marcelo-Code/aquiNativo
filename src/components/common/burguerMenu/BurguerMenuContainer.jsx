@@ -12,12 +12,12 @@ export const BurguerMenuContainer = () => {
   // const { userProfile = "profesional", userProfessionalId } =
   //   useContext(GeneralContext);
 
-  const userProfile = "user";
+  const userProfile = "admin";
   const userProfessionalId = 1;
 
   useEffect(() => {
     if (userProfile === "admin") setOptions(adminOptions);
-    if (userProfile === "user") setOptions(userOptions(userOptions));
+    if (userProfile === "user") setOptions(userOptions);
   }, [userProfile, userProfessionalId]);
 
   const burguerMenuProps = {

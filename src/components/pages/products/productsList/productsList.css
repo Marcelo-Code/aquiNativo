@@ -1,3 +1,10 @@
+.updateCard {
+  width: 250px;
+  height: 470px;
+  position: relative;
+  overflow: hidden;
+}
+
 .card {
   width: 250px;
   height: 420px;
@@ -38,4 +45,14 @@
 
 .card :hover .cardMedia {
   opacity: 0.2;
+}
+
+.updateCardActions {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  /* background-color: rgba(0, 0, 0, 0.3); */
 }

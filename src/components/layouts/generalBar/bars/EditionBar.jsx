@@ -1,6 +1,7 @@
 import React from "react";
 import { SwitchEditionMode } from "../../../common/switchEditionMode/SwitchEditionMode";
-import { Box, Button, Link, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
+import { Link } from "react-router-dom";
 import "../generalBar.css";
 import { Icons } from "../../../../assets/Icons";
 import { IconButton } from "@mui/material";
@@ -28,24 +29,24 @@ export const EditionBar = (editionBarProps) => {
     >
       {buttonText && buttonIcon && (
         <Tooltip title={tooltipMessage} placement="top-end" arrow>
-          <Link to={disableEditionBarButton ? "#" : to}>
-            <Button
-              aria-label="fingerprint"
-              size="small"
-              variant="contained"
-              startIcon={buttonIcon}
-              disabled={disableEditionBarButton}
-              sx={{
-                backgroundColor: buttonColor,
-                color: "white",
-                "&:hover": {
-                  backgroundColor: hoverButtonColor,
-                },
-              }}
-            >
-              {buttonText}
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            to={disableEditionBarButton ? "#" : to}
+            aria-label="fingerprint"
+            size="small"
+            variant="contained"
+            startIcon={buttonIcon}
+            disabled={disableEditionBarButton}
+            sx={{
+              backgroundColor: buttonColor,
+              color: "white",
+              "&:hover": {
+                backgroundColor: hoverButtonColor,
+              },
+            }}
+          >
+            {buttonText}
+          </Button>
         </Tooltip>
       )}
       <Box

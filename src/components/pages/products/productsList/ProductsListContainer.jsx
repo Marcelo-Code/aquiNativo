@@ -7,6 +7,10 @@ import { LoadingContainer } from "../../loading/LoadingContainer";
 import { getUniqueSortedOptions } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import "./productsList.css";
+import { useParams } from "react-router-dom";
+import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
+import { useConfirm } from "../../../../context/ConfirmContext";
+import { successToastifyAlert } from "../../../../utils/alerts";
 
 export const ProductsListContainer = () => {
   const [products, setProducts] = useState([]);
@@ -18,16 +22,33 @@ export const ProductsListContainer = () => {
   const { addProduct, removeProduct, addProductToCart } =
     useContext(GeneralContext);
 
+  const { productMode } = useParams();
+  const confirm = useConfirm();
+
+  const handleDeleteProduct = async (product) => {
+    const isConfirmed = await confirm(
+      `¿Querés eliminar el producto "${product.description}"?`
+    );
+
+    if (isConfirmed) {
+      successToastifyAlert("Producto eliminado");
+    } else {
+      console.log("Cancelado");
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
 
     Promise.all([getProducts()])
       .then(([productsResponse]) => {
-        //Verifica si hubo un error
+        //Captura erores en caso de que existan
         if (productsResponse.status !== 200) {
-          throw new Error(
-            productsResponse.message + ": " + productsResponse.error
-          );
+          const errorMessage =
+            typeof productsResponse.error === "string"
+              ? productsResponse.error
+              : JSON.stringify(productsResponse.error);
+          throw new Error(`${productsResponse.message}: ${errorMessage}`);
         }
         //Agrega el contador de cada producto
         const productsResponseData = productsResponse.data;
@@ -132,6 +153,7 @@ export const ProductsListContainer = () => {
     SORT_OPTIONS,
     FILTER_OPTIONS,
     FIELDS_TO_SEARCH,
+    to: "/updateProducts/createProduct",
   };
 
   const productsListProps = {
@@ -141,6 +163,11 @@ export const ProductsListContainer = () => {
     addProduct,
     removeProduct,
     addProductToCart,
+    handleDeleteProduct,
   };
-  return <ProductsList {...productsListProps} />;
+
+  if (productMode === "readProducts")
+    return <ProductsList {...productsListProps} />;
+  if (productMode === "updateProducts")
+    return <ProductsListUpdateMode {...productsListProps} />;
 };
