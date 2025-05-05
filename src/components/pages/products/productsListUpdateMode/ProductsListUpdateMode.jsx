@@ -14,7 +14,7 @@ import {
 import "../../../../assets/css/generalStyles.css";
 import { Icons } from "../../../../assets/Icons";
 
-import "./productsList.css";
+import "./productsListUpdateMode.css";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
 
@@ -53,7 +53,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       component="div"
                       sx={{ textAlign: "center" }}
                     >
-                      {product.brand}
+                      {product.brands.name}
                     </Typography>
 
                     <Typography
@@ -62,7 +62,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       sx={{ textAlign: "left" }}
                     >
                       <b>Categoria: </b>
-                      {product.category}
+                      {product.categories.name}
                     </Typography>
                     <Typography
                       variant="subtitle2"
@@ -72,6 +72,13 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       <b>Código: </b> {product.id}
                     </Typography>
                     <Typography variant="subtitle2" component="div">
+                      <Typography
+                        variant="subtitle2"
+                        component="div"
+                        sx={{ textAlign: "left" }}
+                      >
+                        <b>Stock: </b> {product.stock}
+                      </Typography>
                       {product.description}
                     </Typography>
                   </CardContent>

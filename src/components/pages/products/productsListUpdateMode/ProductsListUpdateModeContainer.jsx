@@ -1,13 +1,15 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
-import { ProductsList } from "./ProductsList";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { getProducts } from "../../../../services/api/products";
+import { createProduct, getProducts } from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { getUniqueSortedOptions } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
+import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
+import { useConfirm } from "../../../../context/ConfirmContext";
+import { successToastifyAlert } from "../../../../utils/alerts";
 
-export const ProductsListContainer = () => {
+export const ProductsListUpdateModeContainer = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,9 +19,22 @@ export const ProductsListContainer = () => {
   const { addProduct, removeProduct, addProductToCart } =
     useContext(GeneralContext);
 
+  const confirm = useConfirm();
+
+  const handleDeleteProduct = async (product) => {
+    const isConfirmed = await confirm(
+      `¿Querés eliminar el producto "${product.description}"?`
+    );
+
+    if (isConfirmed) {
+      successToastifyAlert("Producto eliminado");
+    } else {
+      console.log("Cancelado");
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
-
     Promise.all([getProducts()])
       .then(([productsResponse]) => {
         //Captura erores en caso de que existan
@@ -133,7 +148,7 @@ export const ProductsListContainer = () => {
     SORT_OPTIONS,
     FILTER_OPTIONS,
     FIELDS_TO_SEARCH,
-    enableEditionBar: false,
+    to: "/updateProducts/createProduct",
   };
 
   const productsListProps = {
@@ -143,7 +158,7 @@ export const ProductsListContainer = () => {
     addProduct,
     removeProduct,
     addProductToCart,
+    handleDeleteProduct,
   };
-
-  return <ProductsList {...productsListProps} />;
+  return <ProductsListUpdateMode {...productsListProps} />;
 };

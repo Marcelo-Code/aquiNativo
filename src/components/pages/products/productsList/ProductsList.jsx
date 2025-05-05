@@ -125,7 +125,7 @@ export const ProductsList = (productsListProps) => {
                       component="div"
                       sx={{ textAlign: "center" }}
                     >
-                      {product.brand}
+                      {product.brands.name}
                     </Typography>
 
                     <Typography
@@ -134,7 +134,7 @@ export const ProductsList = (productsListProps) => {
                       sx={{ textAlign: "left" }}
                     >
                       <b>Categoria: </b>
-                      {product.category}
+                      {product.categories.name}
                     </Typography>
                     <Typography
                       variant="subtitle2"

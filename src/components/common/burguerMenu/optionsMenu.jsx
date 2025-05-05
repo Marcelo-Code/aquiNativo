@@ -4,7 +4,7 @@ export const adminOptions = [
   {
     icon: <Icons.InventoryIcon />,
     option: "Productos",
-    link: "/readProducts",
+    link: "/",
   },
   {
     icon: <Icons.EditIcon />,

@@ -1,15 +1,13 @@
-import { Box, FormGroup, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Icons } from "../../../../assets/Icons";
 import "../../../../assets/css/generalStyles.css";
-import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
 import { useNavigate } from "react-router-dom";
-import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
 import { CreateEditProduct } from "./CreateEditProduct";
 import { getBrands } from "../../../../services/api/brands";
 import { getCategories } from "../../../../services/api/categories";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
+import { createProduct } from "../../../../services/api/products";
+import { successToastifyAlert } from "../../../../utils/alerts";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
@@ -19,12 +17,46 @@ export const CreateEditProductContainer = () => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const formDataInitialState = {
+    description: "",
+    brand_id: "",
+    category_id: "",
+    price: "",
+    stock: "",
+  };
+  const [productCreated, setProductCreated] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     const updatedFormData = { ...formData, [name]: value };
+
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoadingButton(true);
+    createProduct(formData)
+      .then((response) => {
+        if (response.status !== 200 && response.status !== 201) {
+          const errorMessage =
+            typeof response.error === "string"
+              ? response.error
+              : JSON.stringify(response.error);
+          throw new Error(`${response.message}: ${errorMessage}`);
+        }
+        successToastifyAlert("Producto creado con éxito");
+        console.log(response);
+        setProductCreated(true);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoadingButton(false);
+      });
   };
 
   const navigate = useNavigate();
@@ -34,7 +66,6 @@ export const CreateEditProductContainer = () => {
 
   useEffect(() => {
     setIsLoading(true);
-
     Promise.all([getBrands(), getCategories()])
       .then(([brandsResponse, categoriesResponse]) => {
         if (brandsResponse.status !== 200) {
@@ -44,7 +75,6 @@ export const CreateEditProductContainer = () => {
               : JSON.stringify(brandsResponse.error);
           throw new Error(`Error al obtener marcas: ${errorMessage}`);
         }
-
         if (categoriesResponse.status !== 200) {
           const errorMessage =
             typeof categoriesResponse.error === "string"
@@ -52,11 +82,11 @@ export const CreateEditProductContainer = () => {
               : JSON.stringify(categoriesResponse.error);
           throw new Error(`Error al obtener categorías: ${errorMessage}`);
         }
-
         setBrands(brandsResponse.data);
         setCategories(categoriesResponse.data);
-        console.log(brandsResponse.data);
-        console.log(categoriesResponse.data);
+        setFormData(formDataInitialState);
+        console.log(brandsResponse);
+        console.log(categoriesResponse);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
@@ -84,6 +114,8 @@ export const CreateEditProductContainer = () => {
     categories,
     handleChange,
     formData,
+    handleSubmit,
+    productCreated,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;

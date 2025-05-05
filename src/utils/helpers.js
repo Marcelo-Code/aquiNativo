@@ -12,9 +12,16 @@ export const commonCurrencyFormat = (number) => {
 
 //Función para obtener opciones unicas y ordenadas
 export const getUniqueSortedOptions = (items, key, initialOption = null) => {
-  const uniqueValues = Array.from(new Set(items.map((item) => item[key]))).sort(
-    (a, b) =>
-      a?.toString().localeCompare(b?.toString(), "es", { sensitivity: "base" })
+  const path = key.split(".");
+
+  const getValue = (item) =>
+    path.reduce(
+      (acc, part) => (acc && acc[part] !== undefined ? acc[part] : ""),
+      item
+    );
+
+  const uniqueValues = Array.from(new Set(items.map(getValue))).sort((a, b) =>
+    a?.toString().localeCompare(b?.toString(), "es", { sensitivity: "base" })
   );
 
   const options = uniqueValues.map((value) => ({

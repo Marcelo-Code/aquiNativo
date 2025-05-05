@@ -39,6 +39,7 @@ export const SearchFilterBar = ({
   STATUS_OPTIONS_2,
   filters,
   handleFilterChange,
+  enableEditionBar,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -78,11 +79,13 @@ export const SearchFilterBar = ({
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Barra edición" placement="top-end" arrow>
-          <IconButton onClick={() => setActiveBar("editionBar")} size="small">
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
+        {enableEditionBar && (
+          <Tooltip title="Barra edición" placement="top-end" arrow>
+            <IconButton onClick={() => setActiveBar("editionBar")} size="small">
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
 
       <Drawer

@@ -7,6 +7,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     setEditMode,
     enableSearchFilterBar = true,
     disableEditionBarButton = false,
+    enableEditionBar = true,
     tooltipMessage,
     selectedRecords,
     to,
@@ -48,7 +49,9 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
       // Coincidencia con filtros dinámicos
       const matchesAllFilters = Object.entries(newFilters).every(
         ([key, value]) => {
-          return value === "all" || record[key] === value;
+          const path = key.split(".");
+          const recordValue = path.reduce((acc, k) => acc?.[k], record);
+          return value === "all" || recordValue == value; // Cambié la comparación de === a == para manejar null y undefined
         }
       );
 
@@ -60,7 +63,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
       const sortConfig = SORT_OPTIONS.find((opt) => opt.value === newSort);
       if (sortConfig) {
         const [type, direction] = newSort.split("-");
-        const fieldPath = sortConfig.name.split("."); // por ejemplo: ["paciente", "apellido"]
+        const fieldPath = sortConfig.name.split("."); // Ejemplo: ["categories", "name"]
 
         const getValue = (obj, path) =>
           path.reduce(
@@ -71,6 +74,10 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
         result = [...result].sort((a, b) => {
           const aValue = getValue(a, fieldPath);
           const bValue = getValue(b, fieldPath);
+
+          // Verificar si los valores son válidos antes de realizar la comparación
+          if (aValue === "" || aValue == null) return 1; // Asegura que valores vacíos o nulos no causen problemas
+          if (bValue === "" || bValue == null) return -1;
 
           if (type === "alphabetical") {
             return direction === "asc"
@@ -134,6 +141,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     handleFilterChange,
     sortOption,
     handleSortChange,
+    enableEditionBar,
     SORT_OPTIONS,
     STATUS_OPTIONS_1: FILTER_OPTIONS[0],
     STATUS_OPTIONS_2: FILTER_OPTIONS[1],

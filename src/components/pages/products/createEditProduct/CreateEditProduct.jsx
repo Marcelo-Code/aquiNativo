@@ -1,9 +1,10 @@
-import { Box, FormGroup, TextField } from "@mui/material";
+import { Box, Collapse, FormGroup, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Icons } from "../../../../assets/Icons";
 import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
 import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
 import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
+import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
 
 export const CreateEditProduct = (createEditProductProps) => {
   const {
@@ -14,6 +15,8 @@ export const CreateEditProduct = (createEditProductProps) => {
     categories,
     handleChange,
     formData,
+    handleSubmit,
+    productCreated,
   } = createEditProductProps;
 
   const formButtonGroupContainerProps = {
@@ -34,13 +37,16 @@ export const CreateEditProduct = (createEditProductProps) => {
       <Box
         sx={{
           width: "100%",
+          maxWidth: "600px",
+          mx: "auto",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           marginTop: "20px",
+          opacity: productCreated ? 0.5 : 1,
         }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <FormGroup>
             <Box sx={elementStyle}>
               <Icons.DescriptionIcon />
@@ -71,6 +77,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                     },
                   },
                 }}
+                disabled={productCreated}
               />
             </Box>
             <Box sx={elementStyle}>
@@ -107,6 +114,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                     },
                   },
                 }}
+                disabled={productCreated}
               />
             </Box>
             <Box sx={elementStyle}>
@@ -143,6 +151,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                     },
                   },
                 }}
+                disabled={productCreated}
               />
             </Box>
             <Box sx={elementStyle}>
@@ -157,6 +166,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                 label={"Marca"}
                 required
                 // disabled={brand ? true : false}
+                disabled={productCreated}
               />
             </Box>
             <Box sx={elementStyle}>
@@ -166,17 +176,29 @@ export const CreateEditProduct = (createEditProductProps) => {
                 name="category_id"
                 placeholder="Seleccionar categoría"
                 clients={categories}
-                value={formData.category_Id}
+                value={formData.category_id}
                 onChange={handleChange}
                 label={"Categoría"}
                 required
                 // disabled={brand ? true : false}
+                disabled={productCreated}
               />
             </Box>
-            <FormButtonGroupContainer {...formButtonGroupContainerProps} />
+            {!productCreated && (
+              <FormButtonGroupContainer {...formButtonGroupContainerProps} />
+            )}
           </FormGroup>
         </form>
       </Box>
+      <Collapse in={productCreated}>
+        <Box sx={{ mt: 3, p: 2, maxWidth: "600px", mx: "auto" }}>
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
+            Carga de imagenes
+          </Typography>
+
+          <BackButtonContainer />
+        </Box>
+      </Collapse>
     </Box>
   );
 };
