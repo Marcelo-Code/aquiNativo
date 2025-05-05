@@ -1,4 +1,5 @@
 import { TextField, Autocomplete } from "@mui/material";
+import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
 // Componente Select con Autocomplete y búsqueda
 export const OptionSelect = ({
@@ -38,13 +39,24 @@ export const OptionSelect = ({
           helperText={helperText}
           sx={{
             backgroundColor: "white",
-            height: "40px", //Ajusta la altura del componente interior
-            alignItems: "center", // centra contenido vertical
-            "& .MuiInputBase-root": {
-              height: "100%", // fuerza la altura del input
+            "& .MuiOutlinedInput-root": {
+              height: "40px",
+              "& fieldset": {
+                borderColor: "gray", // borde normal
+              },
+              "&:hover fieldset": {
+                borderColor: "black", // al pasar mouse
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: `${generalBackGroundColor}`, // al enfocar
+              },
             },
             "& label": {
-              top: "-6px", // ajusta si el label flotante queda muy bajo
+              top: "-5px",
+              color: "gray", // color normal
+            },
+            "& label.Mui-focused": {
+              color: `${buttonColor}`, // color al enfocar
             },
           }}
         />

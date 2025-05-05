@@ -1,176 +1,90 @@
 import { Box, FormGroup, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import "../../../../assets/css/generalStyles.css";
 import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
+import { useNavigate } from "react-router-dom";
+import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
+import { CreateEditProduct } from "./CreateEditProduct";
+import { getBrands } from "../../../../services/api/brands";
+import { getCategories } from "../../../../services/api/categories";
+import { LoadingContainer } from "../../loading/LoadingContainer";
+import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const CreateEditProductContainer = () => {
-  const elementStyle = {
-    margin: "10px",
-    width: "250px",
-    backgroundColor: "white",
-  };
-
   const [formData, setFormData] = useState({});
+  const [modifiedFlag, setModifiedFlag] = useState(false);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);
+    if (!modifiedFlag) setModifiedFlag(true);
   };
 
-  //   const formButtonGroupProps = {
-  //     modifiedFlag,
-  //     isLoadingButton,
-  //   };
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
-  const patients = [];
+  useEffect(() => {
+    setIsLoading(true);
 
-  return (
-    <Box className="generalContainer">
-      <Box className="generalTitle">{"Crear nuevo producto"}</Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <form>
-          <FormGroup>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                margin: "10px",
-                gap: "10px",
-              }}
-            >
-              <Icons.DescriptionIcon />
-              <TextField
-                id="outlined-basic"
-                label="Descripción"
-                variant="outlined"
-                name="description"
-                onChange={handleChange}
-                required
-                value={formData.description}
-                multiline
-                rows={3}
-                fullWidth
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                margin: "10px",
-                gap: "10px",
-              }}
-            >
-              <Icons.MonetizationOnIcon />
-              <TextField
-                type="number"
-                id="outlined-basic"
-                label="Precio"
-                variant="outlined"
-                name="price"
-                onChange={handleChange}
-                required
-                value={formData.price}
-                fullWidth
-                InputProps={{
-                  sx: {
-                    height: 45,
-                    alignItems: "center",
-                  },
-                }}
-                InputLabelProps={{
-                  sx: {
-                    transform: "translate(14px, 11px) scale(1)", // Ajustar label más arriba
-                  },
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                margin: "10px",
-                gap: "10px",
-              }}
-            >
-              <Icons.MonetizationOnIcon />
-              <TextField
-                type="number"
-                id="outlined-basic"
-                label="Stock"
-                variant="outlined"
-                name="stock"
-                onChange={handleChange}
-                required
-                value={formData.stock}
-                fullWidth
-                InputProps={{
-                  sx: {
-                    height: 45,
-                    alignItems: "center",
-                  },
-                }}
-                InputLabelProps={{
-                  sx: {
-                    transform: "translate(14px, 11px) scale(1)", // Ajustar label más arriba
-                  },
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                margin: "10px",
-                gap: "10px",
-              }}
-            >
-              <Icons.DescriptionIcon />
-              <OptionSelect
-                getOptionLabel={(option) => `${option.nombreyapellidopaciente}`}
-                name="idpaciente"
-                placeholder="Seleccionar marca"
-                clients={patients}
-                value={formData.brand}
-                onChange={handleChange}
-                label={"Marca"}
-                required
-                // disabled={brand ? true : false}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                margin: "10px",
-                gap: "10px",
-              }}
-            >
-              <Icons.DescriptionIcon />
-              <OptionSelect
-                getOptionLabel={(option) => `${option.nombreyapellidopaciente}`}
-                name="idpaciente"
-                placeholder="Seleccionar categoría"
-                clients={patients}
-                value={formData.brand}
-                onChange={handleChange}
-                label={"Categoría"}
-                required
-                // disabled={brand ? true : false}
-              />
-            </Box>
-            {/* <FormButtonGroupContainer {...formButtonGroupProps} /> */}
-          </FormGroup>
-        </form>
-      </Box>
-    </Box>
-  );
+    Promise.all([getBrands(), getCategories()])
+      .then(([brandsResponse, categoriesResponse]) => {
+        if (brandsResponse.status !== 200) {
+          const errorMessage =
+            typeof brandsResponse.error === "string"
+              ? brandsResponse.error
+              : JSON.stringify(brandsResponse.error);
+          throw new Error(`Error al obtener marcas: ${errorMessage}`);
+        }
+
+        if (categoriesResponse.status !== 200) {
+          const errorMessage =
+            typeof categoriesResponse.error === "string"
+              ? categoriesResponse.error
+              : JSON.stringify(categoriesResponse.error);
+          throw new Error(`Error al obtener categorías: ${errorMessage}`);
+        }
+
+        setBrands(brandsResponse.data);
+        setCategories(categoriesResponse.data);
+        console.log(brandsResponse.data);
+        console.log(categoriesResponse.data);
+      })
+      .catch((error) => {
+        console.error("Error en la carga de datos:", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <LoadingContainer />;
+  if (error) {
+    const errorContainerProps = {
+      error: error.message,
+    };
+    console.log(errorContainerProps);
+    return <ErrorContainer {...errorContainerProps} />;
+  }
+
+  const createEditProductProps = {
+    handleGoBack,
+    modifiedFlag,
+    isLoadingButton,
+    brands,
+    categories,
+    handleChange,
+    formData,
+  };
+
+  return <CreateEditProduct {...createEditProductProps} />;
 };
