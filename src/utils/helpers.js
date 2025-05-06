@@ -31,3 +31,11 @@ export const getUniqueSortedOptions = (items, key, initialOption = null) => {
 
   return initialOption ? [initialOption, ...options] : options;
 };
+
+//Función para limpiar el nombre de un archivo, elimina los acentos y carácteres especiales
+export const sanitizeFileName = (name) => {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w.-]/g, "_");
+};

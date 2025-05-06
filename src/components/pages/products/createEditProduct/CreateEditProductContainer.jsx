@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../../../assets/css/generalStyles.css";
 import { useNavigate } from "react-router-dom";
 import { CreateEditProduct } from "./CreateEditProduct";
@@ -6,8 +6,12 @@ import { getBrands } from "../../../../services/api/brands";
 import { getCategories } from "../../../../services/api/categories";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
-import { createProduct } from "../../../../services/api/products";
-import { successToastifyAlert } from "../../../../utils/alerts";
+import { createProduct, getProduct } from "../../../../services/api/products";
+import {
+  errorToastifyAlert,
+  successToastifyAlert,
+} from "../../../../utils/alerts";
+import { uploadImage } from "../../../../services/api/images";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
@@ -24,7 +28,13 @@ export const CreateEditProductContainer = () => {
     price: "",
     stock: "",
   };
+
+  //hook para obtener el id del producto creado
+  const [productCreatedId, setProductCreatedId] = useState(null);
   const [productCreated, setProductCreated] = useState(false);
+  const [documentName, setDocumentName] = useState(null);
+  //hook para el selector de archivos
+  const fileInputRef = useRef(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,6 +42,53 @@ export const CreateEditProductContainer = () => {
 
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
+  };
+
+  const handleUploadDocument = (documentName) => {
+    if (formData[documentName]) {
+      errorToastifyAlert(
+        "Ya existen documentos, para cargar otros, primero elimine los anteriores"
+      );
+      return;
+    }
+    setDocumentName(documentName);
+    fileInputRef.current.click();
+  };
+
+  // Función para manejar la carga de archivos
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Verifica el formato del archivo
+      const allowedFileTypes = [
+        "application/pdf",
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "application/msword", // .doc
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+      ];
+      if (!allowedFileTypes.includes(file.type)) {
+        errorToastifyAlert("Formato de archivo no permitido");
+        console.error("Formato no permitido");
+        return;
+      }
+      console.log("Archivo seleccionado:", file);
+
+      const halfFileName = `imagen`;
+
+      // Llama a la función para subir el archivo
+      uploadImage(file, documentName, productCreated, halfFileName)
+        .then((response) => {
+          console.log(response);
+          return getProduct(productCreated.id);
+        })
+        .then((response) => {
+          setFormData(response.data);
+          console.log("Producto actualizado:", response.data);
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +105,8 @@ export const CreateEditProductContainer = () => {
         }
         successToastifyAlert("Producto creado con éxito");
         console.log(response);
-        setProductCreated(true);
+        setProductCreated(response.data);
+        console.log(response.data.id);
       })
       .catch((error) => {
         console.error(error);
@@ -116,6 +174,10 @@ export const CreateEditProductContainer = () => {
     formData,
     handleSubmit,
     productCreated,
+    handleUploadDocument,
+    handleFileChange,
+    fileInputRef,
+    productCreatedId,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;

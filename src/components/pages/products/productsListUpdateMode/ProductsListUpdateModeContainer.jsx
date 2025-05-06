@@ -7,11 +7,15 @@ import { getUniqueSortedOptions } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
 import { useConfirm } from "../../../../context/ConfirmContext";
-import { successToastifyAlert } from "../../../../utils/alerts";
+import {
+  errorToastifyAlert,
+  successToastifyAlert,
+} from "../../../../utils/alerts";
 
 export const ProductsListUpdateModeContainer = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
 

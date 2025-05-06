@@ -133,7 +133,9 @@ export const SearchFilterBar = ({
             </Typography>
             <Select
               value={filters.brand}
-              onChange={(e) => handleFilterChange("brand", e.target.value)}
+              onChange={(e) =>
+                handleFilterChange("brands.name", e.target.value)
+              }
               sx={{
                 color: "black",
                 backgroundColor: "white",
@@ -161,7 +163,9 @@ export const SearchFilterBar = ({
             </Typography>
             <Select
               value={filters.category}
-              onChange={(e) => handleFilterChange("category", e.target.value)}
+              onChange={(e) =>
+                handleFilterChange("categories.name", e.target.value)
+              }
               sx={{
                 color: "black",
                 backgroundColor: "white",

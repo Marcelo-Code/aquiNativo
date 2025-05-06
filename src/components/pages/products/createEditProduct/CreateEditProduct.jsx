@@ -1,4 +1,12 @@
-import { Box, Collapse, FormGroup, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Collapse,
+  FormGroup,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { Icons } from "../../../../assets/Icons";
 import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
@@ -17,6 +25,9 @@ export const CreateEditProduct = (createEditProductProps) => {
     formData,
     handleSubmit,
     productCreated,
+    fileInputRef,
+    handleFileChange,
+    handleUploadDocument,
   } = createEditProductProps;
 
   const formButtonGroupContainerProps = {
@@ -31,6 +42,12 @@ export const CreateEditProduct = (createEditProductProps) => {
     margin: "10px",
     gap: "10px",
   };
+
+  const iconStyle = { color: "blue", fontSize: "1.5em", margin: "10px" };
+
+  console.log(productCreated);
+  console.log(formData);
+
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">{"Crear nuevo producto"}</Box>
@@ -195,6 +212,23 @@ export const CreateEditProduct = (createEditProductProps) => {
           <Typography variant="h6" sx={{ textAlign: "center" }}>
             Carga de imagenes
           </Typography>
+
+          {/* Llama a la función de carga de archivos */}
+          <Tooltip title="Subir imagen" placement="top-end" arrow>
+            <IconButton onClick={() => handleUploadDocument("image")}>
+              <Icons.UploadIcon sx={iconStyle} />
+            </IconButton>
+          </Tooltip>
+
+          {formData?.image && <img src={formData.image} width={100} />}
+
+          {/* Abre el selector de archivos */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
 
           <BackButtonContainer />
         </Box>

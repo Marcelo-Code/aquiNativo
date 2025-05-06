@@ -1,3 +1,4 @@
+import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
 export const getProducts = async () => {
@@ -21,22 +22,78 @@ export const getProducts = async () => {
 
 export const createProduct = async (product) => {
   try {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .insert([product]); // Se inserta como array de objetos
+    const { error } = await supabaseClient.from("products").insert([product]); // Se inserta como array de objetos
 
     if (error) throw error;
+
+    const { data: fetched, error: fetchError } = await supabaseClient
+      .from("products")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(1);
+
+    if (fetchError) throw fetchError;
 
     return {
       status: 201,
       message: "Producto creado con éxito",
-      data,
+      data: fetched[0],
     };
   } catch (error) {
     return {
       status: 500,
       message: "Error al crear el producto",
       error,
+    };
+  }
+};
+
+export const getProduct = async (productId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("products")
+      .select("*")
+      .eq("id", productId);
+    if (error) throw error;
+    return {
+      status: 201,
+      message: "Registro obtenido con éxito",
+      data,
+    };
+  } catch (error) {
+    return {
+      status: 404,
+      message: "Error al obtener registro",
+      error: error.message,
+    };
+  }
+};
+
+export const updateProduct = async (updatedProduct) => {
+  try {
+    const { id, ...fieldsToUpdate } = updatedProduct;
+
+    const { data, error } = await supabaseClient
+      .from("products")
+      .update(fieldsToUpdate)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    successToastifyAlert(`Producto actualizado con éxito`);
+
+    return {
+      status: 200,
+      message: "Registro actualizado con éxito",
+      data,
+    };
+  } catch (error) {
+    errorToastifyAlert("Error al actualizar paciente");
+
+    return {
+      status: 400,
+      message: "Error al actualizar registro",
+      error: error.message,
     };
   }
 };
