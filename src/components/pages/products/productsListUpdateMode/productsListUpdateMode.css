@@ -1,13 +1,6 @@
 .updateCard {
   width: 250px;
-  height: 470px;
-  position: relative;
-  overflow: hidden;
-}
-
-.card {
-  width: 250px;
-  height: 420px;
+  height: 430px;
   position: relative;
   overflow: hidden;
 }
@@ -22,37 +15,20 @@
   width: 100%;
 }
 
-.cardActions {
-  opacity: 0;
-  transform: translateY(400px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.card :hover .cardActions {
-  opacity: 1;
-  transform: translateY(140px);
-}
-
-.card :hover .cardMedia {
-  opacity: 0.2;
-}
-
 .updateCardActions {
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  gap: 20px;
-  /* background-color: rgba(0, 0, 0, 0.3); */
+  gap: 10px;
+  position: absolute;
+  top: 0px;
+  right: 100%; /* oculto fuera de la tarjeta */
+  transition: right 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.updateCard:hover .updateCardActions {
+  right: 0px;
 }

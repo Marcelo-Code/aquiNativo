@@ -32,6 +32,26 @@ export const ProductsListUpdateMode = (productsListProps) => {
           <Box className="generalList">
             {recordsToShow.map((product) => (
               <Card className="updateCard" key={product.id}>
+                <CardActions className="updateCardActions">
+                  <Tooltip title="Eliminar producto" placement="top-end" arrow>
+                    <IconButton
+                      onClick={() => {
+                        handleDeleteProduct(product);
+                      }}
+                    >
+                      <Icons.DeleteIcon
+                        sx={{ fontSize: "30px", color: "#E53935" }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Editar producto" placement="top-end" arrow>
+                    <IconButton>
+                      <Icons.EditIcon
+                        sx={{ fontSize: "30px", color: "gray" }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                </CardActions>
                 <Box>
                   <CardMedia
                     className="cardMedia"
@@ -49,10 +69,11 @@ export const ProductsListUpdateMode = (productsListProps) => {
                     }}
                   >
                     <Typography
-                      variant="h5"
+                      variant="subtitle2"
                       component="div"
-                      sx={{ textAlign: "center" }}
+                      sx={{ textAlign: "left" }}
                     >
+                      <b>Marca: </b>
                       {product.brands.name}
                     </Typography>
 
@@ -71,49 +92,25 @@ export const ProductsListUpdateMode = (productsListProps) => {
                     >
                       <b>Código: </b> {product.id}
                     </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      component="div"
+                      sx={{ textAlign: "left" }}
+                    >
+                      <b>Stock: </b> {product.stock}
+                    </Typography>
                     <Typography variant="subtitle2" component="div">
-                      <Typography
-                        variant="subtitle2"
-                        component="div"
-                        sx={{ textAlign: "left" }}
-                      >
-                        <b>Stock: </b> {product.stock}
-                      </Typography>
+                      <b>Descripción: </b>
                       {product.description}
                     </Typography>
                   </CardContent>
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ textAlign: "center", marginTop: "30px" }}
+                    sx={{ textAlign: "center", marginTop: "40px" }}
                   >
                     {currencyFormat(product.price)}
                   </Typography>
-                  <CardActions className="updateCardActions">
-                    <Tooltip
-                      title="Eliminar producto"
-                      placement="top-end"
-                      arrow
-                    >
-                      <IconButton
-                        onClick={() => {
-                          handleDeleteProduct(product);
-                        }}
-                      >
-                        <Icons.DeleteIcon
-                          color="error"
-                          sx={{ fontSize: "30px" }}
-                        />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Editar producto" placement="top-end" arrow>
-                      <IconButton>
-                        <Icons.EditIcon
-                          sx={{ fontSize: "30px", color: "black" }}
-                        />
-                      </IconButton>
-                    </Tooltip>
-                  </CardActions>
                 </Box>
               </Card>
             ))}

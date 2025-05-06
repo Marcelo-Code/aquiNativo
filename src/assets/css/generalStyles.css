@@ -1,7 +1,14 @@
+@font-face {
+  font-family: "roboto";
+  src: url("../fonts/Roboto.ttf") format("truetype");
+}
+
 .generalContainer {
   min-height: 80vh;
   width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: "roboto";
+  font-size: 15px;
 }
 
 .generalTitle {

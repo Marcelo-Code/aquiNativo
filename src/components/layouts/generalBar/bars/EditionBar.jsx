@@ -49,7 +49,7 @@ export const EditionBar = (editionBarProps) => {
           </Button>
         </Tooltip>
       )}
-      <Box
+      {/* <Box
         style={{
           fontFamily: "Arial",
           fontSize: "1.1em",
@@ -68,7 +68,7 @@ export const EditionBar = (editionBarProps) => {
             sx={{ transform: "scale(1.2)" }}
           />
         </Tooltip>
-      </Box>
+      </Box> */}
 
       {/* acceso a barra de búsqueda */}
 
