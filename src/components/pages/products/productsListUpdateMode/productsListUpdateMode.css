@@ -26,7 +26,7 @@
   top: 0px;
   right: 100%; /* oculto fuera de la tarjeta */
   transition: right 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .updateCard:hover .updateCardActions {
