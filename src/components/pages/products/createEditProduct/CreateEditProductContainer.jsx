@@ -156,7 +156,7 @@ export const CreateEditProductContainer = () => {
         console.log(response);
         setFormData(response.data);
         setCreatedProduct(true);
-        handleGoBack();
+        if (productId) handleGoBack();
       })
       .catch((error) => {
         console.error(error);
