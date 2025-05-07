@@ -1,22 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../../assets/css/generalStyles.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CreateEditProduct } from "./CreateEditProduct";
 import { getBrands } from "../../../../services/api/brands";
 import { getCategories } from "../../../../services/api/categories";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
-import { createProduct, getProduct } from "../../../../services/api/products";
+import {
+  createProduct,
+  getProduct,
+  updateProduct,
+} from "../../../../services/api/products";
 import {
   errorToastifyAlert,
   successToastifyAlert,
 } from "../../../../utils/alerts";
-import { uploadImage } from "../../../../services/api/images";
+import { deleteImage, uploadImage } from "../../../../services/api/images";
+import { useConfirm } from "../../../../context/ConfirmContext";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -29,12 +35,24 @@ export const CreateEditProductContainer = () => {
     stock: "",
   };
 
-  //hook para obtener el id del producto creado
-  const [productCreatedId, setProductCreatedId] = useState(null);
-  const [productCreated, setProductCreated] = useState(false);
+  //Flag para saber si se creo el producto
+  const [createdProduct, setCreatedProduct] = useState(false);
+
+  //hook para guardar el nombre de la imagen
   const [documentName, setDocumentName] = useState(null);
+
   //hook para el selector de archivos
   const fileInputRef = useRef(null);
+
+  //Obtiene el id del producto para su edición
+  const { productId } = useParams();
+
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  const confirm = useConfirm();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,15 +62,40 @@ export const CreateEditProductContainer = () => {
     if (!modifiedFlag) setModifiedFlag(true);
   };
 
-  const handleUploadDocument = (documentName) => {
+  const handleUploadImage = (documentName) => {
     if (formData[documentName]) {
       errorToastifyAlert(
-        "Ya existen documentos, para cargar otros, primero elimine los anteriores"
+        "Ya existe una imagen, eliminá antes de cargar una nueva"
       );
       return;
     }
     setDocumentName(documentName);
     fileInputRef.current.click();
+  };
+
+  const handleDeleteImage = async (documentName) => {
+    if (!formData[documentName]) {
+      errorToastifyAlert("No existe imagen para eliminar");
+      return;
+    }
+
+    const isConfirmed = await confirm(`¿Querés eliminar la imagen?`);
+
+    if (!isConfirmed) return;
+
+    setIsLoadingImage(true);
+    // Llama a la función para eliminar el archivo
+    deleteImage(documentName, formData)
+      .then((response) => {
+        console.log(response);
+        return getProduct(formData.id);
+      })
+      .then((response) => {
+        setFormData(response.data[0]);
+        console.log("Producto actualizado:", response.data);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingImage(false));
   };
 
   // Función para manejar la carga de archivos
@@ -75,26 +118,29 @@ export const CreateEditProductContainer = () => {
       }
       console.log("Archivo seleccionado:", file);
 
-      const halfFileName = `imagen`;
-
       // Llama a la función para subir el archivo
-      uploadImage(file, documentName, productCreated, halfFileName)
+      setIsLoadingImage(true);
+      uploadImage(file, documentName, formData)
         .then((response) => {
           console.log(response);
-          return getProduct(productCreated.id);
+          return getProduct(formData.id);
         })
         .then((response) => {
-          setFormData(response.data);
+          setFormData(response.data[0]);
           console.log("Producto actualizado:", response.data);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoadingImage(false));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoadingButton(true);
-    createProduct(formData)
+
+    const request = productId ? updateProduct : createProduct;
+
+    request(formData)
       .then((response) => {
         if (response.status !== 200 && response.status !== 201) {
           const errorMessage =
@@ -103,10 +149,14 @@ export const CreateEditProductContainer = () => {
               : JSON.stringify(response.error);
           throw new Error(`${response.message}: ${errorMessage}`);
         }
-        successToastifyAlert("Producto creado con éxito");
+
+        const action = productId ? "actualizado" : "creado";
+
+        successToastifyAlert(`Producto ${action} con éxito`);
         console.log(response);
-        setProductCreated(response.data);
-        console.log(response.data.id);
+        setFormData(response.data);
+        setCreatedProduct(true);
+        handleGoBack();
       })
       .catch((error) => {
         console.error(error);
@@ -117,15 +167,15 @@ export const CreateEditProductContainer = () => {
       });
   };
 
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   useEffect(() => {
     setIsLoading(true);
-    Promise.all([getBrands(), getCategories()])
-      .then(([brandsResponse, categoriesResponse]) => {
+    Promise.all([
+      getBrands(),
+      getCategories(),
+      productId ? getProduct(productId) : Promise.resolve({ data: [null] }),
+    ])
+      .then(([brandsResponse, categoriesResponse, productResponse]) => {
+        //Validaciones de marcas
         if (brandsResponse.status !== 200) {
           const errorMessage =
             typeof brandsResponse.error === "string"
@@ -133,6 +183,10 @@ export const CreateEditProductContainer = () => {
               : JSON.stringify(brandsResponse.error);
           throw new Error(`Error al obtener marcas: ${errorMessage}`);
         }
+
+        console.log(productResponse.status);
+
+        //Validaciones de categorias
         if (categoriesResponse.status !== 200) {
           const errorMessage =
             typeof categoriesResponse.error === "string"
@@ -140,11 +194,28 @@ export const CreateEditProductContainer = () => {
               : JSON.stringify(categoriesResponse.error);
           throw new Error(`Error al obtener categorías: ${errorMessage}`);
         }
+
+        // Validaciones de producto (si aplica)
+        if (productId && productResponse.status !== 200) {
+          const errorMessage =
+            typeof productResponse.error === "string"
+              ? productResponse.error
+              : JSON.stringify(productResponse.error);
+          throw new Error(`Error al obtener producto: ${errorMessage}`);
+        }
+
         setBrands(brandsResponse.data);
         setCategories(categoriesResponse.data);
-        setFormData(formDataInitialState);
+
+        if (productId) {
+          setFormData(productResponse.data[0]);
+        } else {
+          setFormData(formDataInitialState);
+        }
+
         console.log(brandsResponse);
         console.log(categoriesResponse);
+        console.log(productResponse);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
@@ -153,7 +224,7 @@ export const CreateEditProductContainer = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [productId]);
 
   if (isLoading) return <LoadingContainer />;
   if (error) {
@@ -173,11 +244,13 @@ export const CreateEditProductContainer = () => {
     handleChange,
     formData,
     handleSubmit,
-    productCreated,
-    handleUploadDocument,
+    createdProduct,
+    handleUploadImage,
     handleFileChange,
     fileInputRef,
-    productCreatedId,
+    handleDeleteImage,
+    isLoadingImage,
+    productId,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;

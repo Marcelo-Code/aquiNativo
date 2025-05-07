@@ -152,13 +152,15 @@ export const CartList = (cartLostProps) => {
         </Box>
 
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
           sx={{
-            width: "79%",
+            width: "80%",
+            maxWidth: "400px",
             color: "white",
             backgroundColor: "black",
-            "&:hover": {
+            border: "1px solid white",
+            "&:active": {
               backgroundColor: hoverButtonColor,
             },
           }}

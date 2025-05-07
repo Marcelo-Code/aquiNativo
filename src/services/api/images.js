@@ -1,4 +1,3 @@
-import { sanitizeFileName } from "../../utils/helpers";
 import { bucketName, supabaseClient } from "../config/config";
 import { updateProduct } from "./products";
 
@@ -6,9 +5,8 @@ import { updateProduct } from "./products";
 export const uploadImage = async (
   file,
   documentName,
-  productCreated,
+  formData
   //   setUploadingDocumentName,
-  halfFileName
 ) => {
   //   setUploadingDocumentName(documentName);
 
@@ -16,11 +14,8 @@ export const uploadImage = async (
     //define la extensión del archivo
     const extension = file.name.split(".").pop();
 
-    // Elimina del nombre del archivo los acentos y carácteres especiales
-    const cleanHalfFileName = sanitizeFileName(halfFileName);
-
     //Define el nombre del archivo
-    const fileName = `${documentName}_${cleanHalfFileName}.${extension}`;
+    const fileName = `${documentName}_${formData.id}.${extension}`;
 
     // Sube el archivo a Supabase
     const { error: uploadError } = await supabaseClient.storage
@@ -49,7 +44,7 @@ export const uploadImage = async (
         throw new Error("No se pudo obtener la URL pública del archivo");
 
       const updatedRecord = {
-        ...productCreated,
+        ...formData,
         [documentName]: decodedUrl,
       };
 
@@ -63,22 +58,7 @@ export const uploadImage = async (
 };
 
 //Funcion para eliminar un archivo
-export const deleteDocument = async (
-  documentName,
-  formData,
-  updateFunction,
-  folder,
-  setUploadingDocumentName,
-  setUpdateList,
-  halfFileName
-) => {
-  const confirm = await confirmationAlert(
-    `¿Estás seguro de eliminar el documento ${documentName}?`
-  );
-  if (!confirm) return;
-
-  setUploadingDocumentName(documentName);
-
+export const deleteImage = async (documentName, formData) => {
   try {
     const currentUrl = formData[documentName];
     if (!currentUrl)
@@ -87,11 +67,8 @@ export const deleteDocument = async (
     // Obtener extensión desde la URL
     const extension = currentUrl.split(".").pop();
 
-    // Elimina del nombre del archivo los acentos y carácteres especiales
-    const cleanHalfFileName = sanitizeFileName(halfFileName);
-
     // Reconstruir el nombre del archivo como en uploadDocument
-    const fileName = `${folder}/${documentName}_${cleanHalfFileName}.${extension}`;
+    const fileName = `${documentName}_${formData.id}.${extension}`;
 
     // Eliminar archivo del bucket (requiere un array)
     const { error: deleteError } = await supabaseClient.storage
@@ -105,10 +82,8 @@ export const deleteDocument = async (
       ...formData,
       [documentName]: "",
     };
-    await updateFunction(updatedRecord);
 
-    //Actualiza la lista de documentos
-    setUpdateList((prev) => !prev);
+    await updateProduct(updatedRecord);
 
     console.log("Archivo eliminado correctamente:", fileName);
     return { success: true, file: fileName };

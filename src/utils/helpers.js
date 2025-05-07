@@ -1,6 +1,7 @@
 export const generalBackGroundColor = "#6BCEBF";
 export const buttonColor = "black";
 export const hoverButtonColor = "#6BCEBF";
+export const deleteColor = "#E53935";
 
 //Función para formatear el precio
 export const commonCurrencyFormat = (number) => {

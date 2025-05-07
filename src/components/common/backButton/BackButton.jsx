@@ -13,11 +13,12 @@ export const BackButton = (BackButtonProps) => {
           color: "black",
           backgroundColor: "white",
           border: "1px solid black",
+          maxWidth: "400px",
           width: "80%",
-          "&:hover": {
+          "&:active": {
             backgroundColor: hoverButtonColor,
             color: "white",
-            border: `1px solid ${hoverButtonColor}`,
+            border: `1px solid white`,
           },
         }}
       >

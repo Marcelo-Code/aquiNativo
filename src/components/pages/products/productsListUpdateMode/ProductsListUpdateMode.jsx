@@ -17,10 +17,15 @@ import { Icons } from "../../../../assets/Icons";
 import "./productsListUpdateMode.css";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
+import { deleteColor } from "../../../../utils/helpers";
 
 export const ProductsListUpdateMode = (productsListProps) => {
-  const { products, handleDeleteProduct, ...generalBarContainerProps } =
-    productsListProps;
+  const {
+    products,
+    handleDeleteProduct,
+    handleUpdateProduct,
+    ...generalBarContainerProps
+  } = productsListProps;
 
   return (
     <Box className="generalContainer">
@@ -40,12 +45,16 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       }}
                     >
                       <Icons.DeleteIcon
-                        sx={{ fontSize: "30px", color: "#E53935" }}
+                        sx={{ fontSize: "30px", color: deleteColor }}
                       />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Editar producto" placement="top-end" arrow>
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        handleUpdateProduct(product.id);
+                      }}
+                    >
                       <Icons.EditIcon
                         sx={{ fontSize: "30px", color: "gray" }}
                       />
@@ -53,14 +62,35 @@ export const ProductsListUpdateMode = (productsListProps) => {
                   </Tooltip>
                 </CardActions>
                 <Box>
-                  <CardMedia
-                    className="cardMedia"
-                    component="img"
-                    height="240"
-                    image="/images/foodImage.jpg"
-                    alt="green iguana"
-                  />
-
+                  {product.image ? (
+                    <CardMedia
+                      className="cardMedia"
+                      component="img"
+                      image={`${product.image}?t=${Date.now()}`}
+                      alt="producto"
+                      sx={{
+                        width: "100%",
+                        height: "240px",
+                        objectFit: "contain",
+                        margin: "0 auto",
+                        display: "block",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      sx={{
+                        height: "240px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "20px",
+                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                      }}
+                    >
+                      Producto sin imagen
+                    </Box>
+                  )}
                   <CardContent
                     sx={{
                       display: "flex",

@@ -26,6 +26,10 @@ function App() {
                 path="/updateProducts/createProduct"
                 element={<CreateEditProductContainer />}
               />
+              <Route
+                path="/updateProducts/updateProduct/:productId"
+                element={<CreateEditProductContainer />}
+              />
             </Routes>
             <FooterContainer />
           </ConfirmProvider>

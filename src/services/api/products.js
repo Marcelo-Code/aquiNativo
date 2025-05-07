@@ -22,7 +22,7 @@ export const getProducts = async () => {
 
 export const createProduct = async (product) => {
   try {
-    const { error } = await supabaseClient.from("products").insert([product]); // Se inserta como array de objetos
+    const { error } = await supabaseClient.from("products").insert([product]);
 
     if (error) throw error;
 
@@ -56,7 +56,7 @@ export const getProduct = async (productId) => {
       .eq("id", productId);
     if (error) throw error;
     return {
-      status: 201,
+      status: 200,
       message: "Registro obtenido con éxito",
       data,
     };

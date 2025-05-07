@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import { Icons } from "../../../../assets/Icons";
-import { buttonColor, hoverButtonColor } from "../../../../utils/helpers";
+import {
+  buttonColor,
+  generalBackGroundColor,
+  hoverButtonColor,
+} from "../../../../utils/helpers";
 import "./productsList.css";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
@@ -22,8 +26,11 @@ const addRemoveButtonStyle = {
   height: 28,
   color: "white",
   backgroundColor: buttonColor,
+  "&:active": {
+    backgroundColor: generalBackGroundColor + " !important",
+  },
   "&:hover": {
-    backgroundColor: hoverButtonColor,
+    backgroundColor: buttonColor,
   },
 };
 
@@ -47,13 +54,35 @@ export const ProductsList = (productsListProps) => {
             {recordsToShow.map((product) => (
               <Card className="card" key={product.id}>
                 <Box>
-                  <CardMedia
-                    className="cardMedia"
-                    component="img"
-                    height="240"
-                    image="/images/foodImage.jpg"
-                    alt="green iguana"
-                  />
+                  {product.image ? (
+                    <CardMedia
+                      className="cardMedia"
+                      component="img"
+                      image={`${product.image}?t=${Date.now()}`}
+                      alt="producto"
+                      sx={{
+                        width: "100%",
+                        height: "240px",
+                        objectFit: "contain",
+                        margin: "0 auto",
+                        display: "block",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      sx={{
+                        height: "240px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "20px",
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      Producto sin imagen
+                    </Box>
+                  )}
                   <CardActions className="cardActions">
                     <Box
                       sx={{
@@ -104,7 +133,7 @@ export const ProductsList = (productsListProps) => {
                           marginTop: 2,
                           backgroundColor: buttonColor,
                           color: "white",
-                          "&:hover": {
+                          "&:active": {
                             backgroundColor: hoverButtonColor,
                           },
                         }}

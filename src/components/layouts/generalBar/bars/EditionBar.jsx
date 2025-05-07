@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import "../generalBar.css";
 import { Icons } from "../../../../assets/Icons";
 import { IconButton } from "@mui/material";
-import { buttonColor, hoverButtonColor } from "../../../../utils/helpers";
+import {
+  buttonColor,
+  generalBackGroundColor,
+  hoverButtonColor,
+} from "../../../../utils/helpers";
 
 export const EditionBar = (editionBarProps) => {
   const {
@@ -34,14 +38,16 @@ export const EditionBar = (editionBarProps) => {
             to={disableEditionBarButton ? "#" : to}
             aria-label="fingerprint"
             size="small"
-            variant="contained"
+            variant="outlined"
             startIcon={buttonIcon}
             disabled={disableEditionBarButton}
             sx={{
               backgroundColor: buttonColor,
               color: "white",
-              "&:hover": {
-                backgroundColor: hoverButtonColor,
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid white`,
               },
             }}
           >

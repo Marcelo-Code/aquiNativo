@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
 import { Icons } from "../../../assets/Icons";
-import { buttonColor } from "../../../utils/helpers";
+import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
 export const FormButtonGroup = (formButtonGroupProps) => {
   const { modifiedFlag, isLoadingButton, handleGoBack } = formButtonGroupProps;
@@ -15,10 +15,23 @@ export const FormButtonGroup = (formButtonGroupProps) => {
             type="submit"
             loading={isLoadingButton}
             size="small"
-            variant="contained"
+            variant="outlined"
             startIcon={<Icons.SaveIcon />}
             disabled={!modifiedFlag}
-            sx={{ backgroundColor: `${buttonColor}` }}
+            sx={{
+              backgroundColor: `${buttonColor}`,
+              color: "white",
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid white`,
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "rgba(0, 0, 0, 0.3)",
+                border: `1px solid white`,
+                color: "white",
+              },
+            }}
           >
             Guardar
           </Button>
@@ -32,6 +45,11 @@ export const FormButtonGroup = (formButtonGroupProps) => {
               color: "black",
               backgroundColor: "white",
               border: "1px solid black",
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid white`,
+              },
             }}
           >
             Volver

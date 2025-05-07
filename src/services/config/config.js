@@ -7,8 +7,3 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY;
 
 export const supabaseClient = createClient(supabaseUrl, supabaseKey);
 export const bucketName = "products.images";
-
-// export const patientDocumentationFolder = "testFolder";
-// export const professionalDocumentationFolder = "testFolder1";
-// export const documentationCudBillingFolder = "testFolderCudBilling";
-// export const documentationNoCudBillingFolder = "testFolderNoCudBilling";

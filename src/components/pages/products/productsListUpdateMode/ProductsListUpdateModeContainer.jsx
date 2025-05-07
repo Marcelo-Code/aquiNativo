@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { use, useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { createProduct, getProducts } from "../../../../services/api/products";
@@ -11,6 +11,7 @@ import {
   errorToastifyAlert,
   successToastifyAlert,
 } from "../../../../utils/alerts";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsListUpdateModeContainer = () => {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,8 @@ export const ProductsListUpdateModeContainer = () => {
 
   const confirm = useConfirm();
 
+  const navigate = useNavigate();
+
   const handleDeleteProduct = async (product) => {
     const isConfirmed = await confirm(
       `¿Querés eliminar el producto "${product.description}"?`
@@ -35,6 +38,10 @@ export const ProductsListUpdateModeContainer = () => {
     } else {
       console.log("Cancelado");
     }
+  };
+
+  const handleUpdateProduct = (productId) => {
+    navigate(`/updateProducts/updateProduct/${productId}`);
   };
 
   useEffect(() => {
@@ -163,6 +170,7 @@ export const ProductsListUpdateModeContainer = () => {
     removeProduct,
     addProductToCart,
     handleDeleteProduct,
+    handleUpdateProduct,
   };
   return <ProductsListUpdateMode {...productsListProps} />;
 };
