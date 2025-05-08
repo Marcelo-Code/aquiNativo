@@ -4,6 +4,7 @@ import { CartListContainer } from "./components/pages/cart/cartList/CartListCont
 import { CreateEditProductContainer } from "./components/pages/products/createEditProduct/CreateEditProductContainer";
 import { ProductsListContainer } from "./components/pages/products/productsList/ProductsListContainer";
 import { ProductsListUpdateModeContainer } from "./components/pages/products/productsListUpdateMode/ProductsListUpdateModeContainer";
+import { BuyersDataContainer } from "./components/pages/purchaseOrders/buyersData/BuyersDataContainer";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import { GeneralContextProvider } from "./context/GeneralContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -30,6 +31,8 @@ function App() {
                 path="/updateProducts/updateProduct/:productId"
                 element={<CreateEditProductContainer />}
               />
+              <Route path="/checkout" element={<BuyersDataContainer />} />
+              <Route path="*" element={<div>404</div>} />
             </Routes>
             <FooterContainer />
           </ConfirmProvider>

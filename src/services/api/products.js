@@ -55,6 +55,7 @@ export const getProduct = async (productId) => {
       .select("*")
       .eq("id", productId);
     if (error) throw error;
+
     return {
       status: 200,
       message: "Registro obtenido con éxito",

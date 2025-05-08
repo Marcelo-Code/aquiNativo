@@ -58,6 +58,8 @@ export const CreateEditProductContainer = () => {
     const { name, value } = event.target;
     const updatedFormData = { ...formData, [name]: value };
 
+    console.log(updatedFormData);
+
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
   };
@@ -121,50 +123,57 @@ export const CreateEditProductContainer = () => {
       // Llama a la función para subir el archivo
       setIsLoadingImage(true);
       uploadImage(file, documentName, formData)
-        .then((response) => {
-          console.log(response);
-          return getProduct(formData.id);
+        .then(() => getProduct(formData.id))
+        .then(({ data }) => {
+          setFormData(data[0]);
+          console.log("Producto actualizado:", data);
         })
-        .then((response) => {
-          setFormData(response.data[0]);
-          console.log("Producto actualizado:", response.data);
-        })
-        .catch((error) => console.log(error))
+        .catch(console.error)
         .finally(() => setIsLoadingImage(false));
     }
+    console.log(formData);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoadingButton(true);
+    setCreatedProduct(false);
 
     const request = productId ? updateProduct : createProduct;
 
-    request(formData)
-      .then((response) => {
-        if (response.status !== 200 && response.status !== 201) {
-          const errorMessage =
-            typeof response.error === "string"
-              ? response.error
-              : JSON.stringify(response.error);
-          throw new Error(`${response.message}: ${errorMessage}`);
-        }
+    console.log(formData);
 
-        const action = productId ? "actualizado" : "creado";
+    try {
+      const response = await request(formData);
 
-        successToastifyAlert(`Producto ${action} con éxito`);
-        console.log(response);
-        setFormData(response.data);
+      if (response.status !== 200 && response.status !== 201) {
+        const errorMessage =
+          typeof response.error === "string"
+            ? response.error
+            : JSON.stringify(response.error);
+        throw new Error(`${response.message}: ${errorMessage}`);
+      }
+
+      const action = productId ? "actualizado" : "creado";
+      successToastifyAlert(`Producto ${action} con éxito`);
+
+      console.log(response);
+
+      if (!productId) {
+        // setFormData(response.data);
         setCreatedProduct(true);
-        if (productId) handleGoBack();
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoadingButton(false);
-      });
+      } else {
+        // const refreshed = await getProduct(productId);
+        // setFormData(refreshed.data);
+      }
+
+      setModifiedFlag(false);
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    } finally {
+      setIsLoadingButton(false);
+    }
   };
 
   useEffect(() => {

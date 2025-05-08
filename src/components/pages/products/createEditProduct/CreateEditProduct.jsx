@@ -1,11 +1,8 @@
 import {
   Box,
   CircularProgress,
-  Collapse,
   FormGroup,
   IconButton,
-  LinearProgress,
-  Paper,
   TextField,
   Tooltip,
   Typography,
@@ -20,8 +17,6 @@ import {
   generalBackGroundColor,
 } from "../../../../utils/helpers";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
-import { Loading } from "../../loading/Loading";
-import { LoadingContainer } from "../../loading/LoadingContainer";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 
 import { Dialog, DialogContent } from "@mui/material";
@@ -108,6 +103,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                       },
                     }}
                     InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
                       sx: {
                         color: "gray", // color normal
                         "&.Mui-focused": {
@@ -129,6 +125,9 @@ export const CreateEditProduct = (createEditProductProps) => {
                     required
                     value={formData.price}
                     fullWidth
+                    InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
+                    }}
                     sx={{
                       pr: 2,
                       "& label": {
@@ -166,6 +165,9 @@ export const CreateEditProduct = (createEditProductProps) => {
                     required
                     value={formData.stock}
                     fullWidth
+                    InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
+                    }}
                     sx={{
                       pr: 2,
                       "& label": {
@@ -286,7 +288,7 @@ export const CreateEditProduct = (createEditProductProps) => {
                 // Muestra la imagen actualizada, siempre llamando a una URL distinta
                 // para evitar que se cargue la almacenada en el caché del navegador
                 <img
-                  src={`${formData.image}?t=${Date.now()}`}
+                  src={`${formData?.image}?t=${Date.now()}`}
                   alt="Producto"
                   style={{
                     width: "100%",

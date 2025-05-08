@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
 import { useNavigate } from "react-router-dom";
 
@@ -7,9 +7,24 @@ export const GeneralContext = createContext();
 
 export const GeneralContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  const handleGoBack = () => navigate(-1);
 
-  const [cart, setCart] = useState([]);
+  //Función que navega hacia atrás
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  //Hook para el carrito
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  //Hook para los datos del comprador
+  const [buyerData, setBuyerData] = useState({});
 
   //Función que verifica si hay suficiente stock
   const outOfStock = (product, action) => {
@@ -142,6 +157,10 @@ export const GeneralContextProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   const data = {
     cart,
     addProduct,
@@ -149,6 +168,9 @@ export const GeneralContextProvider = ({ children }) => {
     addProductToCart,
     handleGoBack,
     removeProductFromCart,
+    clearCart,
+    buyerData,
+    setBuyerData,
   };
 
   return (

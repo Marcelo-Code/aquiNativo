@@ -7,7 +7,7 @@ export const successToastifyAlert = (message) => {
     toast: true,
     position: "top-end",
     icon: "success",
-    html: `<span style="font-weight: normal; font-size: 20px">${message}</span>`, // 👈 esto reemplaza el título en negrita
+    html: `<span style="font-weight: normal; font-family: "roboto"; font-size: 15px">${message}</span>`, // 👈 esto reemplaza el título en negrita
     showCloseButton: true,
     showConfirmButton: false,
     timer: 4000, // duración total del toast
@@ -47,6 +47,11 @@ export const successToastifyAlert = (message) => {
       toast.style.opacity = "0"; // Comienza la animación de salida
     }
   }, 3500); // La animación comienza 500ms antes de que termine el timer
+  // Ajustar el ancho del toast
+  const customToast = document.querySelector(".custom-toast");
+  if (customToast) {
+    customToast.style.width = "320px"; // Ajusta el valor del ancho aquí
+  }
 };
 
 export const errorToastifyAlert = (message) => {
@@ -54,7 +59,7 @@ export const errorToastifyAlert = (message) => {
     toast: true,
     position: "top-end",
     icon: "error",
-    html: `<span style="font-weight: normal; font-size: 20px">${message}</span>`, // 👈 esto reemplaza el título en negrita
+    html: `<span style="font-weight: normal; font-size: 15px">${message}</span>`,
     showCloseButton: true,
     showConfirmButton: false,
     timer: 4000,
@@ -89,6 +94,11 @@ export const errorToastifyAlert = (message) => {
       toast.style.opacity = "0";
     }
   }, 3500);
+  // Ajustar el ancho del toast
+  const customToast = document.querySelector(".custom-toast");
+  if (customToast) {
+    customToast.style.width = "320px"; // Ajusta el valor del ancho aquí
+  }
 };
 
 export const confirmationAlert = async (message) => {
