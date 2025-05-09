@@ -8,32 +8,22 @@ import { dateFormat, generalBackGroundColor } from "../../../../utils/helpers";
 import { Link } from "react-router-dom";
 
 export const PurchaseOrderList = (purchaseOrdersListProps) => {
-  const { orders } = purchaseOrdersListProps;
-
-  console.log(orders);
+  const { filteredOrders, ...generalBarContainerProps } =
+    purchaseOrdersListProps;
 
   const iconStyle = { fontSize: "25px", verticalAlign: "middle" };
 
-  const generalBarContainerProps = {
-    enableSearchFilterBar: true,
-    buttonText: "Producto",
-    buttonIcon: <Icons.AddIcon />,
-    setFilteredRecords: null,
-    records: [],
-    SORT_OPTIONS: [],
-    FILTER_OPTIONS: [],
-    FIELDS_TO_SEARCH: [],
-    enableEditionBar: false,
-  };
+  console.log(filteredOrders);
+
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Lista de ordenes de compra</Box>
       <GeneralBarContainer {...generalBarContainerProps} />
       <Box className="generalSubTitle">
-        {orders.length} registros encontrados
+        {filteredOrders.length} registros encontrados
       </Box>
       <Box className="generalList">
-        {orders.map((order) => (
+        {filteredOrders.map((order) => (
           <Card sx={{ minWidth: 275, height: 300 }} key={order.id}>
             <Box
               sx={{
