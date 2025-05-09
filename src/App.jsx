@@ -1,3 +1,4 @@
+import { ScrollToTop } from "./components/common/scrollToTop/ScrollToTop";
 import { FooterContainer } from "./components/layouts/footer/FooterContainer";
 import { NavBarContainer } from "./components/layouts/navBar/NavBarContainer";
 import { CartListContainer } from "./components/pages/cart/cartList/CartListContainer";
@@ -18,6 +19,7 @@ function App() {
         <GeneralContextProvider>
           <ConfirmProvider>
             <NavBarContainer />
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<ProductsListContainer />} />
               <Route
