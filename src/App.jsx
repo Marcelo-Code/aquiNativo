@@ -6,7 +6,7 @@ import { ProductsListContainer } from "./components/pages/products/productsList/
 import { ProductsListUpdateModeContainer } from "./components/pages/products/productsListUpdateMode/ProductsListUpdateModeContainer";
 import { BuyersDataContainer } from "./components/pages/purchaseOrders/buyersData/BuyersDataContainer";
 import { PurchaseOrdersItemsListContainer } from "./components/pages/purchaseOrders/purchaseOrdersItemsList/PurchaseOrdersItemsListContainer_";
-import { PurchaseOrdersListContainer } from "./components/pages/purchaseOrders/purchaseOrdersList/PurchaseOrdersListContainer_";
+import { PurchaseOrdersListContainer } from "./components/pages/purchaseOrders/purchaseOrdersList/PurchaseOrdersListContainer";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import { GeneralContextProvider } from "./context/GeneralContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
