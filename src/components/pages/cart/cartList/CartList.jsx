@@ -39,6 +39,9 @@ export const CartList = (cartListProps) => {
     return (
       <Box className="generalContainer">
         <Box className="generalSubTitle">No hay productos en el carrito</Box>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5, mb: 5 }}>
+          <img src={"/images/emptyCart.svg"} width={150} alt="empty cart" />
+        </Box>
         <BackButtonContainer />
       </Box>
     );
