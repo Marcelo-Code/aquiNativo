@@ -38,7 +38,6 @@ export const OptionSelect = ({
           error={error}
           helperText={helperText}
           sx={{
-            pr: 2,
             backgroundColor: "white",
             "& .MuiOutlinedInput-root": {
               height: "40px",

@@ -7,7 +7,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
 import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
@@ -52,6 +52,7 @@ export const CreateEditProduct = (createEditProductProps) => {
     alignItems: "center",
     margin: "10px",
     gap: "10px",
+    width: "90%",
   };
 
   const [openImageDialog, setOpenImageDialog] = useState(false);
@@ -64,26 +65,24 @@ export const CreateEditProduct = (createEditProductProps) => {
           <Box className="generalTitle">
             {productId ? "Editar producto" : "Crear nuevo producto"}
           </Box>
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "600px",
-              mx: "auto",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "20px",
-              marginBottom: "20px",
-            }}
-          >
-            <form onSubmit={handleSubmit}>
-              <FormGroup>
+          <form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "800px",
+                  mx: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                }}
+              >
                 <Box sx={elementStyle}>
                   <Icons.DescriptionIcon />
                   <TextField
-                    sx={{
-                      pr: 2,
-                    }}
                     id="outlined-basic"
                     label="Descripción"
                     variant="outlined"
@@ -129,7 +128,6 @@ export const CreateEditProduct = (createEditProductProps) => {
                       shrink: true, // ← fuerza el label flotante
                     }}
                     sx={{
-                      pr: 2,
                       "& label": {
                         top: "-5px",
                         color: "gray", // color normal
@@ -169,7 +167,6 @@ export const CreateEditProduct = (createEditProductProps) => {
                       shrink: true, // ← fuerza el label flotante
                     }}
                     sx={{
-                      pr: 2,
                       "& label": {
                         top: "-5px",
                         color: "gray", // color normal
@@ -220,9 +217,9 @@ export const CreateEditProduct = (createEditProductProps) => {
                   />
                 </Box>
                 <FormButtonGroupContainer {...formButtonGroupContainerProps} />
-              </FormGroup>
-            </form>
-          </Box>
+              </Box>
+            </FormGroup>
+          </form>
         </>
       )}
       {/* Contenedor de imagenes */}

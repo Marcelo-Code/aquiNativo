@@ -1,25 +1,58 @@
-import { errorToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
 export const getPurchaseOrders = async () => {
   try {
     const { data, error } = await supabaseClient
       .from("purchase_orders")
-      .select(
-        `
-          *,
-          products:product_id (
-            description,
-            price,
-            brands:brand_id(name),
-            categories:category_id(name)
-          ),
-          quantity,
-          date
-        `
-      )
+      .select("*")
       .order("date", { ascending: true });
 
+    if (error) throw error;
+
+    return {
+      status: 200,
+      message: "Registros obtenidos con éxito",
+      data,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al obtener los registros",
+      error,
+    };
+  }
+};
+
+export const getPurchaseOrder = async (orderId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("purchase_orders")
+      .select("*")
+      .eq("id", orderId)
+      .single(); // Espera un único resultado
+
+    if (error) throw error;
+
+    return {
+      status: 200,
+      message: "Orden obtenida con éxito",
+      data,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al obtener la orden",
+      error,
+    };
+  }
+};
+
+export const getPurchaseOrdersItems = async (orderId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("purchase_orders_items")
+      .select("*, products: product_id(*)")
+      .eq("purchase_order_id", orderId);
     if (error) throw error;
 
     return {
@@ -108,11 +141,19 @@ export const createPurchaseOrder = async (cart) => {
   }
 };
 
-export const createPurchaseOrderRPC = async (cart) => {
+export const createPurchaseOrderRPC = async (cart, buyer, totalPrice) => {
   try {
     const { data, error } = await supabaseClient.rpc(
       "create_purchase_order_atomic",
-      { items: cart }
+      {
+        items: cart,
+        buyer_name: buyer.buyer_name,
+        buyer_last_name: buyer.buyer_last_name,
+        buyer_address: buyer.buyer_address,
+        buyer_phone_number: buyer.buyer_phone_number,
+        buyer_email: buyer.buyer_email,
+        total_price: totalPrice,
+      }
     );
 
     if (error) throw error;
@@ -120,7 +161,12 @@ export const createPurchaseOrderRPC = async (cart) => {
     return {
       status: 200,
       message: "Orden creada con éxito",
-      order_id: data[0].order_id,
+      data: {
+        order_id: data[0].order_id,
+        cart,
+        buyer,
+        totalPrice,
+      },
     };
   } catch (error) {
     throw new Error(

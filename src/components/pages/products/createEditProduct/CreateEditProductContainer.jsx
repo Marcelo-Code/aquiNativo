@@ -17,6 +17,7 @@ import {
 } from "../../../../utils/alerts";
 import { deleteImage, uploadImage } from "../../../../services/api/images";
 import { useConfirm } from "../../../../context/ConfirmContext";
+import imageCompression from "browser-image-compression";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
@@ -101,37 +102,38 @@ export const CreateEditProductContainer = () => {
   };
 
   // Función para manejar la carga de archivos
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Verifica el formato del archivo
-      const allowedFileTypes = [
-        "application/pdf",
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "application/msword", // .doc
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-      ];
+      const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
       if (!allowedFileTypes.includes(file.type)) {
         errorToastifyAlert("Formato de archivo no permitido");
-        console.error("Formato no permitido");
         return;
       }
-      console.log("Archivo seleccionado:", file);
 
-      // Llama a la función para subir el archivo
-      setIsLoadingImage(true);
-      uploadImage(file, documentName, formData)
-        .then(() => getProduct(formData.id))
-        .then(({ data }) => {
-          setFormData(data[0]);
-          console.log("Producto actualizado:", data);
-        })
-        .catch(console.error)
-        .finally(() => setIsLoadingImage(false));
+      try {
+        const options = {
+          maxSizeMB: 0.5, // tamaño máximo de la imagen (en MB)
+          maxWidthOrHeight: 1024, // opcional: reescala si es más grande
+          useWebWorker: true,
+        };
+
+        setIsLoadingImage(true);
+
+        // Comprime y sube la imagen
+        const compressedFile = await imageCompression(file, options);
+        console.log("Imagen comprimida:", compressedFile);
+
+        await uploadImage(compressedFile, documentName, formData);
+        const { data } = await getProduct(formData.id);
+        setFormData(data[0]);
+        console.log("Producto actualizado:", data);
+      } catch (error) {
+        console.error("Error al comprimir/subir la imagen:", error);
+      } finally {
+        setIsLoadingImage(false);
+      }
     }
-    console.log(formData);
   };
 
   const handleSubmit = async (e) => {

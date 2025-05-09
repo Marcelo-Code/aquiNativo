@@ -5,6 +5,8 @@ import { CreateEditProductContainer } from "./components/pages/products/createEd
 import { ProductsListContainer } from "./components/pages/products/productsList/ProductsListContainer";
 import { ProductsListUpdateModeContainer } from "./components/pages/products/productsListUpdateMode/ProductsListUpdateModeContainer";
 import { BuyersDataContainer } from "./components/pages/purchaseOrders/buyersData/BuyersDataContainer";
+import { PurchaseOrdersItemsListContainer } from "./components/pages/purchaseOrders/purchaseOrdersItemsList/purchaseOrdersItemsListContainer";
+import { PurchaseOrdersListContainer } from "./components/pages/purchaseOrders/purchaseOrdersList/PurchaseOrdersListContainer";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import { GeneralContextProvider } from "./context/GeneralContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -32,6 +34,14 @@ function App() {
                 element={<CreateEditProductContainer />}
               />
               <Route path="/checkout" element={<BuyersDataContainer />} />
+              <Route
+                path="/purchaseOrders"
+                element={<PurchaseOrdersListContainer />}
+              />
+              <Route
+                path="/purchaseOrders/details/:purchaseOrderId"
+                element={<PurchaseOrdersItemsListContainer />}
+              />
               <Route path="*" element={<div>404</div>} />
             </Routes>
             <FooterContainer />

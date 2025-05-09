@@ -40,3 +40,13 @@ export const sanitizeFileName = (name) => {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^\w.-]/g, "_");
 };
+
+export const dateFormat = (date) => {
+  const formattedDate = new Date(date).toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  return formattedDate;
+};

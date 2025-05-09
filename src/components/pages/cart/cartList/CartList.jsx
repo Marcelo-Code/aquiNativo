@@ -5,9 +5,10 @@ import {
   hoverButtonColor,
 } from "../../../../utils/helpers";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
 import { Icons } from "../../../../assets/Icons";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
+import { ButtonGroupContainer } from "../../../common/buttonGroup/ButtonGroupContainer";
 
 export const CartList = (cartListProps) => {
   const {
@@ -17,6 +18,7 @@ export const CartList = (cartListProps) => {
     totalPrice,
     removeProductFromCart,
     handleContinue,
+    handleGoBack,
   } = cartListProps;
   const addRemoveButtonStyle = {
     width: 28,
@@ -26,6 +28,11 @@ export const CartList = (cartListProps) => {
     "&:hover": {
       backgroundColor: hoverButtonColor,
     },
+  };
+
+  const buttonGroupContainerProps = {
+    handleContinue,
+    handleGoBack,
   };
 
   if (cart.length === 0)
@@ -55,7 +62,7 @@ export const CartList = (cartListProps) => {
               borderCollapse: "collapse",
               border: `1px solid ${generalBackGroundColor}`,
               width: "100%",
-              maxWidth: "700px",
+              maxWidth: "710px",
             }}
           >
             <thead style={{ backgroundColor: generalBackGroundColor }}>
@@ -75,6 +82,7 @@ export const CartList = (cartListProps) => {
                       WrapText: "wrap",
                       textAlign: "justify",
                       verticalAlign: "middle",
+                      paddingLeft: "15px",
                     }}
                   >
                     {product.description}
@@ -159,61 +167,7 @@ export const CartList = (cartListProps) => {
             </tfoot>
           </table>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            margin: "10px",
-            width: "100%",
-          }}
-        >
-          <Box sx={{ width: "100%", maxWidth: "300px" }}>
-            <Button
-              onClick={() => handleContinue()}
-              fullWidth
-              type="submit"
-              size="small"
-              variant="outlined"
-              sx={{
-                backgroundColor: `${buttonColor}`,
-                color: "white",
-                "&:active": {
-                  backgroundColor: generalBackGroundColor,
-                  color: "white",
-                  border: `1px solid white`,
-                },
-                "&.Mui-disabled": {
-                  backgroundColor: " #d6d6d6",
-                  border: `1px solid  #d6d6d6`,
-                  color: "#a1a1a1",
-                },
-              }}
-            >
-              Continuar
-            </Button>
-          </Box>
-          <Box sx={{ width: "100%", maxWidth: "300px" }}>
-            <Button
-              // onClick={() => handleGoBack(modifiedFlag)}
-              size="small"
-              fullWidth
-              sx={{
-                color: "black",
-                backgroundColor: "white",
-                border: "1px solid black",
-                "&:active": {
-                  backgroundColor: generalBackGroundColor,
-                  color: "white",
-                  border: `1px solid white`,
-                },
-              }}
-            >
-              Volver
-            </Button>
-          </Box>
-        </Box>
+        <ButtonGroupContainer {...buttonGroupContainerProps} />
       </Box>
     </Box>
   );

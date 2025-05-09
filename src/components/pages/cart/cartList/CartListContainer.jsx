@@ -4,8 +4,13 @@ import { CartList } from "./CartList";
 import { useNavigate } from "react-router-dom";
 
 export const CartListContainer = () => {
-  const { cart, removeProduct, addProduct, removeProductFromCart } =
-    useContext(GeneralContext);
+  const {
+    cart,
+    removeProduct,
+    addProduct,
+    removeProductFromCart,
+    handleGoBack,
+  } = useContext(GeneralContext);
 
   const navigate = useNavigate();
 
@@ -26,6 +31,7 @@ export const CartListContainer = () => {
     totalPrice,
     removeProductFromCart,
     handleContinue,
+    handleGoBack,
   };
 
   return <CartList {...cartListProps} />;

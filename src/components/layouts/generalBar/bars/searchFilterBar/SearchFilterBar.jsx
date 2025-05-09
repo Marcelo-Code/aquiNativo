@@ -63,6 +63,10 @@ export const SearchFilterBar = ({
             "& .MuiInputBase-root": {
               height: 35, // Ajustá a la altura deseada
             },
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+              {
+                borderColor: generalBackGroundColor,
+              },
           }}
           InputProps={{
             startAdornment: (

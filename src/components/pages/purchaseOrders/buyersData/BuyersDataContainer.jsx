@@ -6,17 +6,27 @@ import {
 } from "../../../../utils/alerts";
 import { BuyersData } from "./BuyersData";
 import { GeneralContext } from "../../../../context/GeneralContext";
+import { LoadingContainer } from "../../loading/LoadingContainer";
+import { useNavigate } from "react-router-dom";
 
 export const BuyersDataContainer = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    lastName: "",
-    address: "",
-    phoneNumber: "",
-    email: "",
+    buyer_name: "",
+    buyer_last_name: "",
+    buyer_address: "",
+    buyer_phone_number: "",
+    buyer_email: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [createdPurchaseOrder, setCreatedPurchaseOrder] = useState({});
+  const navigate = useNavigate();
+
   const { cart, clearCart, handleGoBack } = useContext(GeneralContext);
+
+  const handleNavigate = () => {
+    navigate("/");
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,26 +34,39 @@ export const BuyersDataContainer = () => {
     setFormData(updatedFormData);
   };
 
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(cart);
-    createPurchaseOrderRPC(cart)
+    setIsLoading(true);
+
+    createPurchaseOrderRPC(cart, formData, totalPrice)
       .then((response) => {
         console.log(response);
         successToastifyAlert(response.message);
         clearCart();
+        setCreatedPurchaseOrder(response.data);
       })
       .catch((error) => {
         errorToastifyAlert(error.message || "Ocurrió un error inesperado");
         console.error(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
+
+  if (isLoading) return <LoadingContainer />;
 
   const buyersDataProps = {
     handleSubmit,
     handleGoBack,
     formData,
     handleChange,
+    createdPurchaseOrder,
+    totalPrice,
+    handleNavigate,
   };
 
   return <BuyersData {...buyersDataProps} />;

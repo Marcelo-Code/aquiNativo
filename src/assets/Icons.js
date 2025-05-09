@@ -50,6 +50,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 export const Icons = {
   PersonAddIcon,
@@ -104,4 +105,5 @@ export const Icons = {
   InstagramIcon,
   RemoveIcon,
   AddShoppingCartIcon,
+  AlternateEmailIcon,
 };

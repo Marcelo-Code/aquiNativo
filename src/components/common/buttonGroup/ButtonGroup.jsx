@@ -1,10 +1,8 @@
 import { Box, Button } from "@mui/material";
-import { Icons } from "../../../assets/Icons";
 import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
-export const FormButtonGroup = (formButtonGroupProps) => {
-  const { modifiedFlag, isLoadingButton, handleGoBack } = formButtonGroupProps;
-
+export const ButtonGroup = (buttonGroupProps) => {
+  const { handleContinue, handleGoBack } = buttonGroupProps;
   return (
     <Box
       sx={{
@@ -18,10 +16,9 @@ export const FormButtonGroup = (formButtonGroupProps) => {
     >
       <Box sx={{ width: "100%", maxWidth: "350px" }}>
         <Button
-          type="submit"
-          loading={isLoadingButton}
-          startIcon={<Icons.SaveIcon />}
+          onClick={() => handleContinue()}
           fullWidth
+          type="submit"
           size="small"
           variant="outlined"
           sx={{
@@ -39,12 +36,12 @@ export const FormButtonGroup = (formButtonGroupProps) => {
             },
           }}
         >
-          Guardar
+          Continuar
         </Button>
       </Box>
       <Box sx={{ width: "100%", maxWidth: "350px" }}>
         <Button
-          onClick={() => handleGoBack(modifiedFlag)}
+          onClick={() => handleGoBack()}
           size="small"
           fullWidth
           sx={{

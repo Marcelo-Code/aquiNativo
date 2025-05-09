@@ -23,8 +23,8 @@ export const adminOptions = [
   },
   {
     icon: <Icons.ReceiptIcon />,
-    option: "Mis compras",
-    link: "",
+    option: "Ordenes de compra",
+    link: "/purchaseOrders",
   },
   {
     icon: <Icons.LogoutIcon />,
