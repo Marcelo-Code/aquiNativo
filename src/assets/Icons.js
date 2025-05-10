@@ -51,6 +51,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import SortIcon from "@mui/icons-material/Sort";
 
 export const Icons = {
   PersonAddIcon,
@@ -106,4 +108,6 @@ export const Icons = {
   RemoveIcon,
   AddShoppingCartIcon,
   AlternateEmailIcon,
+  FilterListIcon,
+  SortIcon,
 };

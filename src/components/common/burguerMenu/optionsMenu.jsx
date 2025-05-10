@@ -14,7 +14,7 @@ export const adminOptions = [
   {
     icon: <Icons.GroupsIcon />,
     option: "Nosotros",
-    link: "",
+    link: "/aboutUs",
   },
   {
     icon: <Icons.ContactsIcon />,

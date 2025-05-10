@@ -10,18 +10,10 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Chip,
   Select,
   MenuItem,
-  Badge,
 } from "@mui/material";
-import {
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  Sort as SortIcon,
-  Edit as EditIcon,
-  Height,
-} from "@mui/icons-material";
+
 import { useState } from "react";
 import { Icons } from "../../../../../assets/Icons";
 import "../../generalBar.css";
@@ -71,7 +63,7 @@ export const SearchFilterBar = ({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon fontSize="small" />
+                <Icons.SearchIcon fontSize="small" />
               </InputAdornment>
             ),
           }}
@@ -79,14 +71,14 @@ export const SearchFilterBar = ({
 
         <Tooltip title="Filtros" placement="top-end" arrow>
           <IconButton onClick={() => setDrawerOpen(true)} size="small">
-            <FilterIcon />
+            <Icons.FilterListIcon />
           </IconButton>
         </Tooltip>
 
         {enableEditionBar && (
           <Tooltip title="Barra edición" placement="top-end" arrow>
             <IconButton onClick={() => setActiveBar("editionBar")} size="small">
-              <EditIcon />
+              <Icons.EditIcon />
             </IconButton>
           </Tooltip>
         )}
@@ -117,75 +109,81 @@ export const SearchFilterBar = ({
             </IconButton>
           </Tooltip>
         </Box>
-        <Box sx={{ width: 300, p: 1 }}>
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{
-              textAlign: "center",
-              color: "black",
-              borderBottom: "1px solid white",
-              paddingBottom: "10px",
-            }}
-          >
-            Filtros
-          </Typography>
 
-          <FormControl fullWidth sx={{ mb: 3 }}>
-            <Typography sx={{ color: "black", mb: 1, textAlign: "center" }}>
-              Marca
-            </Typography>
-            <Select
-              value={filters.brand}
-              onChange={(e) =>
-                handleFilterChange("brands.name", e.target.value)
-              }
-              sx={{
-                color: "black",
-                backgroundColor: "white",
-                "& .MuiSelect-select": {
-                  padding: "6px 14px", // controlás el alto aquí
-                },
-              }}
-            >
-              {STATUS_OPTIONS_1.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth sx={{ mb: 3 }}>
+        <Box sx={{ width: 300, p: 1 }}>
+          {(STATUS_OPTIONS_1.length > 0 || STATUS_OPTIONS_2.length > 0) && (
             <Typography
               sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
                 color: "black",
-                mb: 1,
-                textAlign: "center",
+                margin: "10px 0",
               }}
             >
-              Categoría
+              <Icons.FilterListIcon fontSize="small" /> Filtrar por
             </Typography>
-            <Select
-              value={filters.category}
-              onChange={(e) =>
-                handleFilterChange("categories.name", e.target.value)
-              }
-              sx={{
-                color: "black",
-                backgroundColor: "white",
-                "& .MuiSelect-select": {
-                  padding: "6px 14px", // controlás el alto aquí
-                },
-              }}
-            >
-              {STATUS_OPTIONS_2.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          )}
 
+          {STATUS_OPTIONS_1.length > 0 && (
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <Typography sx={{ color: "black", mb: 1, textAlign: "center" }}>
+                Marca
+              </Typography>
+              <Select
+                value={filters.brand}
+                onChange={(e) =>
+                  handleFilterChange("brands.name", e.target.value)
+                }
+                sx={{
+                  color: "black",
+                  backgroundColor: "white",
+                  "& .MuiSelect-select": {
+                    padding: "6px 14px", // controlás el alto aquí
+                  },
+                }}
+              >
+                {STATUS_OPTIONS_1.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+          {STATUS_OPTIONS_2.length > 0 && (
+            <FormControl fullWidth sx={{ mb: 3 }}>
+              <Typography
+                sx={{
+                  color: "black",
+                  mb: 1,
+                  textAlign: "center",
+                }}
+              >
+                Categoría
+              </Typography>
+              <Select
+                value={filters.category}
+                onChange={(e) =>
+                  handleFilterChange("categories.name", e.target.value)
+                }
+                sx={{
+                  color: "black",
+                  backgroundColor: "white",
+                  "& .MuiSelect-select": {
+                    padding: "6px 14px", // controlás el alto aquí
+                  },
+                }}
+              >
+                {STATUS_OPTIONS_2.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
           <FormControl fullWidth>
             <Typography
               sx={{
@@ -197,7 +195,7 @@ export const SearchFilterBar = ({
                 margin: "10px 0",
               }}
             >
-              <SortIcon fontSize="small" /> Ordenar por
+              <Icons.SortIcon fontSize="small" /> Ordenar por
             </Typography>
 
             <RadioGroup value={sortOption} onChange={handleSortChange}>

@@ -138,8 +138,8 @@ export const ProductsListContainer = () => {
 
   const productsListProps = {
     ...generalBarContainerProps,
-    products: filteredProducts,
-    setProducts: setFilteredProducts,
+    filteredProducts,
+    setFilteredProducts,
     addProduct,
     removeProduct,
     addProductToCart,

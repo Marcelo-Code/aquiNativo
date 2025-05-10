@@ -1,6 +1,7 @@
 import { ScrollToTop } from "./components/common/scrollToTop/ScrollToTop";
 import { FooterContainer } from "./components/layouts/footer/FooterContainer";
 import { NavBarContainer } from "./components/layouts/navBar/NavBarContainer";
+import { AboutUsContainer } from "./components/pages/aboutUs/AboutUsContainer";
 import { CartListContainer } from "./components/pages/cart/cartList/CartListContainer";
 import { CreateEditProductContainer } from "./components/pages/products/createEditProduct/CreateEditProductContainer";
 import { ProductsListContainer } from "./components/pages/products/productsList/ProductsListContainer";
@@ -44,6 +45,7 @@ function App() {
                 path="/purchaseOrders/details/:purchaseOrderId"
                 element={<PurchaseOrdersItemsListContainer />}
               />
+              <Route path="/aboutUs" element={<AboutUsContainer />} />"
               <Route path="*" element={<div>404</div>} />
             </Routes>
             <FooterContainer />

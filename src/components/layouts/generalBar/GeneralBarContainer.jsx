@@ -4,13 +4,11 @@ import { ChipsBarContainer } from "./bars/chipsBar/ChipsBarContainer";
 
 export const GeneralBarContainer = (generalBarContainerProps) => {
   const {
-    setEditMode,
     enableSearchFilterBar = true,
     disableEditionBarButton = false,
     enableEditionBar = true,
     tooltipMessage,
     selectedRecords,
-    to,
     patient,
     professionals,
     FIELDS_TO_SEARCH,
@@ -143,7 +141,6 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     patient,
     professionals,
     setFilteredRecords,
-    records,
     searchQuery,
     handleSearchChange,
     filters,

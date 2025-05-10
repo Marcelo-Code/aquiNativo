@@ -37,6 +37,8 @@ export const ChipsBar = (chipsBarProps) => {
                 mb: 1,
                 pl: 1,
                 pr: 1,
+                backgroundColor: generalBackGroundColor,
+                color: "black",
               }}
             />
           )
@@ -50,7 +52,7 @@ export const ChipsBar = (chipsBarProps) => {
             sortOption
           }
           onDelete={() => handleSortChange({ target: { value: "none" } })}
-          color="secondary"
+          color="primary"
           size="small"
           sx={{
             mt: 1,

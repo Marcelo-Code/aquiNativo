@@ -1,4 +1,3 @@
-import React from "react";
 import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
 import {
   Box,
@@ -36,8 +35,8 @@ const addRemoveButtonStyle = {
 
 export const ProductsList = (productsListProps) => {
   const {
-    products,
-    setProducts,
+    filteredProducts,
+    setFilteredProducts,
     addProduct,
     removeProduct,
     addProductToCart,
@@ -47,8 +46,8 @@ export const ProductsList = (productsListProps) => {
   return (
     <Box className="generalContainer">
       <GeneralBarContainer {...generalBarContainerProps} />
-      <Box className="generalSubTitle">{`${products.length} productos disponibles`}</Box>
-      <PaginationContainer items={products} itemsPerPage={10}>
+      <Box className="generalSubTitle">{`${filteredProducts.length} productos disponibles`}</Box>
+      <PaginationContainer items={filteredProducts} itemsPerPage={10}>
         {(recordsToShow) => (
           <Box className="generalList">
             {recordsToShow.map((product) => (
@@ -107,7 +106,9 @@ export const ProductsList = (productsListProps) => {
                       >
                         <IconButton
                           aria-label="remove product"
-                          onClick={() => removeProduct(product, setProducts)}
+                          onClick={() =>
+                            removeProduct(product, setFilteredProducts)
+                          }
                           sx={addRemoveButtonStyle}
                         >
                           <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
@@ -115,7 +116,9 @@ export const ProductsList = (productsListProps) => {
                         <Box>{product.counter}</Box>
                         <IconButton
                           aria-label="add product"
-                          onClick={() => addProduct(product, setProducts)}
+                          onClick={() =>
+                            addProduct(product, setFilteredProducts)
+                          }
                           sx={addRemoveButtonStyle}
                         >
                           <Icons.AddIcon sx={{ fontSize: "20px" }} />
@@ -123,7 +126,11 @@ export const ProductsList = (productsListProps) => {
                       </Box>
                       <Button
                         onClick={() =>
-                          addProductToCart(product, products, setProducts)
+                          addProductToCart(
+                            product,
+                            filteredProducts,
+                            setFilteredProducts
+                          )
                         }
                         aria-label="add to cart"
                         startIcon={<Icons.AddShoppingCartIcon />}
