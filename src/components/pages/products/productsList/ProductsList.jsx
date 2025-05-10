@@ -62,7 +62,7 @@ export const ProductsList = (productsListProps) => {
                       alt="producto"
                       sx={{
                         width: "100%",
-                        height: "240px",
+                        height: "250px",
                         objectFit: "contain",
                         margin: "0 auto",
                         display: "block",
@@ -71,7 +71,7 @@ export const ProductsList = (productsListProps) => {
                   ) : (
                     <Box
                       sx={{
-                        height: "240px",
+                        height: "250px",
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",

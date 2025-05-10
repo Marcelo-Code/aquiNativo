@@ -266,7 +266,7 @@ export const CreateEditProduct = (createEditProductProps) => {
             <Box
               sx={{
                 width: "300px",
-                height: "250px",
+                height: "300px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",

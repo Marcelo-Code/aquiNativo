@@ -113,27 +113,65 @@ export const CreateEditProductContainer = () => {
 
       try {
         const options = {
-          maxSizeMB: 0.5, // tamaño máximo de la imagen (en MB)
-          maxWidthOrHeight: 1024, // opcional: reescala si es más grande
+          maxSizeMB: 0.5,
+          maxWidthOrHeight: 1024,
           useWebWorker: true,
         };
 
         setIsLoadingImage(true);
 
-        // Comprime y sube la imagen
+        // Comprime la imagen
         const compressedFile = await imageCompression(file, options);
-        console.log("Imagen comprimida:", compressedFile);
 
-        await uploadImage(compressedFile, documentName, formData);
+        // Convertir a .webp
+        const webpBlob = await convertToWebP(compressedFile);
+        const webpFile = new File([webpBlob], "imagen.webp", {
+          type: "image/webp",
+        });
+
+        console.log("Imagen comprimida y convertida a WebP:", webpFile);
+
+        await uploadImage(webpFile, documentName, formData);
         const { data } = await getProduct(formData.id);
         setFormData(data[0]);
         console.log("Producto actualizado:", data);
       } catch (error) {
-        console.error("Error al comprimir/subir la imagen:", error);
+        console.error("Error al procesar la imagen:", error);
       } finally {
         setIsLoadingImage(false);
       }
     }
+  };
+
+  // Convierte una imagen a WebP usando canvas
+  const convertToWebP = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) resolve(blob);
+            else reject(new Error("Error al convertir a WebP"));
+          },
+          "image/webp",
+          0.8
+        ); // calidad 0.8
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleSubmit = async (e) => {
