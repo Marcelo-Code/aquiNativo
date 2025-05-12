@@ -16,6 +16,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProtectedUserRoute } from "./routes/ProtectedUserRoute";
 import { ContactUs } from "./components/pages/contactUs/ContactUs";
 import { ContactUsContainer } from "./components/pages/contactUs/ContactUsContainer";
+import { RecoverPasswordContainer } from "./components/pages/recoverPassword/RecoverPasswordContainer";
+import { UpdatePasswordContainer } from "./components/pages/updatePassword/UpdatePasswordContainer";
 
 function App() {
   return (
@@ -35,6 +37,16 @@ function App() {
             <Route path="/contactUs" element={<ContactUsContainer />} />"
             {/* Login */}
             <Route path="/login" element={<LoginContainer />} />
+            {/* Recuperar contraseña */}
+            <Route
+              path="/recoverPassword"
+              element={<RecoverPasswordContainer />}
+            />
+            {/* Actualizar contraseña */}
+            <Route
+              path="/updatePassword"
+              element={<UpdatePasswordContainer />}
+            />
             {/* 404 */}
             <Route path="*" element={<div>404</div>} />
             {/* Rutas protegidas para el admin */}

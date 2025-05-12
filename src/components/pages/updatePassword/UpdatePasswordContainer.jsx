@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { authToken, supabaseClient } from "../../services/config/config";
 import { useNavigate } from "react-router-dom";
 import { UpdatePassword } from "./UpdatePassword";
 import { LoadingContainer } from "../loading/LoadingContainer";
+import { authToken, supabaseClient } from "../../../services/config/config";
 
 export const UpdatePasswordContainer = () => {
   const [newPassword, setNewPassword] = useState("");

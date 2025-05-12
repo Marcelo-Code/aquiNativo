@@ -74,6 +74,8 @@ export const updateProduct = async (updatedProduct) => {
   try {
     const { id, ...fieldsToUpdate } = updatedProduct;
 
+    console.log(fieldsToUpdate, id);
+
     const { data, error } = await supabaseClient
       .from("products")
       .update(fieldsToUpdate)
@@ -83,13 +85,17 @@ export const updateProduct = async (updatedProduct) => {
 
     successToastifyAlert(`Producto actualizado con éxito`);
 
+    console.log(id);
+
+    console.log(data);
+
     return {
       status: 200,
       message: "Registro actualizado con éxito",
       data,
     };
   } catch (error) {
-    errorToastifyAlert("Error al actualizar paciente");
+    errorToastifyAlert("Error al actualizar registro");
 
     return {
       status: 400,

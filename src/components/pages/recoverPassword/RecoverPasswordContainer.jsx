@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { supabaseClient } from "../../services/config/config";
 import { useNavigate } from "react-router-dom";
 import { RecoverPassword } from "./RecoverPassword";
+import { supabaseClient } from "../../../services/config/config";
 
 export const RecoverPasswordContainer = () => {
   const [email, setEmail] = useState("");

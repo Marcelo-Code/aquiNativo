@@ -57,6 +57,7 @@ export const CreateEditProductContainer = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     const updatedFormData = { ...formData, [name]: value };
 
     console.log(updatedFormData);
@@ -196,6 +197,7 @@ export const CreateEditProductContainer = () => {
 
       const action = productId ? "actualizado" : "creado";
       successToastifyAlert(`Producto ${action} con éxito`);
+      setModifiedFlag(false);
 
       console.log(response);
 

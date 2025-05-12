@@ -29,8 +29,18 @@ export const Login = ({
           sx={{ mt: 1, backgroundColor: generalBackGroundColor }}
           className="loginForm"
         >
-          <span className="loginTitle">Nativo</span>
-          <span className="loginTitle">Login</span>
+          <Box
+            sx={{ fontFamily: "roboto", color: "black" }}
+            className="loginTitle"
+          >
+            Nativo
+          </Box>
+          <Box
+            sx={{ fontFamily: "roboto", color: "black" }}
+            className="loginTitle"
+          >
+            Login
+          </Box>
           <TextField
             margin="normal"
             required

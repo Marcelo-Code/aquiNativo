@@ -173,16 +173,9 @@ export const ProductsList = (productsListProps) => {
                       component="div"
                       sx={{ textAlign: "left" }}
                     >
-                      <b>Categoria: </b>
                       {product.categories.name}
                     </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left" }}
-                    >
-                      <b>Código: </b> {product.id}
-                    </Typography>
+
                     <Typography variant="subtitle2" component="div">
                       {product.description}
                     </Typography>

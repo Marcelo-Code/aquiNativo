@@ -1,6 +1,6 @@
 import { Container, TextField, Button, Box, Typography } from "@mui/material";
 import "./updatePassword.css";
-import { Icons } from "../../assets/Icons";
+import { Icons } from "../../../assets/Icons";
 export const UpdatePassword = (updatePasswordProps) => {
   const {
     newPassword,

@@ -3,7 +3,11 @@ import { Icons } from "../../../assets/Icons";
 import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
 export const FormButtonGroup = (formButtonGroupProps) => {
-  const { modifiedFlag, isLoadingButton, handleGoBack } = formButtonGroupProps;
+  const {
+    modifiedFlag = true,
+    isLoadingButton,
+    handleGoBack,
+  } = formButtonGroupProps;
 
   return (
     <Box
@@ -38,6 +42,7 @@ export const FormButtonGroup = (formButtonGroupProps) => {
               color: "#a1a1a1",
             },
           }}
+          disabled={!modifiedFlag}
         >
           Guardar
         </Button>
