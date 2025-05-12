@@ -19,17 +19,12 @@ export const adminOptions = [
   {
     icon: <Icons.ContactsIcon />,
     option: "Contacto",
-    link: "",
+    link: "/contactUs",
   },
   {
     icon: <Icons.ReceiptIcon />,
     option: "Ordenes de compra",
     link: "/purchaseOrders",
-  },
-  {
-    icon: <Icons.LogoutIcon />,
-    option: "Logout",
-    link: "",
   },
 ];
 
@@ -42,21 +37,11 @@ export const userOptions = [
   {
     icon: <Icons.GroupsIcon />,
     option: "Nosotros",
-    link: "",
+    link: "/aboutUs",
   },
   {
     icon: <Icons.ContactsIcon />,
     option: "Contacto",
-    link: "",
-  },
-  {
-    icon: <Icons.ReceiptIcon />,
-    option: "Mis compras",
-    link: "",
-  },
-  {
-    icon: <Icons.LogoutIcon />,
-    option: "Logout",
-    link: "",
+    link: "/contactUs",
   },
 ];

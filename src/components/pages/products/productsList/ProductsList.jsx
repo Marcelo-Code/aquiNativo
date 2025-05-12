@@ -51,7 +51,11 @@ export const ProductsList = (productsListProps) => {
         {(recordsToShow) => (
           <Box className="generalList">
             {recordsToShow.map((product) => (
-              <Card className="card" key={product.id}>
+              <Card
+                sx={{ boxShadow: "0px 0px 10px black" }}
+                className="card"
+                key={product.id}
+              >
                 <Box>
                   {product.image ? (
                     <CardMedia

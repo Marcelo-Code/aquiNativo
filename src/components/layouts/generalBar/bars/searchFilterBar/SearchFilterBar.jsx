@@ -101,6 +101,7 @@ export const SearchFilterBar = ({
             display: "flex",
             justifyContent: "flex-start",
             px: 2,
+            pt: 2,
           }}
         >
           <Tooltip title="Cerrar" placement="top-start" arrow>
@@ -142,6 +143,9 @@ export const SearchFilterBar = ({
                   "& .MuiSelect-select": {
                     padding: "6px 14px", // controlás el alto aquí
                   },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: generalBackGroundColor, // borde cuando está enfocado
+                  },
                 }}
               >
                 {STATUS_OPTIONS_1.map((option) => (
@@ -173,6 +177,9 @@ export const SearchFilterBar = ({
                   backgroundColor: "white",
                   "& .MuiSelect-select": {
                     padding: "6px 14px", // controlás el alto aquí
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: generalBackGroundColor, // borde cuando está enfocado
                   },
                 }}
               >

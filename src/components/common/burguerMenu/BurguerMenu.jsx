@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -12,7 +11,8 @@ import { IconButton, Link, Tooltip } from "@mui/material";
 import { generalBackGroundColor } from "../../../utils/helpers";
 
 export const BurguerMenu = (burguerMenuProps) => {
-  const { toggleDrawer, options, open } = burguerMenuProps;
+  const { toggleDrawer, options, open, handleLogout, isLoggedIn } =
+    burguerMenuProps;
   return (
     <Box>
       <Tooltip title="Menú" placement="top-end" arrow>
@@ -35,6 +35,7 @@ export const BurguerMenu = (burguerMenuProps) => {
               display: "flex",
               justifyContent: "flex-end",
               px: 2,
+              pt: 2,
             }}
           >
             <Tooltip title="Cerrar" placement="top-end" arrow>
@@ -47,9 +48,9 @@ export const BurguerMenu = (burguerMenuProps) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center", // centra verticalmente
-              alignItems: "center", // opcional: centra horizontalmente también
-              height: "93%",
+              justifyContent: "space-between", // centra verticalmente
+              alignItems: "start", // opcional: centra horizontalmente también
+              height: "91%",
               overflow: "hidden",
             }}
           >
@@ -86,6 +87,32 @@ export const BurguerMenu = (burguerMenuProps) => {
                 </ListItem>
               ))}
             </List>
+
+            {/* Logout */}
+            {isLoggedIn && (
+              <ListItem sx={{ width: "250px", padding: 0 }}>
+                <ListItemButton
+                  onClick={handleLogout}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    color: "white",
+                  }}
+                >
+                  <ListItemIcon sx={{ color: "white", minWidth: 40 }}>
+                    <Icons.LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Logout"
+                    primaryTypographyProps={{
+                      color: "black",
+                      fontSize: "1.2rem",
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            )}
           </Box>
         </Box>
       </Drawer>

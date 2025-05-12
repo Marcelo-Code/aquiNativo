@@ -1,29 +1,51 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BurguerMenu } from "./BurguerMenu";
 import { adminOptions, userOptions } from "./optionsMenu";
+import { GeneralContext } from "../../../context/GeneralContext";
+import { logout } from "../../../services/api/log";
+import { useConfirm } from "../../../context/ConfirmContext";
+import { errorToastifyAlert } from "../../../utils/alerts";
 
 export const BurguerMenuContainer = () => {
+  const { setIsLoggedIn, isLoggedIn } = useContext(GeneralContext);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
+  const confirm = useConfirm();
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
-  // const { userProfile = "profesional", userProfessionalId } =
-  //   useContext(GeneralContext);
+  const handleLogout = async () => {
+    const isConfirmed = await confirm("¿Seguro que quieres cerrar sesión?");
 
-  const userProfile = "admin";
-  const userProfessionalId = 1;
+    if (!isConfirmed) return;
+
+    logout()
+      .then((response) => {
+        if (response.status === 200) {
+          setIsLoggedIn(false);
+          window.location.href = "/";
+        }
+      })
+      .catch((error) => {
+        errorToastifyAlert("Error al cerrar sesión: ", error);
+      });
+  };
 
   useEffect(() => {
-    if (userProfile === "admin") setOptions(adminOptions);
-    if (userProfile === "user") setOptions(userOptions);
-  }, [userProfile, userProfessionalId]);
+    if (isLoggedIn) {
+      setOptions(adminOptions);
+    } else {
+      setOptions(userOptions);
+    }
+  }, [isLoggedIn]);
 
   const burguerMenuProps = {
     toggleDrawer,
     options,
     open,
+    handleLogout,
+    isLoggedIn,
   };
 
   return <BurguerMenu {...burguerMenuProps} />;

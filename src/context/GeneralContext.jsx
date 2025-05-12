@@ -6,9 +6,17 @@ import { useNavigate } from "react-router-dom";
 export const GeneralContext = createContext();
 
 export const GeneralContextProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true" ? true : false;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedIn);
+  }, [isLoggedIn]);
+
   const navigate = useNavigate();
 
-  //Función que navega hacia atrás
+  // Función que navega hacia atrás
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -171,6 +179,8 @@ export const GeneralContextProvider = ({ children }) => {
     clearCart,
     buyerData,
     setBuyerData,
+    isLoggedIn,
+    setIsLoggedIn,
   };
 
   return (

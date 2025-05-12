@@ -53,6 +53,9 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SortIcon from "@mui/icons-material/Sort";
+import FrontHandIcon from "@mui/icons-material/FrontHand";
+import CheckIcon from "@mui/icons-material/Check";
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 
 export const Icons = {
   PersonAddIcon,
@@ -110,4 +113,7 @@ export const Icons = {
   AlternateEmailIcon,
   FilterListIcon,
   SortIcon,
+  FrontHandIcon,
+  CheckIcon,
+  QueryBuilderIcon,
 };

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Badge, Box, IconButton, Tooltip } from "@mui/material";
 import { Icons } from "../../../assets/Icons";
 import "./navbar.css";
 import { BurguerMenuContainer } from "../../common/burguerMenu/BurguerMenuContainer";
 import { generalBackGroundColor } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
+import { GeneralContext } from "../../../context/GeneralContext";
 
 export const NavBar = (navBarProps) => {
-  const { totalProductsInCart } = navBarProps;
+  const { totalProductsInCart, isLoggedIn } = navBarProps;
   const navBarIcon = {
     fontSize: "30px",
     color: "white",
@@ -23,7 +24,7 @@ export const NavBar = (navBarProps) => {
       </IconButton> */}
       <BurguerMenuContainer />
       <Box className="logo">
-        <img src={"/images/logo2.png"} width={110} />
+        <img src={"/images/logo2.png"} width={80} />
         {/* <img src={"/images/logo.png"} width={110} /> */}
         {/* <Box>AQUÍ NATIVO</Box> */}
       </Box>
@@ -47,9 +48,17 @@ export const NavBar = (navBarProps) => {
         </Badge>
       </Tooltip>
 
-      <IconButton>
-        <Icons.PersonIcon sx={navBarIcon} />
-      </IconButton>
+      {isLoggedIn ? (
+        <Box className="logged">Admin</Box>
+      ) : (
+        <Tooltip title="Ingresar" placement="top-end" arrow>
+          <Link to="/login">
+            <IconButton>
+              <Icons.PersonIcon sx={navBarIcon} />
+            </IconButton>
+          </Link>
+        </Tooltip>
+      )}
     </Box>
   );
 };

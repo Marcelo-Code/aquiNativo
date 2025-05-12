@@ -3,6 +3,7 @@ import { FooterContainer } from "./components/layouts/footer/FooterContainer";
 import { NavBarContainer } from "./components/layouts/navBar/NavBarContainer";
 import { AboutUsContainer } from "./components/pages/aboutUs/AboutUsContainer";
 import { CartListContainer } from "./components/pages/cart/cartList/CartListContainer";
+import { LoginContainer } from "./components/pages/login/LoginContainer";
 import { CreateEditProductContainer } from "./components/pages/products/createEditProduct/CreateEditProductContainer";
 import { ProductsListContainer } from "./components/pages/products/productsList/ProductsListContainer";
 import { ProductsListUpdateModeContainer } from "./components/pages/products/productsListUpdateMode/ProductsListUpdateModeContainer";
@@ -12,46 +13,81 @@ import { PurchaseOrdersListContainer } from "./components/pages/purchaseOrders/p
 import { ConfirmProvider } from "./context/ConfirmContext";
 import { GeneralContextProvider } from "./context/GeneralContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ProtectedUserRoute } from "./routes/ProtectedUserRoute";
+import { ContactUs } from "./components/pages/contactUs/ContactUs";
+import { ContactUsContainer } from "./components/pages/contactUs/ContactUsContainer";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <GeneralContextProvider>
-          <ConfirmProvider>
-            <NavBarContainer />
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<ProductsListContainer />} />
-              <Route
-                path="/updateProducts"
-                element={<ProductsListUpdateModeContainer />}
-              />
-              <Route path="/cart" element={<CartListContainer />} />
-              <Route
-                path="/updateProducts/createProduct"
-                element={<CreateEditProductContainer />}
-              />
-              <Route
-                path="/updateProducts/updateProduct/:productId"
-                element={<CreateEditProductContainer />}
-              />
-              <Route path="/checkout" element={<BuyersDataContainer />} />
-              <Route
-                path="/purchaseOrders"
-                element={<PurchaseOrdersListContainer />}
-              />
-              <Route
-                path="/purchaseOrders/details/:purchaseOrderId"
-                element={<PurchaseOrdersItemsListContainer />}
-              />
-              <Route path="/aboutUs" element={<AboutUsContainer />} />"
-              <Route path="*" element={<div>404</div>} />
-            </Routes>
-            <FooterContainer />
-          </ConfirmProvider>
-        </GeneralContextProvider>
-      </BrowserRouter>
+      <GeneralContextProvider>
+        <ConfirmProvider>
+          <NavBarContainer />
+          <ScrollToTop />
+          <Routes>
+            {/* Lista de productos */}
+            <Route path="/" element={<ProductsListContainer />} />
+            {/* Carrito de compras */}
+            <Route path="/cart" element={<CartListContainer />} />
+            {/* Nosotros */}
+            <Route path="/aboutUs" element={<AboutUsContainer />} />"
+            {/* Login */}
+            <Route path="/contactUs" element={<ContactUsContainer />} />"
+            {/* Login */}
+            <Route path="/login" element={<LoginContainer />} />
+            {/* 404 */}
+            <Route path="*" element={<div>404</div>} />
+            {/* Rutas protegidas para el admin */}
+            {/* Lista editar productos */}
+            <Route
+              path="/updateProducts"
+              element={
+                <ProtectedUserRoute>
+                  <ProductsListUpdateModeContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear producto */}
+            <Route
+              path="/updateProducts/createProduct"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditProductContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Editar producto */}
+            <Route
+              path="/updateProducts/updateProduct/:productId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditProductContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Lista de órdenes de compra */}
+            <Route path="/checkout" element={<BuyersDataContainer />} />
+            <Route
+              path="/purchaseOrders"
+              element={
+                <ProtectedUserRoute>
+                  <PurchaseOrdersListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Detalle de orden de compra */}
+            <Route
+              path="/purchaseOrders/details/:purchaseOrderId"
+              element={
+                <ProtectedUserRoute>
+                  <PurchaseOrdersItemsListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+          </Routes>
+          <FooterContainer />
+        </ConfirmProvider>
+      </GeneralContextProvider>
     </>
   );
 }

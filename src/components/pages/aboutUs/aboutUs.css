@@ -14,7 +14,7 @@
   min-width: 300px;
   text-align: justify;
   margin: auto;
-  line-height: 1.5em;
+  line-height: 1.9em;
 }
 
 .image1,
@@ -22,6 +22,8 @@
 .image3 {
   width: 300px;
   margin: auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
 }
 
 .text1 {

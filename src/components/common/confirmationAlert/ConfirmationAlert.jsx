@@ -30,18 +30,34 @@ export const ConfirmationAlert = ({ open, onCancel, onConfirm, message }) => (
     </DialogContent>
     <DialogActions sx={{ justifyContent: "center" }}>
       <Button
-        startIcon={<Icons.DeleteIcon />}
-        variant="contained"
+        startIcon={<Icons.CheckIcon />}
+        variant="outlined"
         onClick={onConfirm}
-        sx={{ backgroundColor: "red" }}
+        sx={{
+          backgroundColor: "white",
+          color: "black",
+          border: "1px solid black",
+          "&:active": {
+            backgroundColor: generalBackGroundColor,
+            color: "white",
+            border: `1px solid ${generalBackGroundColor}`,
+          },
+        }}
       >
         confirmar
       </Button>
       <Button
         startIcon={<Icons.CloseIcon />}
-        variant="contained"
+        variant="uotlined"
         onClick={onCancel}
-        sx={{ backgroundColor: "black" }}
+        sx={{
+          backgroundColor: "black",
+          color: "white",
+          "&:active": {
+            backgroundColor: generalBackGroundColor,
+            color: "white",
+          },
+        }}
       >
         Cancelar
       </Button>
