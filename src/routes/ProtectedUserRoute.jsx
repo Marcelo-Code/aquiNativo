@@ -1,26 +1,18 @@
-import { useEffect, useState } from "react";
-import { supabaseClient } from "../services/config/config";
+import { useContext, useEffect } from "react";
 import { LoadingContainer } from "../components/pages/loading/LoadingContainer";
 import { DeniedAccessContainer } from "../components/pages/deniedAccess/DeniedAccessContainer";
+import { GeneralContext } from "../context/GeneralContext";
+import { checkAuth } from "../services/api/log";
 
 export const ProtectedUserRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // null = aún cargando
+  const { isLoggedIn = null, setIsLoggedIn } = useContext(GeneralContext);
 
+  //Verificar si el usuario esta logueado
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data } = await supabaseClient.auth.getSession();
-
-      if (data?.session) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
+    checkAuth(setIsLoggedIn);
   }, []);
 
-  if (isAuthenticated === null) return <LoadingContainer />;
+  if (isLoggedIn === null) return <LoadingContainer />;
 
-  return isAuthenticated ? children : <DeniedAccessContainer />;
+  return isLoggedIn ? children : <DeniedAccessContainer />;
 };

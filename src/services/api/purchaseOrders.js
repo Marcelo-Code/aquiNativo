@@ -70,41 +70,28 @@ export const getPurchaseOrdersItems = async (orderId) => {
 };
 
 //Función sin RPC, no la utilizo (no previene las race conditions)
-export const createPurchaseOrder = async (cart) => {
-  //Verifica el stock disponible
-
-  const updatedCart = [];
+export const createPurchaseOrder = async (cart, buyer, totalPrice) => {
   try {
-    for (const item of cart) {
-      const { data: product, error: productError } = await supabaseClient
-        .from("products")
-        .select("stock")
-        .eq("id", item.id)
-        .single();
-
-      if (productError) throw productError;
-
-      if (product.stock < item.quantity) {
-        return {
-          status: 400,
-          message: `Sin stock para el producto ${item.description}`,
-        };
-      }
-
-      updatedCart.push({ ...item, currentStock: product.stock });
-    }
-
-    // Crear la orden de compra
     const date = new Date();
-    const { data: order, error: orderError } = await supabaseClient
+
+    // Crear orden de compra principal
+    const { data: order, error } = await supabaseClient
       .from("purchase_orders")
-      .insert({ date })
+      .insert({
+        date,
+        buyer_name: buyer.buyer_name,
+        buyer_last_name: buyer.buyer_last_name,
+        buyer_address: buyer.buyer_address,
+        buyer_phone_number: buyer.buyer_phone_number,
+        buyer_email: buyer.buyer_email,
+        total_price: totalPrice,
+      })
       .select()
       .single();
 
-    if (orderError) throw orderError;
+    if (error) throw error;
 
-    // Crea los ítems de la orden
+    // Insertar ítems de la orden
     const orderItems = cart.map((item) => ({
       purchase_order_id: order.id,
       product_id: item.id,
@@ -118,19 +105,15 @@ export const createPurchaseOrder = async (cart) => {
 
     if (itemsError) throw itemsError;
 
-    //Actualiza el inventario
-    for (const item of updatedCart) {
-      const { error: stockError } = await supabaseClient
-        .from("products")
-        .update({ stock: item.currentStock - item.quantity })
-        .eq("id", item.id);
-      if (stockError) throw stockError;
-    }
-
     return {
       status: 200,
       message: "Orden creada con éxito",
-      order_id: order.id,
+      data: {
+        order_id: order.id,
+        buyer,
+        totalPrice,
+        cart,
+      },
     };
   } catch (error) {
     return {
@@ -141,6 +124,7 @@ export const createPurchaseOrder = async (cart) => {
   }
 };
 
+// NO UTILIZADO: función RPC, previene las race conditions
 export const createPurchaseOrderRPC = async (cart, buyer, totalPrice) => {
   try {
     const { data, error } = await supabaseClient.rpc(

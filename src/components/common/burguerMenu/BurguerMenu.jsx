@@ -50,7 +50,7 @@ export const BurguerMenu = (burguerMenuProps) => {
               flexDirection: "column",
               justifyContent: "space-between", // centra verticalmente
               alignItems: "start", // opcional: centra horizontalmente también
-              height: "91%",
+              height: "90%",
               overflow: "hidden",
             }}
           >

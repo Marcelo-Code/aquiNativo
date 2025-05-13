@@ -39,7 +39,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
               <Card className="updateCard" key={product.id}>
                 <CardActions className="updateCardActions">
                   <Tooltip title="Eliminar producto" placement="top-end" arrow>
-                    <IconButton
+                    {/* <IconButton
                       onClick={() => {
                         handleDeleteProduct(product);
                       }}
@@ -47,7 +47,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       <Icons.DeleteIcon
                         sx={{ fontSize: "30px", color: deleteColor }}
                       />
-                    </IconButton>
+                    </IconButton> */}
                   </Tooltip>
                   <Tooltip title="Editar producto" placement="top-end" arrow>
                     <IconButton
@@ -91,6 +91,29 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       Producto sin imagen
                     </Box>
                   )}
+                  {/* Marca al agua, mensaje de inactividad */}
+                  {!product.active && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "250px",
+                        backgroundColor: "rgba(0,0,0,0.4)",
+                        display: "flex",
+                        justifyContent: "center",
+                        paddingTop: "60px",
+                        alignItems: "start",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        zIndex: 1,
+                      }}
+                    >
+                      PRODUCTO INACTIVO
+                    </Box>
+                  )}
                   <CardContent
                     sx={{
                       display: "flex",
@@ -122,13 +145,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
                     >
                       <b>Código: </b> {product.id}
                     </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left" }}
-                    >
-                      <b>Stock: </b> {product.stock}
-                    </Typography>
+
                     <Typography variant="subtitle2" component="div">
                       <b>Descripción: </b>
                       {product.description}

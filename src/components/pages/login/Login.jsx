@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, TextField, Button, Box, Typography } from "@mui/material";
 import "./login.css";
 import { Link } from "react-router-dom";
@@ -30,14 +29,12 @@ export const Login = ({
           className="loginForm"
         >
           <Box
-            sx={{ fontFamily: "roboto", color: "black" }}
-            className="loginTitle"
-          >
-            Nativo
-          </Box>
-          <Box
-            sx={{ fontFamily: "roboto", color: "black" }}
-            className="loginTitle"
+            sx={{
+              fontFamily: "roboto",
+              color: "black",
+              fontSize: "20px",
+              textAlign: "center",
+            }}
           >
             Login
           </Box>

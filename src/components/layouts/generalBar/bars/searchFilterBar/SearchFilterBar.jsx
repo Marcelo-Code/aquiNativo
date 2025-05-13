@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Icons } from "../../../../../assets/Icons";
 import "../../generalBar.css";
 import { generalBackGroundColor } from "../../../../../utils/helpers";
+import { FilterSelect } from "./filterSelect/FilterSelectContainer";
 
 export const SearchFilterBar = ({
   activeBar,
@@ -34,6 +35,23 @@ export const SearchFilterBar = ({
   enableEditionBar,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const FILTER_CONFIGS = [
+    {
+      label: "Marca",
+      name: "brands.name",
+      value: filters["brands.name"],
+      options: STATUS_OPTIONS_1,
+      placeholder: "Seleccionar marca",
+    },
+    {
+      label: "Categoría",
+      name: "categories.name",
+      value: filters["categories.name"],
+      options: STATUS_OPTIONS_2,
+      placeholder: "Seleccionar categoría",
+    },
+  ];
 
   return (
     <>
@@ -127,70 +145,17 @@ export const SearchFilterBar = ({
             </Typography>
           )}
 
-          {STATUS_OPTIONS_1.length > 0 && (
-            <FormControl fullWidth sx={{ mb: 3 }}>
-              <Typography sx={{ color: "black", mb: 1, textAlign: "center" }}>
-                Marca
-              </Typography>
-              <Select
-                value={filters.brand}
-                onChange={(e) =>
-                  handleFilterChange("brands.name", e.target.value)
-                }
-                sx={{
-                  color: "black",
-                  backgroundColor: "white",
-                  "& .MuiSelect-select": {
-                    padding: "6px 14px", // controlás el alto aquí
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: generalBackGroundColor, // borde cuando está enfocado
-                  },
-                }}
-              >
-                {STATUS_OPTIONS_1.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-          {STATUS_OPTIONS_2.length > 0 && (
-            <FormControl fullWidth sx={{ mb: 3 }}>
-              <Typography
-                sx={{
-                  color: "black",
-                  mb: 1,
-                  textAlign: "center",
-                }}
-              >
-                Categoría
-              </Typography>
-              <Select
-                value={filters.category}
-                onChange={(e) =>
-                  handleFilterChange("categories.name", e.target.value)
-                }
-                sx={{
-                  color: "black",
-                  backgroundColor: "white",
-                  "& .MuiSelect-select": {
-                    padding: "6px 14px", // controlás el alto aquí
-                  },
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: generalBackGroundColor, // borde cuando está enfocado
-                  },
-                }}
-              >
-                {STATUS_OPTIONS_2.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
+          {FILTER_CONFIGS.map((config) => (
+            <FilterSelect
+              key={config.name}
+              label={config.label}
+              name={config.name}
+              value={config.value}
+              onChange={handleFilterChange}
+              options={config.options}
+              placeholder={config.placeholder}
+            />
+          ))}
           <FormControl fullWidth>
             <Typography
               sx={{

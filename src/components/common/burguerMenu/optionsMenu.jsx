@@ -2,9 +2,9 @@ import { Icons } from "../../../assets/Icons";
 
 export const adminOptions = [
   {
-    icon: <Icons.InventoryIcon />,
-    option: "Productos",
-    link: "/",
+    icon: <Icons.SettingsIcon />,
+    option: "Ajustes",
+    link: "",
   },
   {
     icon: <Icons.EditIcon />,
@@ -12,14 +12,9 @@ export const adminOptions = [
     link: `/updateProducts`,
   },
   {
-    icon: <Icons.GroupsIcon />,
-    option: "Nosotros",
-    link: "/aboutUs",
-  },
-  {
-    icon: <Icons.ContactsIcon />,
-    option: "Contacto",
-    link: "/contactUs",
+    icon: <Icons.InventoryIcon />,
+    option: "Productos",
+    link: "/",
   },
   {
     icon: <Icons.ReceiptIcon />,

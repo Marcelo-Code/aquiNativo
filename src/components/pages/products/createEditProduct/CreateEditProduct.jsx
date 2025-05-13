@@ -39,6 +39,7 @@ export const CreateEditProduct = (createEditProductProps) => {
     handleDeleteImage,
     isLoadingImage,
     productId,
+    PRODUCT_STATUS,
   } = createEditProductProps;
 
   const formButtonGroupContainerProps = {
@@ -152,45 +153,6 @@ export const CreateEditProduct = (createEditProductProps) => {
                   />
                 </Box>
                 <Box sx={elementStyle}>
-                  <Icons.InventoryIcon />
-                  <TextField
-                    type="number"
-                    id="outlined-basic"
-                    label="Stock"
-                    variant="outlined"
-                    name="stock"
-                    onChange={handleChange}
-                    required
-                    value={formData.stock}
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true, // ← fuerza el label flotante
-                    }}
-                    sx={{
-                      "& label": {
-                        top: "-5px",
-                        color: "gray", // color normal
-                      },
-                      "& label.Mui-focused": {
-                        color: `${buttonColor}`, // color al enfocar
-                      },
-                      "& .MuiOutlinedInput-root": {
-                        height: 43,
-                        alignItems: "center",
-                        "& fieldset": {
-                          borderColor: "gray", // borde normal
-                        },
-                        "&:hover fieldset": {
-                          borderColor: "black", // hover
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: `${generalBackGroundColor}`, // borde al enfocar
-                        },
-                      },
-                    }}
-                  />
-                </Box>
-                <Box sx={elementStyle}>
                   <Icons.DescriptionIcon />
                   <OptionSelect
                     getOptionLabel={(option) => `${option.name}`}
@@ -216,6 +178,20 @@ export const CreateEditProduct = (createEditProductProps) => {
                     required
                   />
                 </Box>
+                <Box sx={elementStyle}>
+                  <Icons.DescriptionIcon />
+                  <OptionSelect
+                    getOptionLabel={(option) => `${option.name}`}
+                    name="active"
+                    placeholder="Seleccionar estado"
+                    clients={PRODUCT_STATUS}
+                    value={formData.active}
+                    onChange={handleChange}
+                    label={"Estado"}
+                    required
+                  />
+                </Box>
+
                 <FormButtonGroupContainer {...formButtonGroupContainerProps} />
               </Box>
             </FormGroup>
@@ -244,10 +220,6 @@ export const CreateEditProduct = (createEditProductProps) => {
               <Typography sx={{ paddingBottom: "5px" }}>
                 <b>Precio: </b>
                 {currencyFormat(formData.price)}
-              </Typography>
-              <Typography>
-                <b>Stock: </b>
-                {formData.stock}
               </Typography>
             </Box>
           )}

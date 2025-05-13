@@ -10,12 +10,24 @@ export const uploadImage = async (
 ) => {
   //   setUploadingDocumentName(documentName);
 
+  console.log(formData);
+
   try {
+    if (!file || !file.name) {
+      throw new Error("Archivo inválido");
+    }
     //define la extensión del archivo
     const extension = file.name.split(".").pop();
 
     //Define el nombre del archivo
     const fileName = `${documentName}_${formData.id}.${extension}`;
+
+    console.log("📁 Intentando subir archivo:");
+    console.log("bucketName:", bucketName);
+    console.log("fileName:", fileName);
+    console.log("file.name:", file.name);
+    console.log("file.size:", file.size);
+    console.log("file.type:", file.type);
 
     // Sube el archivo a Supabase
     const { error: uploadError } = await supabaseClient.storage
@@ -26,6 +38,7 @@ export const uploadImage = async (
 
         //Sobreescribe el archivo en caso de que ya exista
         upsert: true,
+        contentType: file.type || "image/webp", // 👈 línea agregada
       });
 
     if (uploadError) throw uploadError;

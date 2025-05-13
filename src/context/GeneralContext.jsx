@@ -64,8 +64,10 @@ export const GeneralContextProvider = ({ children }) => {
 
   //Función para incrementar el contador del producto
   const addProduct = (product, setProducts = null) => {
-    const action = "addProduct";
-    if (outOfStock(product, action)) return;
+    // const action = "addProduct";
+
+    //Verifica si hay suficiente stock
+    // if (outOfStock(product, action)) return;
 
     //Incrementa el contador del producto estando en la página de productos
     if (setProducts) {
@@ -119,9 +121,9 @@ export const GeneralContextProvider = ({ children }) => {
 
   //Función para agregar el producto al carrito
   const addProductToCart = (product, products, setProducts) => {
-    const action = "addProductToCart";
+    // const action = "addProductToCart";
     //Verifica si hay suficiente stock
-    if (outOfStock(product, action)) return;
+    // if (outOfStock(product, action)) return;
 
     const quantity = product.counter;
     const exists = existingProductInCart(product);
@@ -145,7 +147,7 @@ export const GeneralContextProvider = ({ children }) => {
             brand: product.brand,
             category: product.category,
             price: product.price,
-            stock: product.stock,
+            // stock: product.stock,
           },
         ];
 

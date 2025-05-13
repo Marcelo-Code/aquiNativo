@@ -1,6 +1,7 @@
 import { Container, TextField, Button, Box, Typography } from "@mui/material";
 import "./recoverPassword.css";
 import { Icons } from "../../../assets/Icons";
+import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
 export const RecoverPassword = ({
   handleGoBack,
@@ -21,6 +22,8 @@ export const RecoverPassword = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          backgroundColor: generalBackGroundColor,
+          borderRadius: "5px",
         }}
       >
         <Box
@@ -39,15 +42,39 @@ export const RecoverPassword = ({
             name="email"
             autoComplete="email"
             autoFocus
-            sx={{ backgroundColor: "white" }}
+            sx={{
+              backgroundColor: "white",
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": {
+                  borderColor: generalBackGroundColor,
+                },
+              },
+              "& .MuiInputLabel-root": {
+                color: "gray", // color normal
+                "&.Mui-focused": {
+                  color: buttonColor, // color al enfocar
+                },
+              },
+            }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Button
             type="submit"
             fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            variant="outlined"
+            sx={{
+              mt: 3,
+              mb: 2,
+              backgroundColor: "black",
+              color: "white",
+              border: "1px solid black",
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid ${generalBackGroundColor}`,
+              },
+            }}
             startIcon={<Icons.SendIcon />}
             onClick={handleRecoverPassword}
           >
@@ -66,7 +93,16 @@ export const RecoverPassword = ({
           <Button
             fullWidth
             variant="outlined"
-            style={{ border: "1px solid white", color: "white" }}
+            sx={{
+              border: "1px solid black",
+              color: "black",
+              backgroundColor: "white",
+              "&:active": {
+                backgroundColor: generalBackGroundColor,
+                color: "white",
+                border: `1px solid ${generalBackGroundColor}`,
+              },
+            }}
             onClick={handleGoBack}
           >
             Volver

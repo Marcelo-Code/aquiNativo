@@ -52,22 +52,14 @@ export const ProductsListContainer = () => {
 
   //Array de opciones de filtros por marca
   const STATUS_OPTIONS_1 = useMemo(
-    () =>
-      getUniqueSortedOptions(products, "brands.name", {
-        value: "all",
-        label: "Todas las marcas",
-      }),
+    () => getUniqueSortedOptions(products, "brands.name"),
 
     [products]
   );
 
   //Array de opciones de filtros por categoria
   const STATUS_OPTIONS_2 = useMemo(
-    () =>
-      getUniqueSortedOptions(products, "categories.name", {
-        value: "all",
-        label: "Todas las categorías",
-      }),
+    () => getUniqueSortedOptions(products, "categories.name"),
     [products]
   );
 

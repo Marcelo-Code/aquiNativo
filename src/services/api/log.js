@@ -23,3 +23,15 @@ export const logout = async () => {
     return { status: 500, message: "Error al cerrar sesion", error };
   }
 };
+
+export const checkAuth = async (setIsloggedIn) => {
+  const { data } = await supabaseClient.auth.getSession();
+
+  if (data?.session) {
+    setIsloggedIn(true);
+    return { status: 200, message: "Sesion activa" };
+  } else {
+    setIsloggedIn(false);
+    return { status: 401, message: "Sesion no activa" };
+  }
+};

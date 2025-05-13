@@ -33,8 +33,18 @@ export const CreateEditProductContainer = () => {
     brand_id: "",
     category_id: "",
     price: "",
-    stock: "",
   };
+
+  const PRODUCT_STATUS = [
+    {
+      id: true,
+      name: "Producto activo",
+    },
+    {
+      id: false,
+      name: "Producto inactivo",
+    },
+  ];
 
   //Flag para saber si se creo el producto
   const [createdProduct, setCreatedProduct] = useState(false);
@@ -302,6 +312,7 @@ export const CreateEditProductContainer = () => {
     handleDeleteImage,
     isLoadingImage,
     productId,
+    PRODUCT_STATUS,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;
