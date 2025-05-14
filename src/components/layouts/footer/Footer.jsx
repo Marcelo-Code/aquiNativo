@@ -14,24 +14,21 @@ export const Footer = () => {
           height: "50px",
           backgroundColor: "#25D366",
           position: "fixed",
-          bottom: "5%",
+          bottom: "50px",
           right: "50px",
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          zIndex: 2,
         }}
       >
         <IconButton>
-          <Icons.WhatsAppIcon
-            sx={{ color: "white", fontSize: "1.5em", zIndex: 4 }}
-          />
+          <Icons.WhatsAppIcon sx={{ color: "white", fontSize: "1.5em" }} />
         </IconButton>
       </Box>
       <Box className="footerTitle">NATIVO</Box>
-      {/* <Box className="footerNameDeveloper">
-        Marcelo Feltes Dos Mil Veinticinco
-      </Box> */}
+
       <Box className="footerSocialMedia">
         Seguinos en nuestras redes
         <IconButton>

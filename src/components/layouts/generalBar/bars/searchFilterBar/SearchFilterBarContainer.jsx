@@ -10,8 +10,7 @@ export const SearchFilterBarContainer = ({
   sortOption,
   handleSortChange,
   enableEditionBar,
-  STATUS_OPTIONS_1 = [],
-  STATUS_OPTIONS_2 = [],
+  FILTER_CONFIGS,
   DEFAULT_TYPE_OPTIONS = [],
   SORT_OPTIONS = [],
 }) => {
@@ -25,8 +24,7 @@ export const SearchFilterBarContainer = ({
     sortOption,
     handleSortChange,
     enableEditionBar,
-    STATUS_OPTIONS_1,
-    STATUS_OPTIONS_2,
+    FILTER_CONFIGS,
     DEFAULT_TYPE_OPTIONS,
     SORT_OPTIONS,
   };

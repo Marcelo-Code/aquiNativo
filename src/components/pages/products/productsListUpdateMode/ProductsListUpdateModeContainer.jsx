@@ -1,22 +1,18 @@
-import { use, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { createProduct, getProducts } from "../../../../services/api/products";
+import { getProducts } from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { getUniqueSortedOptions } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
 import { useConfirm } from "../../../../context/ConfirmContext";
-import {
-  errorToastifyAlert,
-  successToastifyAlert,
-} from "../../../../utils/alerts";
+import { successToastifyAlert } from "../../../../utils/alerts";
 import { useNavigate } from "react-router-dom";
 
 export const ProductsListUpdateModeContainer = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -97,6 +93,11 @@ export const ProductsListUpdateModeContainer = () => {
     [products]
   );
 
+  const STATUS_OPTIONS_3 = [
+    { value: true, label: "Productos activos" },
+    { value: false, label: "Productos inactivos" },
+  ];
+
   if (isLoading) return <LoadingContainer />;
   if (error) {
     const errorContainerProps = {
@@ -141,8 +142,26 @@ export const ProductsListUpdateModeContainer = () => {
     },
   ];
 
-  const FILTER_OPTIONS = [STATUS_OPTIONS_1, STATUS_OPTIONS_2];
-
+  const FILTER_OPTIONS = [
+    {
+      name: "brands.name",
+      label: "Marca",
+      options: STATUS_OPTIONS_1,
+      placeholder: "Seleccioná una marca",
+    },
+    {
+      name: "categories.name",
+      label: "Categoría",
+      options: STATUS_OPTIONS_2,
+      placeholder: "Seleccioná una categoría",
+    },
+    {
+      name: "active",
+      label: "Estado",
+      options: STATUS_OPTIONS_3,
+      placeholder: "Seleccioná un estado",
+    },
+  ];
   //Array de campos a buscar
   const FIELDS_TO_SEARCH = [
     (r) => r.description,

@@ -4,12 +4,22 @@ export const adminOptions = [
   {
     icon: <Icons.SettingsIcon />,
     option: "Ajustes",
-    link: "",
+    link: "/settings",
   },
   {
     icon: <Icons.EditIcon />,
-    option: "Edición",
+    option: "Categorias",
+    link: `/categories`,
+  },
+  {
+    icon: <Icons.EditIcon />,
+    option: "Edición productos",
     link: `/updateProducts`,
+  },
+  {
+    icon: <Icons.EditIcon />,
+    option: "Marcas",
+    link: `/brands`,
   },
   {
     icon: <Icons.InventoryIcon />,
@@ -20,6 +30,11 @@ export const adminOptions = [
     icon: <Icons.ReceiptIcon />,
     option: "Ordenes de compra",
     link: "/purchaseOrders",
+  },
+  {
+    icon: <Icons.PersonIcon />,
+    option: "Usuarios",
+    link: "",
   },
 ];
 

@@ -10,8 +10,6 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Select,
-  MenuItem,
 } from "@mui/material";
 
 import { useState } from "react";
@@ -28,30 +26,11 @@ export const SearchFilterBar = ({
   sortOption,
   handleSortChange,
   SORT_OPTIONS,
-  STATUS_OPTIONS_1,
-  STATUS_OPTIONS_2,
-  filters,
+  FILTER_CONFIGS,
   handleFilterChange,
   enableEditionBar,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const FILTER_CONFIGS = [
-    {
-      label: "Marca",
-      name: "brands.name",
-      value: filters["brands.name"],
-      options: STATUS_OPTIONS_1,
-      placeholder: "Seleccionar marca",
-    },
-    {
-      label: "Categoría",
-      name: "categories.name",
-      value: filters["categories.name"],
-      options: STATUS_OPTIONS_2,
-      placeholder: "Seleccionar categoría",
-    },
-  ];
 
   return (
     <>
@@ -130,7 +109,7 @@ export const SearchFilterBar = ({
         </Box>
 
         <Box sx={{ width: 300, p: 1 }}>
-          {(STATUS_OPTIONS_1.length > 0 || STATUS_OPTIONS_2.length > 0) && (
+          {FILTER_CONFIGS.length > 0 && (
             <Typography
               sx={{
                 display: "flex",

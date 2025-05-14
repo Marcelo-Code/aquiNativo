@@ -1,5 +1,6 @@
 import { supabaseClient } from "../config/config";
 
+//Función de login
 export const login = async (email, password) => {
   try {
     const { error } = await supabaseClient.auth.signInWithPassword({
@@ -14,6 +15,7 @@ export const login = async (email, password) => {
   }
 };
 
+//Función de logout
 export const logout = async () => {
   try {
     const { error } = await supabaseClient.auth.signOut();
@@ -24,6 +26,7 @@ export const logout = async () => {
   }
 };
 
+//FUnción para verificar si el usuario esta logueado
 export const checkAuth = async (setIsloggedIn) => {
   const { data } = await supabaseClient.auth.getSession();
 
@@ -33,5 +36,21 @@ export const checkAuth = async (setIsloggedIn) => {
   } else {
     setIsloggedIn(false);
     return { status: 401, message: "Sesion no activa" };
+  }
+};
+
+export const updatePassword = async (newPassword, accessToken) => {
+  try {
+    const { error } = await supabaseClient.auth.updateUser(
+      { password: newPassword },
+      { access_token: accessToken }
+    );
+    if (error) throw error;
+    return { status: 200, message: "Password actualizado" };
+  } catch (error) {
+    return {
+      status: 500,
+      message: error.message || "Error al actualizar password",
+    };
   }
 };

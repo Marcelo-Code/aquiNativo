@@ -20,6 +20,26 @@ export const getProducts = async () => {
   }
 };
 
+export const getActiveProducts = async () => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("products")
+      .select("*, categories: category_id(name), brands: brand_id(name)")
+      .eq("active", true)
+      .order("description", { ascending: true });
+
+    if (error) throw error;
+
+    return { status: 200, message: "registros obtenidos con éxito", data };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error al obtener los registros",
+      error,
+    };
+  }
+};
+
 export const createProduct = async (product) => {
   try {
     const { error } = await supabaseClient.from("products").insert([product]);
@@ -73,8 +93,6 @@ export const getProduct = async (productId) => {
 export const updateProduct = async (updatedProduct) => {
   try {
     const { id, ...fieldsToUpdate } = updatedProduct;
-
-    console.log(fieldsToUpdate, id);
 
     const { data, error } = await supabaseClient
       .from("products")

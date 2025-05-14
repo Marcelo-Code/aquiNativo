@@ -50,3 +50,12 @@ export const dateFormat = (date) => {
   });
   return formattedDate;
 };
+
+//Función para manejar errores y mostrar el mensaje adecuado
+export const handleError = (response) => {
+  const errorMessage =
+    typeof response.error === "string"
+      ? response.error
+      : JSON.stringify(response.error);
+  throw new Error(`${response.message}: ${errorMessage}`);
+};

@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Icons } from "../../../../assets/Icons";
 import { ProductsList } from "./ProductsList";
 import { GeneralContext } from "../../../../context/GeneralContext";
-import { getProducts } from "../../../../services/api/products";
+import { getActiveProducts } from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { getUniqueSortedOptions } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
@@ -20,7 +20,7 @@ export const ProductsListContainer = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    Promise.all([getProducts()])
+    Promise.all([getActiveProducts()])
       .then(([productsResponse]) => {
         //Captura erores en caso de que existan
         if (productsResponse.status !== 200) {
@@ -107,8 +107,20 @@ export const ProductsListContainer = () => {
     },
   ];
 
-  const FILTER_OPTIONS = [STATUS_OPTIONS_1, STATUS_OPTIONS_2];
-
+  const FILTER_OPTIONS = [
+    {
+      name: "brands.name",
+      label: "Marca",
+      options: STATUS_OPTIONS_1,
+      placeholder: "Seleccioná una marca",
+    },
+    {
+      name: "categories.name",
+      label: "Categoría",
+      options: STATUS_OPTIONS_2,
+      placeholder: "Seleccioná una categoría",
+    },
+  ];
   //Array de campos a buscar
   const FIELDS_TO_SEARCH = [
     (r) => r.description,

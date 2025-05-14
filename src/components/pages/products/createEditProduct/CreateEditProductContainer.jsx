@@ -114,6 +114,7 @@ export const CreateEditProductContainer = () => {
 
   // Función para manejar la carga de archivos
   const handleFileChange = async (event) => {
+    console.log("Archivo seleccionado");
     const file = event.target.files[0];
     if (file) {
       const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];

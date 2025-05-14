@@ -23,8 +23,7 @@ export const GeneralBar = (generalBarProps) => {
     handleSortChange,
     enableEditionBar,
     SORT_OPTIONS,
-    STATUS_OPTIONS_1,
-    STATUS_OPTIONS_2,
+    FILTER_CONFIGS,
   } = generalBarProps;
 
   const searchFilterBarContainerProps = {
@@ -39,8 +38,7 @@ export const GeneralBar = (generalBarProps) => {
     handleSortChange,
     enableEditionBar,
     SORT_OPTIONS,
-    STATUS_OPTIONS_1,
-    STATUS_OPTIONS_2,
+    FILTER_CONFIGS,
   };
 
   const editionBarProps = {

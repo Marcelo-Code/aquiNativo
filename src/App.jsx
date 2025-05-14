@@ -12,12 +12,14 @@ import { PurchaseOrdersItemsListContainer } from "./components/pages/purchaseOrd
 import { PurchaseOrdersListContainer } from "./components/pages/purchaseOrders/purchaseOrdersList/PurchaseOrdersListContainer";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import { GeneralContextProvider } from "./context/GeneralContext";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ProtectedUserRoute } from "./routes/ProtectedUserRoute";
-import { ContactUs } from "./components/pages/contactUs/ContactUs";
 import { ContactUsContainer } from "./components/pages/contactUs/ContactUsContainer";
 import { RecoverPasswordContainer } from "./components/pages/recoverPassword/RecoverPasswordContainer";
 import { UpdatePasswordContainer } from "./components/pages/updatePassword/UpdatePasswordContainer";
+import { SettingsContainer } from "./components/pages/settings/SettingsContainer";
+import { CategoriesContainer } from "./components/pages/categories/CategoriesContainer";
+import { BrandsContainer } from "./components/pages/brands/BrandsContainer";
 
 function App() {
   return (
@@ -50,6 +52,33 @@ function App() {
             {/* 404 */}
             <Route path="*" element={<div>404</div>} />
             {/* Rutas protegidas para el admin */}
+            {/* Edición de categorías */}
+            <Route
+              path="/categories"
+              element={
+                <ProtectedUserRoute>
+                  <CategoriesContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Edición de marcas */}
+            <Route
+              path="/brands"
+              element={
+                <ProtectedUserRoute>
+                  <BrandsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Settings */}
+            <Route
+              path="/settings"
+              element={
+                <ProtectedUserRoute>
+                  <SettingsContainer />
+                </ProtectedUserRoute>
+              }
+            />
             {/* Lista editar productos */}
             <Route
               path="/updateProducts"

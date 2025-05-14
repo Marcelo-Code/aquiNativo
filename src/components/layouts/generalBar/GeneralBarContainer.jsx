@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GeneralBar } from "./GeneralBar";
 import { ChipsBarContainer } from "./bars/chipsBar/ChipsBarContainer";
 
@@ -15,18 +15,20 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     setFilteredRecords,
     records,
     SORT_OPTIONS,
-    FILTER_OPTIONS,
+    FILTER_OPTIONS = [],
+    initialActiveBar = "searchBar",
   } = generalBarContainerProps;
 
-  const [activeBar, setActiveBar] = useState("searchBar");
-
-  //Lógica de filtrado y ordenamiento
+  const [activeBar, setActiveBar] = useState(initialActiveBar);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({
-    brand: "all",
-    category: "all",
-  });
+  const [filters, setFilters] = useState({});
   const [sortOption, setSortOption] = useState("none");
+
+  // Configura dinámicamente FILTER_CONFIGS en base a FILTER_OPTIONS
+  const FILTER_CONFIGS = FILTER_OPTIONS.map((options) => ({
+    ...options,
+    value: filters[options.name] || "all",
+  }));
 
   const applyFiltersAndSort = (
     query = searchQuery,
@@ -37,14 +39,14 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     const keywords = lowerQuery.split(" ").filter(Boolean);
 
     let result = records.filter((record) => {
-      // Coincidencia con búsqueda de texto
+      // Búsqueda
       const matchesSearch = keywords.every((word) =>
         FIELDS_TO_SEARCH.some((getField) =>
           (getField(record) || "").toLowerCase().includes(word)
         )
       );
 
-      // Coincidencia con filtros dinámicos
+      // Filtros
       const matchesAllFilters = Object.entries(newFilters).every(
         ([key, value]) => {
           const path = key.split(".");
@@ -91,10 +93,8 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
           if (type === "number") {
             const numA = Number(aValue);
             const numB = Number(bValue);
-
             if (isNaN(numA)) return 1;
             if (isNaN(numB)) return -1;
-
             return direction === "asc" ? numA - numB : numB - numA;
           }
 
@@ -125,9 +125,8 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
   };
 
   const getFilterLabel = (key, value) => {
-    return (
-      FILTER_OPTIONS[key]?.find((opt) => opt.value === value)?.label || value
-    );
+    const config = FILTER_CONFIGS.find((f) => f.name === key);
+    return config?.options?.find((opt) => opt.value === value)?.label || value;
   };
 
   const generalBarProps = {
@@ -149,8 +148,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     handleSortChange,
     enableEditionBar,
     SORT_OPTIONS,
-    STATUS_OPTIONS_1: FILTER_OPTIONS[0],
-    STATUS_OPTIONS_2: FILTER_OPTIONS[1],
+    FILTER_CONFIGS,
   };
 
   const chipsBarContainerProps = {

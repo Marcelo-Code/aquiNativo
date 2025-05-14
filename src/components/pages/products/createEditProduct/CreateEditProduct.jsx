@@ -335,6 +335,9 @@ export const CreateEditProduct = (createEditProductProps) => {
               ref={fileInputRef}
               style={{ display: "none" }}
               onChange={handleFileChange}
+              //Se reseta el input a null para forzar el cambio y poder disparar el evento onChange
+              //de manera tal pueda permitir subir el mismo archivo nuevamente en caso de que sea necesario
+              onClick={(e) => (e.target.value = null)}
             />
 
             <BackButtonContainer />
