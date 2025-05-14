@@ -102,8 +102,6 @@ export const PurchaseOrdersListContainer = () => {
 
   const generalBarContainerProps = {
     enableSearchFilterBar: true,
-    // buttonText: "Producto",
-    // buttonIcon: <Icons.AddIcon />,
     enableEditionBar: false,
     setFilteredRecords: setFilteredOrders,
     records: orders,

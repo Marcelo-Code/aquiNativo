@@ -78,7 +78,6 @@ export const PurchaseOrderList = (purchaseOrdersListProps) => {
                   <Button
                     variant="outlined"
                     size="small"
-                    // onClick={() => handleGetOrderDetails(order.id)}
                     component={Link}
                     to={`/purchaseOrders/details/${record.id}`}
                     sx={{
