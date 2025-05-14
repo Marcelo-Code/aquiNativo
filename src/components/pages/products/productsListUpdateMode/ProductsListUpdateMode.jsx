@@ -38,17 +38,6 @@ export const ProductsListUpdateMode = (productsListProps) => {
             {recordsToShow.map((product) => (
               <Card className="updateCard" key={product.id}>
                 <CardActions className="updateCardActions">
-                  <Tooltip title="Eliminar producto" placement="top-end" arrow>
-                    {/* <IconButton
-                      onClick={() => {
-                        handleDeleteProduct(product);
-                      }}
-                    >
-                      <Icons.DeleteIcon
-                        sx={{ fontSize: "30px", color: deleteColor }}
-                      />
-                    </IconButton> */}
-                  </Tooltip>
                   <Tooltip title="Editar producto" placement="top-end" arrow>
                     <IconButton
                       onClick={() => {

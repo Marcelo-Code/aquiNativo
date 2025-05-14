@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
-import { Categories } from "./Categories";
-import { getCategories } from "../../../services/api/categories";
-import { getBrands } from "../../../services/api/brands";
-import { handleError } from "../../../utils/helpers";
-import { LoadingContainer } from "../loading/LoadingContainer";
-import { Icons } from "../../../assets/Icons";
+import { CategoriesList } from "./CategoriesList";
+import { getCategories } from "../../../../services/api/categories";
+import { getBrands } from "../../../../services/api/brands";
+import { handleError } from "../../../../utils/helpers";
+import { LoadingContainer } from "../../loading/LoadingContainer";
+import { Icons } from "../../../../assets/Icons";
+import { useNavigate } from "react-router-dom";
 
-export const CategoriesContainer = () => {
+export const CategoriesListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleUpdateCategory = (categoryId) => {
+    navigate(`/updateCategories/updateCategory/${categoryId}`);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,14 +49,14 @@ export const CategoriesContainer = () => {
     buttonText: "Categoría",
     buttonIcon: <Icons.AddIcon />,
     initialActiveBar: "editionBar",
-
-    to: "/categories/createCategory",
+    to: "/updateCategories/createCategory",
   };
 
   const categoriesProps = {
     categories,
+    handleUpdateCategory,
     ...generalBarContainerProps,
   };
 
-  return <Categories {...categoriesProps} />;
+  return <CategoriesList {...categoriesProps} />;
 };

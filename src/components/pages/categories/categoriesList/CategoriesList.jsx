@@ -1,22 +1,27 @@
 import { Box, Button } from "@mui/material";
-import "../../../assets/css/generalStyles.css";
-import "./categories.css";
-import { Icons } from "../../../assets/Icons";
-import { BackButtonContainer } from "../../common/backButton/BackButtonContainer";
-import { generalBackGroundColor } from "../../../utils/helpers";
-import { GeneralBarContainer } from "../../layouts/generalBar/GeneralBarContainer";
+import "../../../../assets/css/generalStyles.css";
+import "./categoriesList.css";
+import { Icons } from "../../../../assets/Icons";
+import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
+import { generalBackGroundColor } from "../../../../utils/helpers";
+import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
 
-export const Categories = (categoriesProps) => {
-  const { categories, ...generalBarContainerProps } = categoriesProps;
+export const CategoriesList = (categoriesListProps) => {
+  const { categories, handleUpdateCategory, ...generalBarContainerProps } =
+    categoriesListProps;
 
   return (
     <Box className="generalContainer">
-      <Box className="generalTitle">Categorias</Box>
+      <Box className="generalTitle">Categorías</Box>
       <GeneralBarContainer {...generalBarContainerProps} />
+      <Box className="generalSubTitle">
+        {categories.length} categorías encontradas
+      </Box>
       <Box className="generalList" sx={{ marginBottom: "20px" }}>
         {categories.map((category) => {
           return (
             <Button
+              onClick={() => handleUpdateCategory(category.id)}
               className="categoriesCard"
               key={category.id}
               variant="outlined"
@@ -25,6 +30,7 @@ export const Categories = (categoriesProps) => {
                 color: "black",
                 border: "1px solid black",
                 backgroundColor: "white",
+                textTransform: "none",
                 "&:active": {
                   backgroundColor: generalBackGroundColor,
                   color: "white",

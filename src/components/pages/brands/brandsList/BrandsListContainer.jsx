@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { getBrands } from "../../../services/api/brands";
-import { handleError } from "../../../utils/helpers";
-import { LoadingContainer } from "../loading/LoadingContainer";
-import { Icons } from "../../../assets/Icons";
-import { Brands } from "./Brands";
+import { getBrands } from "../../../../services/api/brands";
+import { handleError } from "../../../../utils/helpers";
+import { LoadingContainer } from "../../loading/LoadingContainer";
+import { Icons } from "../../../../assets/Icons";
+import { BrandsList } from "./BrandsList";
+import { useNavigate } from "react-router-dom";
 
-export const BrandsContainer = () => {
+export const BrandsListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [brands, setBrands] = useState([]);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleUpdateBrand = (brandId) => {
+    navigate(`/updateBrands/updateBrand/${brandId}`);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -41,14 +48,14 @@ export const BrandsContainer = () => {
     buttonText: "Marca",
     buttonIcon: <Icons.AddIcon />,
     initialActiveBar: "editionBar",
-
-    to: "/brands/createBrand",
+    to: "/updateBrands/createBrand",
   };
 
-  const brandsProps = {
+  const brandsListProps = {
     brands,
+    handleUpdateBrand,
     ...generalBarContainerProps,
   };
 
-  return <Brands {...brandsProps} />;
+  return <BrandsList {...brandsListProps} />;
 };

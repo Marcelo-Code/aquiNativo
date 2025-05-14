@@ -18,8 +18,10 @@ import { ContactUsContainer } from "./components/pages/contactUs/ContactUsContai
 import { RecoverPasswordContainer } from "./components/pages/recoverPassword/RecoverPasswordContainer";
 import { UpdatePasswordContainer } from "./components/pages/updatePassword/UpdatePasswordContainer";
 import { SettingsContainer } from "./components/pages/settings/SettingsContainer";
-import { CategoriesContainer } from "./components/pages/categories/CategoriesContainer";
-import { BrandsContainer } from "./components/pages/brands/BrandsContainer";
+import { CategoriesListContainer } from "./components/pages/categories/categoriesList/CategoriesListContainer";
+import { CreateEditCategoriesContainer } from "./components/pages/categories/createEditCategories/CreateEditCategoriesContainer";
+import { BrandsListContainer } from "./components/pages/brands/brandsList/BrandsListContainer";
+import { CreateEditBrandsContainer } from "./components/pages/brands/createEditBrands/CreateEditBrandsContainer";
 
 function App() {
   return (
@@ -52,21 +54,57 @@ function App() {
             {/* 404 */}
             <Route path="*" element={<div>404</div>} />
             {/* Rutas protegidas para el admin */}
-            {/* Edición de categorías */}
+            {/* Lista de categorías */}
             <Route
               path="/categories"
               element={
                 <ProtectedUserRoute>
-                  <CategoriesContainer />
+                  <CategoriesListContainer />
                 </ProtectedUserRoute>
               }
             />
-            {/* Edición de marcas */}
+            {/* Editar categoría */}
+            <Route
+              path="/updateCategories/updateCategory/:categoryId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditCategoriesContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear categoría */}
+            <Route
+              path="/updateCategories/createCategory"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditCategoriesContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Lista de marcas */}
             <Route
               path="/brands"
               element={
                 <ProtectedUserRoute>
-                  <BrandsContainer />
+                  <BrandsListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Editar marca */}
+            <Route
+              path="/updateBrands/updateBrand/:brandId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditBrandsContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear marca */}
+            <Route
+              path="/updateBrands/createBrand"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditBrandsContainer />
                 </ProtectedUserRoute>
               }
             />
