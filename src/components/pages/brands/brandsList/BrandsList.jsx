@@ -12,7 +12,7 @@ export const BrandsList = (brandsListProps) => {
 
   return (
     <Box className="generalContainer">
-      <Box className="generalTitle">Categorias</Box>
+      <Box className="generalTitle">Marcas</Box>
       <GeneralBarContainer {...generalBarContainerProps} />
       <Box className="generalSubTitle">{brands.length} marcas encontradas</Box>
       <Box className="generalList" sx={{ marginBottom: "20px" }}>
