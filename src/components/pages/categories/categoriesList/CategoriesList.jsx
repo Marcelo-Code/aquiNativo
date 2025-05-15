@@ -25,12 +25,13 @@ export const CategoriesList = (categoriesListProps) => {
               className="categoriesCard"
               key={category.id}
               variant="outlined"
-              startIcon={<Icons.EditIcon sx={{ fontSize: "30px" }} />}
+              // startIcon={<Icons.EditIcon sx={{ fontSize: "30px" }} />}
               sx={{
                 color: "black",
                 border: "1px solid black",
                 backgroundColor: "white",
                 textTransform: "none",
+                borderRadius: "45px",
                 "&:active": {
                   backgroundColor: generalBackGroundColor,
                   color: "white",

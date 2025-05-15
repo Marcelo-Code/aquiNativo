@@ -23,12 +23,13 @@ export const BrandsList = (brandsListProps) => {
               className="brandsCard"
               key={brand.id}
               variant="outlined"
-              startIcon={<Icons.EditIcon sx={{ fontSize: "30px" }} />}
+              // startIcon={<Icons.EditIcon sx={{ fontSize: "30px" }} />}
               sx={{
                 textTransform: "none",
                 color: "black",
                 border: "1px solid black",
                 backgroundColor: "white",
+                borderRadius: "45px",
                 "&:active": {
                   backgroundColor: generalBackGroundColor,
                   color: "white",
