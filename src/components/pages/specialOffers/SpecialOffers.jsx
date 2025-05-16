@@ -94,9 +94,10 @@ export const SpecialOffers = (specialOffersProps) => {
                     alignItems: "center",
                     backgroundColor: generalBackGroundColor,
                     borderRadius: "45px",
-                    color: "black",
+                    color: "white",
                     boxShadow: 5,
                     zIndex: 2,
+                    textShadow: "0px 0px 5px black",
                   }}
                 >
                   {product.description}
@@ -146,12 +147,14 @@ export const SpecialOffers = (specialOffersProps) => {
                     alignItems: "center",
                     backgroundColor: generalBackGroundColor,
                     borderRadius: "45px",
-                    color: "black",
+                    color: "white",
+                    fontWeight: "bold",
+                    textShadow: "0px 0px 5px black",
                     boxShadow: 5,
                     fontFamily: "arial",
                   }}
                 >
-                  {product.special_offer}
+                  {product.special_offer.toUpperCase()}
                 </Box>
               </CardContent>
             </Card>
