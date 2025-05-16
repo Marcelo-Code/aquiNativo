@@ -10,7 +10,7 @@ import { generalBackGroundColor } from "../../../utils/helpers";
 import { CurrencyFormat } from "../../common/currencyFormat/CurrencyFormat";
 
 export const SpecialOffers = (specialOffersProps) => {
-  const { offers } = specialOffersProps;
+  const { offers, handleProductDetail } = specialOffersProps;
 
   const slidesToShow = Math.min(offers.length, 3);
 
@@ -64,13 +64,18 @@ export const SpecialOffers = (specialOffersProps) => {
           {offers.map((product, index) => (
             <Card
               key={index}
+              onClick={() => handleProductDetail(product.id)}
               sx={{
+                cursor: "pointer",
                 boxShadow: 10,
-                // border: "1px solid white",
                 margin: "30px",
                 height: "400px",
                 maxWidth: "350px",
                 borderRadius: "30px 30px 47px 47px",
+                transition: "transform 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
               }}
             >
               <CardContent

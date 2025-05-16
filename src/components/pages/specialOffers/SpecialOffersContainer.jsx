@@ -3,11 +3,16 @@ import { SpecialOffers } from "./SpecialOffers";
 import { handleError } from "../../../utils/helpers";
 import { getProducts } from "../../../services/api/products";
 import { LoadingContainer } from "../loading/LoadingContainer";
+import { useNavigate } from "react-router-dom";
 
 export const SpecialOffersContainer = () => {
   const [offers, setOffers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const handleProductDetail = (productId) => {
+    navigate(`/productDetail/${productId}`);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,10 +39,9 @@ export const SpecialOffersContainer = () => {
 
   if (isLoading) return <LoadingContainer />;
 
-  console.log(offers);
-
   const specialOffersProps = {
     offers,
+    handleProductDetail,
   };
 
   return <SpecialOffers {...specialOffersProps} />;

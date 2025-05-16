@@ -26,6 +26,7 @@ import { UsersListContainer } from "./components/pages/users/usersList/UsersList
 import { Create } from "@mui/icons-material";
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
+import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
 
 function App() {
   return (
@@ -39,6 +40,11 @@ function App() {
             <Route path="/" element={<SpecialOffersContainer />} />
             {/* Lista de productos */}
             <Route path="/products" element={<ProductsListContainer />} />
+            {/* Detalle del producto */}
+            <Route
+              path="/productDetail/:productId"
+              element={<ProductDetailContainer />}
+            />
             {/* Carrito de compras */}
             <Route path="/cart" element={<CartListContainer />} />
             {/* Nosotros */}
