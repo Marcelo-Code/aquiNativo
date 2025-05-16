@@ -117,12 +117,14 @@ export const SpecialOffers = (specialOffersProps) => {
                   <Box>
                     <img
                       src={product.image}
-                      alt={product.description}
+                      alt="producto"
                       style={{
                         width: "100%",
                         maxWidth: "230px",
-                        height: "auto",
-                        objectFit: "cover",
+                        height: "230px",
+                        objectFit: "contain",
+                        margin: "0 auto",
+                        display: "block",
                       }}
                     />
                   </Box>
@@ -133,8 +135,9 @@ export const SpecialOffers = (specialOffersProps) => {
                       fontWeight: "bold",
                       backgroundColor: "black",
                       padding: "10px",
-                      borderRadius: "10px 0 0 10px",
+                      borderRadius: "25px 0 0 25px",
                       color: "white",
+                      textAlign: "center",
                     }}
                   >
                     {CurrencyFormat(product.price)} {product.price}
