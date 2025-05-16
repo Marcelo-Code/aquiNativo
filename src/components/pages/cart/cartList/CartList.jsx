@@ -65,7 +65,8 @@ export const CartList = (cartListProps) => {
               borderCollapse: "collapse",
               border: `1px solid ${generalBackGroundColor}`,
               width: "100%",
-              maxWidth: "710px",
+              maxWidth: "700px",
+              margin: "20px",
             }}
           >
             <thead style={{ backgroundColor: generalBackGroundColor }}>

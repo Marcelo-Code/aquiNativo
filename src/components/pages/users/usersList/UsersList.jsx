@@ -73,8 +73,8 @@ export const UsersList = (usersListProps) => {
             </Card>
           );
         })}
+        <BackButtonContainer />
       </Box>
-      <BackButtonContainer />
     </Box>
   );
 };
