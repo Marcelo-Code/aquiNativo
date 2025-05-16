@@ -114,6 +114,35 @@ export const CreateEditProduct = (createEditProductProps) => {
                   />
                 </Box>
                 <Box sx={elementStyle}>
+                  <Icons.LocalOfferIcon />
+                  <TextField
+                    id="outlined-basic"
+                    label="Oferta"
+                    variant="outlined"
+                    name="special_offer"
+                    onChange={handleChange}
+                    value={formData.special_offer}
+                    fullWidth
+                    InputProps={{
+                      sx: {
+                        alignItems: "center",
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: `${generalBackGroundColor}`, // borde al enfocar
+                        },
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
+                      sx: {
+                        color: "gray", // color normal
+                        "&.Mui-focused": {
+                          color: `${buttonColor}`, // color al enfocar
+                        },
+                      },
+                    }}
+                  />
+                </Box>
+                <Box sx={elementStyle}>
                   <Icons.MonetizationOnIcon />
                   <TextField
                     type="number"

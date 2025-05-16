@@ -41,9 +41,8 @@ export const BrandsList = (brandsListProps) => {
             </Button>
           );
         })}
+        <BackButtonContainer />
       </Box>
-
-      <BackButtonContainer />
     </Box>
   );
 };

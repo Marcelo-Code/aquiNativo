@@ -179,6 +179,12 @@ export const ProductsList = (productsListProps) => {
                     <Typography variant="subtitle2" component="div">
                       {product.description}
                     </Typography>
+
+                    {product.special_offer?.trim() && (
+                      <Typography variant="subtitle2" component="div">
+                        Oferta {product.special_offer}
+                      </Typography>
+                    )}
                   </CardContent>
                   <Typography
                     variant="h6"

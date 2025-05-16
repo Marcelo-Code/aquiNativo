@@ -40,7 +40,7 @@ export const GeneralContextProvider = ({ children }) => {
   //Hook para los datos del comprador
   const [buyerData, setBuyerData] = useState({});
 
-  //Función que verifica si hay suficiente stock
+  //Función que verifica si hay suficiente stock FUERA DE SERVICIO
   const outOfStock = (product, action) => {
     const productInCart = cart.find((item) => item.id === product.id);
     const productQuantityInCart = productInCart ? productInCart.quantity : 0;

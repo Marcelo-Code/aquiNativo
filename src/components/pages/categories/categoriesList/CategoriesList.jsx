@@ -43,9 +43,8 @@ export const CategoriesList = (categoriesListProps) => {
             </Button>
           );
         })}
+        <BackButtonContainer />
       </Box>
-
-      <BackButtonContainer />
     </Box>
   );
 };

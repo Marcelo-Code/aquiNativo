@@ -22,9 +22,14 @@ export const adminOptions = [
     link: `/brands`,
   },
   {
+    icon: <Icons.LocalOfferIcon />,
+    option: "Ofertas",
+    link: "/",
+  },
+  {
     icon: <Icons.InventoryIcon />,
     option: "Productos",
-    link: "/",
+    link: "/products",
   },
   {
     icon: <Icons.ReceiptIcon />,
@@ -40,9 +45,9 @@ export const adminOptions = [
 
 export const userOptions = [
   {
-    icon: <Icons.InventoryIcon />,
-    option: "Productos",
-    link: "/",
+    icon: <Icons.ContactsIcon />,
+    option: "Contacto",
+    link: "/contactUs",
   },
   {
     icon: <Icons.GroupsIcon />,
@@ -50,8 +55,13 @@ export const userOptions = [
     link: "/aboutUs",
   },
   {
-    icon: <Icons.ContactsIcon />,
-    option: "Contacto",
-    link: "/contactUs",
+    icon: <Icons.LocalOfferIcon />,
+    option: "Ofertas",
+    link: "/",
+  },
+  {
+    icon: <Icons.InventoryIcon />,
+    option: "Productos",
+    link: "/products",
   },
 ];

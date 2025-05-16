@@ -139,6 +139,12 @@ export const ProductsListUpdateMode = (productsListProps) => {
                       <b>Descripción: </b>
                       {product.description}
                     </Typography>
+                    <Typography variant="subtitle2" component="div">
+                      <b>Oferta: </b>
+                      {product.special_offer
+                        ? product.special_offer
+                        : "sin oferta"}
+                    </Typography>
                   </CardContent>
                   <Typography
                     variant="h6"

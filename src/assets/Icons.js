@@ -57,6 +57,7 @@ import FrontHandIcon from "@mui/icons-material/FrontHand";
 import CheckIcon from "@mui/icons-material/Check";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import SettingsIcon from "@mui/icons-material/Settings";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 export const Icons = {
   PersonAddIcon,
@@ -118,4 +119,5 @@ export const Icons = {
   CheckIcon,
   QueryBuilderIcon,
   SettingsIcon,
+  LocalOfferIcon,
 };

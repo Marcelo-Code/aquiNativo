@@ -25,6 +25,7 @@ import { CreateEditBrandsContainer } from "./components/pages/brands/createEditB
 import { UsersListContainer } from "./components/pages/users/usersList/UsersListContainer";
 import { Create } from "@mui/icons-material";
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
+import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
 
 function App() {
   return (
@@ -34,8 +35,10 @@ function App() {
           <NavBarContainer />
           <ScrollToTop />
           <Routes>
+            {/* Lista de ofertas */}
+            <Route path="/" element={<SpecialOffersContainer />} />
             {/* Lista de productos */}
-            <Route path="/" element={<ProductsListContainer />} />
+            <Route path="/products" element={<ProductsListContainer />} />
             {/* Carrito de compras */}
             <Route path="/cart" element={<CartListContainer />} />
             {/* Nosotros */}
