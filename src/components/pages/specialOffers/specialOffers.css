@@ -3,8 +3,13 @@
   src: url("../../../assets/fonts/roboto.ttf");
 }
 
+@font-face {
+  font-family: "novera";
+  src: url("../../../assets/fonts/noveraModern.otf");
+}
+
 .slick-dots {
-  bottom: -200px !important;
+  bottom: -100px !important;
 }
 
 .offerText {

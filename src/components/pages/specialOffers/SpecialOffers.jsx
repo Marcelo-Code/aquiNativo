@@ -7,6 +7,7 @@ import "./specialOffers.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { generalBackGroundColor } from "../../../utils/helpers";
+import { CurrencyFormat } from "../../common/currencyFormat/CurrencyFormat";
 
 export const SpecialOffers = (specialOffersProps) => {
   const { offers } = specialOffersProps;
@@ -44,68 +45,116 @@ export const SpecialOffers = (specialOffersProps) => {
       },
     ],
   };
+  if (offers.length === 0) {
+    return (
+      <Box className="generalContainer">
+        <Box className="generalSubTitle">
+          Sin ofertas por el momento... visitá nuestros productos
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Nuestras ofertas</Box>
+
       <Box sx={{ widthdisplay: "flex", justifyContent: "center" }}>
         <Slider {...settings} className="custom-slider">
           {offers.map((product, index) => (
-            <Box key={index} sx={{ padding: "30px" }}>
-              <Card
+            <Card
+              key={index}
+              sx={{
+                boxShadow: 10,
+                // border: "1px solid white",
+                margin: "30px",
+                height: "400px",
+                maxWidth: "350px",
+                borderRadius: "30px 30px 47px 47px",
+              }}
+            >
+              <CardContent
                 sx={{
-                  height: "400px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
                   width: "100%",
-                  maxWidth: "400px",
+                  padding: 0,
+                  margin: 0,
                 }}
               >
-                <CardContent sx={{ pt: 0 }}>
-                  {/* <Typography sx={{ textAlign: "center" }} variant="h6">
-                    {product.description}
-                  </Typography> */}
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "40px",
-                      fontSize: "20px",
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    className="offerText"
-                  >
-                    {product.description}
-                  </Box>
-                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "60px",
+                    fontSize: "20px",
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: generalBackGroundColor,
+                    borderRadius: "45px",
+                    color: "black",
+                    boxShadow: 5,
+                    zIndex: 2,
+                  }}
+                >
+                  {product.description}
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box>
                     <img
                       src={product.image}
                       alt={product.description}
                       style={{
                         width: "100%",
-                        maxWidth: "250px",
+                        maxWidth: "230px",
                         height: "auto",
                         objectFit: "cover",
                       }}
                     />
                   </Box>
                   <Box
-                    className="offerText"
                     sx={{
-                      width: "100%",
-                      height: "110px",
-                      fontSize: "25px",
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      width: "120px",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      backgroundColor: "black",
+                      padding: "10px",
+                      borderRadius: "10px 0 0 10px",
+                      color: "white",
                     }}
                   >
-                    {product.special_offer}
+                    {CurrencyFormat(product.price)} {product.price}
                   </Box>
-                </CardContent>
-              </Card>
-            </Box>
+                </Box>
+                <Box
+                  sx={{
+                    marginTop: "20px",
+                    width: "100%",
+                    height: "90px",
+                    fontSize: "20px",
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: generalBackGroundColor,
+                    borderRadius: "45px",
+                    color: "black",
+                    boxShadow: 5,
+                    fontFamily: "arial",
+                  }}
+                >
+                  {product.special_offer}
+                </Box>
+              </CardContent>
+            </Card>
           ))}
         </Slider>
       </Box>
