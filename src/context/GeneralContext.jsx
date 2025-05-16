@@ -7,7 +7,8 @@ export const GeneralContext = createContext();
 
 export const GeneralContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true" ? true : false;
+    const stored = localStorage.getItem("isLoggedIn");
+    return stored === "true";
   });
 
   const [loggedUser, setLoggedUser] = useState(() =>

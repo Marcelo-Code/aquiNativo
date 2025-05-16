@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 import { getInitials } from "../../utils/helpers";
 import { supabaseClient } from "../config/config";
 
@@ -35,41 +34,44 @@ export const checkAuth = async (setIsloggedIn, setLoggedUser) => {
 
     if (error) throw new Error("Error al obtener la sesión");
 
-    //Obtiene la sesión
     if (!data?.session) {
       setIsloggedIn(false);
       setLoggedUser("");
-      throw new Error("Sesión no activa");
+      console.log("No hay sesion activa");
+      return;
     }
 
-    //Obtiene el email de la sesión
     const email = data.session.user.email;
 
-    //Obtiene los datos del usuario a partir del email
     const { data: userData, error: userError } = await supabaseClient
       .from("users")
       .select("*")
       .eq("email", email)
       .single();
 
-    if (userError) throw new Error("Error al obtener usuario: ");
+    if (userError || !userData) {
+      setIsloggedIn(false);
+      setLoggedUser("");
+      return;
+    }
 
-    //Si el usuario no esta activo no deja hacer el login
     if (userData.active === false) {
       setIsloggedIn(false);
       setLoggedUser("");
-      throw new Error();
+      return;
     }
 
     const userInitials = getInitials(userData.name, userData.last_name);
 
-    //Obtiene los datos del usuario
     setLoggedUser(userInitials);
     setIsloggedIn(true);
 
     return { status: 200, message: "Sesión activa" };
   } catch (err) {
-    throw err;
+    // En caso de error inesperado, asegurate de desloguear también
+    setIsloggedIn(false);
+    setLoggedUser("");
+    return { status: 500, message: err.message || "Error inesperado" };
   }
 };
 
