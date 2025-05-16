@@ -1,16 +1,13 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import "../../../assets/css/generalStyles.css";
 import "./settings.css";
 import { DonutChart } from "../../common/donutChart/DonutChart";
 import { Icons } from "../../../assets/Icons";
-import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
+import {
+  buttonColor,
+  generalBackGroundColor,
+  normalizeName,
+} from "../../../utils/helpers";
 export const Settings = (settingsProps) => {
   const {
     totalSize,
@@ -21,7 +18,9 @@ export const Settings = (settingsProps) => {
     handleUpdatePassword,
     isLoadingButton,
     handleGoBack,
+    loggedUserData,
   } = settingsProps;
+
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Ajustes</Box>
@@ -42,6 +41,16 @@ export const Settings = (settingsProps) => {
       </Box>
       <Box className="generalSubTitle" sx={{ marginTop: "10px" }}>
         Actualizar contraseña
+      </Box>
+      <Box className="generalSubTitle" sx={{ marginTop: "10px" }}>
+        <b>Usuario logueado: </b>{" "}
+        {normalizeName(loggedUserData ? loggedUserData.name : "User name")}{" "}
+        {normalizeName(
+          loggedUserData ? loggedUserData.last_name : "User last name"
+        )}
+      </Box>
+      <Box className="generalSubTitle">
+        <b>Email: </b> {loggedUserData ? loggedUserData.email : "User email"}
       </Box>
 
       <Box

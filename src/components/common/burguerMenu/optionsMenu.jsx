@@ -34,7 +34,7 @@ export const adminOptions = [
   {
     icon: <Icons.PersonIcon />,
     option: "Usuarios",
-    link: "",
+    link: "/users",
   },
 ];
 

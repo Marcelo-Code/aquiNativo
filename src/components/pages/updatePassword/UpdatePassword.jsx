@@ -8,8 +8,7 @@ export const UpdatePassword = (updatePasswordProps) => {
     confirmPassword,
     setConfirmPassword,
     handleUpdatePassword,
-    error,
-    successMessage,
+    isLoadingButton,
   } = updatePasswordProps;
   return (
     <Container
@@ -58,16 +57,7 @@ export const UpdatePassword = (updatePasswordProps) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          {error && (
-            <Typography color="white" align="center">
-              {error}
-            </Typography>
-          )}
-          {successMessage && (
-            <Typography color="white" align="center">
-              {successMessage}
-            </Typography>
-          )}
+
           <Button
             type="submit"
             fullWidth
@@ -75,6 +65,7 @@ export const UpdatePassword = (updatePasswordProps) => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleUpdatePassword}
             startIcon={<Icons.KeyIcon />}
+            loading={isLoadingButton}
           >
             Actualizar
           </Button>

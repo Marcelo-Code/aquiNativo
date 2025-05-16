@@ -1,67 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UpdatePassword } from "./UpdatePassword";
-import { LoadingContainer } from "../loading/LoadingContainer";
-import { authToken, supabaseClient } from "../../../services/config/config";
+import { updatePassword } from "../../../services/api/log";
+import {
+  errorToastifyAlert,
+  successToastifyAlert,
+} from "../../../utils/alerts";
 
 export const UpdatePasswordContainer = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkToken = () => {
-      const tokenData = localStorage.getItem(authToken);
-      if (tokenData) {
-        const parsedToken = JSON.parse(tokenData);
-        setAccessToken(parsedToken.access_token);
-        setIsLoading(false);
-      } else {
-        setTimeout(checkToken, 100); // Esperar 100ms y volver a intentar
-      }
-    };
-
-    checkToken();
-  }, [accessToken]);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
 
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccessMessage("");
+    setIsLoadingButton(true);
 
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match.");
+      errorToastifyAlert("Las contraseñas no coinciden");
       return;
     }
 
-    try {
-      const { error } = await supabaseClient.auth.updateUser(
-        {
-          password: newPassword,
-        },
-        {
-          access_token: accessToken,
-        }
-      );
-
-      if (error) {
-        setError(error.message);
-      } else {
-        setSuccessMessage("Password updated successfully!");
+    updatePassword(newPassword)
+      .then((response) => {
+        if (response.status !== 200) throw new Error(response.message);
+        successToastifyAlert(response.message);
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+      })
+      .catch((error) => {
+        errorToastifyAlert(error.message);
+      })
+      .finally(() => setIsLoadingButton(false));
   };
-
-  if (isLoading) return <LoadingContainer />;
 
   const updatePasswordProps = {
     newPassword,
@@ -69,8 +42,7 @@ export const UpdatePasswordContainer = () => {
     confirmPassword,
     setConfirmPassword,
     handleUpdatePassword,
-    error,
-    successMessage,
+    isLoadingButton,
   };
 
   return <UpdatePassword {...updatePasswordProps} />;

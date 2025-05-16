@@ -1,4 +1,11 @@
-import { Container, TextField, Button, Box, Typography } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Box,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import "./login.css";
 import { Link } from "react-router-dom";
 import { Icons } from "../../../assets/Icons";
@@ -10,8 +17,8 @@ export const Login = ({
   setEmail,
   password,
   setPassword,
-  error,
   handleGoBack,
+  isLoadingButton,
 }) => {
   return (
     <Container component="main" maxWidth="xs" className="loginContainer">
@@ -90,11 +97,7 @@ export const Login = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && (
-            <Typography color="white" align="center">
-              {error}
-            </Typography>
-          )}
+
           <Button
             type="submit"
             fullWidth
@@ -112,6 +115,10 @@ export const Login = ({
             }}
             startIcon={<Icons.LoginIcon />}
             onClick={handleLogin}
+            loading={isLoadingButton}
+            loadingIndicator={
+              <CircularProgress size={16} sx={{ color: "white" }} />
+            }
           >
             LogIn
           </Button>

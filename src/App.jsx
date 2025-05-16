@@ -22,6 +22,9 @@ import { CategoriesListContainer } from "./components/pages/categories/categorie
 import { CreateEditCategoriesContainer } from "./components/pages/categories/createEditCategories/CreateEditCategoriesContainer";
 import { BrandsListContainer } from "./components/pages/brands/brandsList/BrandsListContainer";
 import { CreateEditBrandsContainer } from "./components/pages/brands/createEditBrands/CreateEditBrandsContainer";
+import { UsersListContainer } from "./components/pages/users/usersList/UsersListContainer";
+import { Create } from "@mui/icons-material";
+import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 
 function App() {
   return (
@@ -37,7 +40,7 @@ function App() {
             <Route path="/cart" element={<CartListContainer />} />
             {/* Nosotros */}
             <Route path="/aboutUs" element={<AboutUsContainer />} />"
-            {/* Login */}
+            {/* Contacto */}
             <Route path="/contactUs" element={<ContactUsContainer />} />"
             {/* Login */}
             <Route path="/login" element={<LoginContainer />} />
@@ -54,6 +57,33 @@ function App() {
             {/* 404 */}
             <Route path="*" element={<div>404</div>} />
             {/* Rutas protegidas para el admin */}
+            {/* Lista de usuarios */}
+            <Route
+              path="/users"
+              element={
+                <ProtectedUserRoute>
+                  <UsersListContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Editar usuario */}
+            <Route
+              path="/updateUsers/updateUser/:userId"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditUserContainer />
+                </ProtectedUserRoute>
+              }
+            />
+            {/* Crear usuario */}
+            <Route
+              path="/users/createUser"
+              element={
+                <ProtectedUserRoute>
+                  <CreateEditUserContainer />
+                </ProtectedUserRoute>
+              }
+            />
             {/* Lista de categorías */}
             <Route
               path="/categories"

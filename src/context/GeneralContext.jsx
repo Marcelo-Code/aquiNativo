@@ -10,9 +10,14 @@ export const GeneralContextProvider = ({ children }) => {
     return localStorage.getItem("isLoggedIn") === "true" ? true : false;
   });
 
+  const [loggedUser, setLoggedUser] = useState(() =>
+    localStorage.getItem("loggedUser")
+  );
+
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn);
-  }, [isLoggedIn]);
+    localStorage.setItem("loggedUser", loggedUser);
+  }, [isLoggedIn, loggedUser]);
 
   const navigate = useNavigate();
 
@@ -183,6 +188,8 @@ export const GeneralContextProvider = ({ children }) => {
     setBuyerData,
     isLoggedIn,
     setIsLoggedIn,
+    loggedUser,
+    setLoggedUser,
   };
 
   return (

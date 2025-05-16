@@ -5,11 +5,15 @@ import { GeneralContext } from "../context/GeneralContext";
 import { checkAuth } from "../services/api/log";
 
 export const ProtectedUserRoute = ({ children }) => {
-  const { isLoggedIn = null, setIsLoggedIn } = useContext(GeneralContext);
+  const {
+    isLoggedIn = null,
+    setIsLoggedIn,
+    setLoggedUser,
+  } = useContext(GeneralContext);
 
   //Verificar si el usuario esta logueado
   useEffect(() => {
-    checkAuth(setIsLoggedIn);
+    checkAuth(setIsLoggedIn, setLoggedUser);
   }, []);
 
   if (isLoggedIn === null) return <LoadingContainer />;

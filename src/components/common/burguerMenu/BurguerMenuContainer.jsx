@@ -7,7 +7,8 @@ import { useConfirm } from "../../../context/ConfirmContext";
 import { errorToastifyAlert } from "../../../utils/alerts";
 
 export const BurguerMenuContainer = () => {
-  const { setIsLoggedIn, isLoggedIn } = useContext(GeneralContext);
+  const { setIsLoggedIn, isLoggedIn, setLoggedUser } =
+    useContext(GeneralContext);
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const confirm = useConfirm();
@@ -24,6 +25,7 @@ export const BurguerMenuContainer = () => {
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(false);
+          setLoggedUser("");
           window.location.href = "/";
         }
       })

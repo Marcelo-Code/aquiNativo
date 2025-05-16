@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
 import { Badge, Box, IconButton, Tooltip } from "@mui/material";
 import { Icons } from "../../../assets/Icons";
 import "./navbar.css";
 import { BurguerMenuContainer } from "../../common/burguerMenu/BurguerMenuContainer";
 import { generalBackGroundColor } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
-import { GeneralContext } from "../../../context/GeneralContext";
 
 export const NavBar = (navBarProps) => {
-  const { totalProductsInCart, isLoggedIn } = navBarProps;
+  const { totalProductsInCart, isLoggedIn, loggedUser } = navBarProps;
   const navBarIcon = {
     fontSize: "30px",
     color: "white",
@@ -49,7 +47,7 @@ export const NavBar = (navBarProps) => {
       </Tooltip>
 
       {isLoggedIn ? (
-        <Box className="logged">Admin</Box>
+        <Box className="logged">{loggedUser ? loggedUser : "User"}</Box>
       ) : (
         <Tooltip title="Ingresar" placement="top-end" arrow>
           <Link to="/login">

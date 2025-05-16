@@ -59,3 +59,22 @@ export const handleError = (response) => {
       : JSON.stringify(response.error);
   throw new Error(`${response.message}: ${errorMessage}`);
 };
+
+//Función para normalizar mayúsculas en nombres
+export const normalizeName = (name) => {
+  if (!name) return "";
+  return name
+    .toLowerCase()
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+//Función para obtener iniciales
+export const getInitials = (name, lastName) => {
+  const firstInitial = name?.trim()?.[0]?.toUpperCase() || "";
+  const lastInitial = lastName?.trim()?.[0]?.toUpperCase() || "";
+  return firstInitial + lastInitial;
+};

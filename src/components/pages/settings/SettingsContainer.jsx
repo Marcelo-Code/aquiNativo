@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Settings } from "./Settings";
 import { getTotalStorageAndDbSize } from "../../../services/api/generalFunctions";
 import { LoadingContainer } from "../loading/LoadingContainer";
-import { authToken } from "../../../services/config/config";
 import { ErrorContainer } from "../error/ErrorContainer";
 import { updatePassword } from "../../../services/api/log";
 import {
@@ -10,45 +9,30 @@ import {
   successToastifyAlert,
 } from "../../../utils/alerts";
 import { GeneralContext } from "../../../context/GeneralContext";
+import { getLoggedInUserData } from "../../../services/api/users";
 
 export const SettingsContainer = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [settingsError, setSettingsError] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [totalSize, setTotalSize] = useState({});
+  const [loggedUserData, setLoggedUserData] = useState({});
 
   const { handleGoBack } = useContext(GeneralContext);
-
-  useEffect(() => {
-    //Recupera el token de localStorage
-    const checkToken = () => {
-      const tokenData = localStorage.getItem(authToken);
-      if (tokenData) {
-        const parsedToken = JSON.parse(tokenData);
-        setAccessToken(parsedToken.access_token);
-        setIsLoading(false);
-      } else {
-        setTimeout(checkToken, 100); // Esperar 100ms y volver a intentar
-      }
-    };
-
-    checkToken();
-  }, [accessToken]);
 
   //Función para actualizar la contraseña
   const handleUpdatePassword = async (e) => {
     e.preventDefault();
-    setIsLoadingButton(true);
 
     if (newPassword !== confirmPassword) {
       errorToastifyAlert("Las contraseñas no coinciden");
       return;
     }
 
-    updatePassword(newPassword, accessToken)
+    setIsLoadingButton(true);
+    updatePassword(newPassword)
       .then((response) => {
         if (response.status !== 200) throw new Error(response.message);
         successToastifyAlert(response.message);
@@ -56,20 +40,29 @@ export const SettingsContainer = () => {
       .catch((error) => {
         errorToastifyAlert(error.message);
       })
-      .finally(() => setIsLoadingButton(false));
+      .finally(() => {
+        setIsLoadingButton(false);
+        setNewPassword("");
+        setConfirmPassword("");
+      });
   };
 
   //Función para obtener el tamaño total
   useEffect(() => {
     setIsLoading(true);
-    getTotalStorageAndDbSize()
-      .then((response) => {
-        setTotalSize(response.data);
+    Promise.all([getTotalStorageAndDbSize(), getLoggedInUserData()])
+      .then(([totalSizeResponse, userResponse]) => {
+        const totalSizeData = totalSizeResponse.data;
+        const userResponseData = userResponse.data;
+        setTotalSize(totalSizeData);
+        setLoggedUserData(userResponseData);
       })
       .catch((error) => {
         setSettingsError(error.message);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) return <LoadingContainer />;
@@ -77,7 +70,6 @@ export const SettingsContainer = () => {
     const errorContainerProps = {
       error: settingsError.message,
     };
-    console.log(errorContainerProps);
     return <ErrorContainer {...errorContainerProps} />;
   }
 
@@ -90,6 +82,7 @@ export const SettingsContainer = () => {
     handleUpdatePassword,
     isLoadingButton,
     handleGoBack,
+    loggedUserData,
   };
 
   return <Settings {...settingsProps} />;
