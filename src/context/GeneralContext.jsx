@@ -179,6 +179,7 @@ export const GeneralContextProvider = ({ children }) => {
 
   const data = {
     cart,
+    setCart,
     addProduct,
     removeProduct,
     addProductToCart,
@@ -191,6 +192,7 @@ export const GeneralContextProvider = ({ children }) => {
     setIsLoggedIn,
     loggedUser,
     setLoggedUser,
+    existingProductInCart,
   };
 
   return (

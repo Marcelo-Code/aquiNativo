@@ -72,7 +72,7 @@ export const getProduct = async (productId) => {
   try {
     const { data, error } = await supabaseClient
       .from("products")
-      .select("*")
+      .select("*, categories: category_id(name), brands: brand_id(name)")
       .eq("id", productId);
     if (error) throw error;
 

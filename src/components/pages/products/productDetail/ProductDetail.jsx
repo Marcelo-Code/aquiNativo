@@ -10,7 +10,13 @@ import {
 import { Icons } from "../../../../assets/Icons";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 
-export const ProductDetail = ({ product }) => {
+export const ProductDetail = ({
+  product,
+  addProduct,
+  removeProduct,
+  counter,
+  addProductToCart,
+}) => {
   const addRemoveButtonStyle = {
     width: 28,
     height: 28,
@@ -23,21 +29,23 @@ export const ProductDetail = ({ product }) => {
       backgroundColor: buttonColor,
     },
   };
+
+  console.log(product);
   return (
     <Box className="generalContainer">
-      <Box className="tarjeta">
+      <Box className="generalTitle">Nuestras ofertas</Box>
+      <Box className="productCardContainer">
         <Box className="productCard">
           <Box className="productCardImage">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="productImage"
-            />
+            <img src={product.image} alt={product.name} />
           </Box>
           <Box className="productCardInfo">
-            <ul>
+            <ul style={{ textAlign: "left", lineHeight: "20px" }}>
+              <li>{product.categories.name}</li>
               <li>{product.description}</li>
-              <li>{currencyFormat(product.price)}</li>
+              <li style={{ fontSize: "20px", fontWeight: "bold" }}>
+                {currencyFormat(product.price)}
+              </li>
             </ul>
             <Box className="productCardActions">
               <Box className="productActionsContent">
@@ -45,13 +53,15 @@ export const ProductDetail = ({ product }) => {
                   <IconButton
                     sx={addRemoveButtonStyle}
                     aria-label="remove product"
+                    onClick={() => removeProduct()}
                   >
                     <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
                   </IconButton>
-                  <Box>{product.counter}</Box>
+                  <Box>{counter}</Box>
                   <IconButton
                     sx={addRemoveButtonStyle}
-                    aria-label="remove product"
+                    aria-label="add product"
+                    onClick={() => addProduct()}
                   >
                     <Icons.AddIcon sx={{ fontSize: "20px" }} />
                   </IconButton>
@@ -61,6 +71,7 @@ export const ProductDetail = ({ product }) => {
                   startIcon={<Icons.AddShoppingCartIcon />}
                   size="small"
                   fullWidth
+                  onClick={() => addProductToCart(product, counter)}
                   sx={{
                     marginTop: 2,
                     width: "100%",
@@ -77,9 +88,8 @@ export const ProductDetail = ({ product }) => {
             </Box>
           </Box>
         </Box>
+        <BackButtonContainer />
       </Box>
-
-      <BackButtonContainer />
     </Box>
   );
 };

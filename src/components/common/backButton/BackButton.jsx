@@ -14,6 +14,7 @@ export const BackButton = (BackButtonProps) => {
           backgroundColor: "white",
           border: "1px solid black",
           maxWidth: "400px",
+          minWidth: "300px",
           width: "80%",
           "&:active": {
             backgroundColor: hoverButtonColor,
