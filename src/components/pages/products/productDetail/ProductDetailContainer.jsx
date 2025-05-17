@@ -18,8 +18,6 @@ export const ProductDetailContainer = () => {
 
   const [counter, setCounter] = useState(1);
 
-  console.log(cart);
-
   const addProductToCart = (product, counter) => {
     const quantity = counter;
     const exists = existingProductInCart(product);

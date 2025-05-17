@@ -19,11 +19,20 @@ export const login = async (email, password) => {
 //Función de logout
 export const logout = async () => {
   try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError) throw sessionError;
+    if (!session) throw new Error("No hay sesión activa.");
+
     const { error } = await supabaseClient.auth.signOut();
     if (error) throw error;
+
     return { status: 200, message: "Logout exitoso" };
   } catch (error) {
-    return { status: 500, message: `Error al cerrar sesion ${error}` };
+    return { status: 500, message: `Error al cerrar sesión: ${error.message}` };
   }
 };
 

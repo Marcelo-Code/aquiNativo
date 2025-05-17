@@ -30,7 +30,6 @@ export const ProductDetail = ({
     },
   };
 
-  console.log(product);
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Nuestras ofertas</Box>
@@ -60,14 +59,14 @@ export const ProductDetail = ({
           {product.special_offer.toUpperCase()}
         </Box>
       </Box>
-      <Box sx={{ marginTop: "40px" }} className="productCardContainer">
+      <Box sx={{ marginTop: "10px" }} className="productCardContainer">
         <Box className="productCard">
           <Box className="productCardImage">
             <img src={product.image} alt={product.name} />
           </Box>
           <Box className="productCardInfo">
             <Box>
-              <ul style={{ textAlign: "left", lineHeight: "20px" }}>
+              <ul style={{ textAlign: "center", lineHeight: "20px" }}>
                 <li>{product.categories.name}</li>
                 <li>{product.description}</li>
                 <li style={{ fontSize: "20px", fontWeight: "bold" }}>
