@@ -17,14 +17,15 @@ export const NavBar = (navBarProps) => {
       className="navBarContainer"
       sx={{ backgroundColor: generalBackGroundColor }}
     >
-      {/* <IconButton>
-        <Icons.MenuIcon sx={navBarIcon} />
-      </IconButton> */}
       <BurguerMenuContainer />
-      <Box className="logo">
-        <img src={"/images/logo2.png"} width={80} />
-        {/* <img src={"/images/logo.png"} width={110} /> */}
-        {/* <Box>AQUÍ NATIVO</Box> */}
+      {/* <Box className="logo"></Box> */}
+      <Box className="titleLogo">
+        NATIVO
+        <img
+          src={"/images/leaf.png"}
+          style={{ paddingBottom: "3px" }}
+          width={50}
+        />
       </Box>
 
       <Tooltip title="Carrito" placement="top-end" arrow>
