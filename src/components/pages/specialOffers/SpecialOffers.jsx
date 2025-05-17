@@ -32,13 +32,13 @@ export const SpecialOffers = (specialOffersProps) => {
         },
       },
       {
-        breakpoint: 800,
+        breakpoint: 1100,
         settings: {
           slidesToShow: Math.min(offers.length, 2),
         },
       },
       {
-        breakpoint: 500,
+        breakpoint: 700,
         settings: {
           slidesToShow: 1,
         },
@@ -59,113 +59,127 @@ export const SpecialOffers = (specialOffersProps) => {
     <Box className="generalContainer">
       <Box className="generalTitle">Nuestras ofertas</Box>
 
-      <Box sx={{ widthdisplay: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1500px",
+          margin: "0 auto",
+        }}
+      >
         <Slider {...settings} className="custom-slider">
           {offers.map((product, index) => (
-            <Card
+            <Box
               key={index}
-              onClick={() => handleProductDetail(product.id)}
-              sx={{
-                cursor: "pointer",
-                boxShadow: 10,
-                margin: "30px",
-                height: "400px",
-                maxWidth: "350px",
-                borderRadius: "30px 30px 47px 47px",
-                transition: "transform 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.1)",
-                },
-              }}
+              pl={6}
+              display="flex"
+              justifyContent="center"
+              mt={2}
+              mb={4}
             >
-              <CardContent
+              <Card
+                key={index}
+                onClick={() => handleProductDetail(product.id)}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  width: "100%",
-                  padding: 0,
-                  margin: 0,
+                  cursor: "pointer",
+                  boxShadow: 10,
+                  height: "400px",
+                  maxWidth: "350px",
+                  borderRadius: "30px 30px 47px 47px",
+                  transition: "transform 0.3s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.1)",
+                  },
                 }}
               >
-                <Box
+                <CardContent
                   sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
                     width: "100%",
-                    height: "60px",
-                    fontSize: "20px",
-                    textAlign: "center",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: generalBackGroundColor,
-                    borderRadius: "45px",
-                    color: "white",
-                    boxShadow: 5,
-                    zIndex: 2,
-                    textShadow: "0px 0px 5px black",
+                    padding: 0,
+                    margin: 0,
                   }}
                 >
-                  {product.description}
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box>
-                    <img
-                      src={product.image}
-                      alt="producto"
-                      style={{
-                        width: "100%",
-                        maxWidth: "230px",
-                        height: "230px",
-                        objectFit: "contain",
-                        margin: "0 auto",
-                        display: "block",
-                      }}
-                    />
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "60px",
+                      fontSize: "20px",
+                      textAlign: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: generalBackGroundColor,
+                      borderRadius: "45px",
+                      color: "white",
+                      boxShadow: 5,
+                      zIndex: 2,
+                      textShadow: "0px 0px 5px black",
+                    }}
+                  >
+                    {product.description}
                   </Box>
                   <Box
                     sx={{
-                      width: "120px",
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      backgroundColor: "black",
-                      padding: "10px",
-                      borderRadius: "25px 0 0 25px",
-                      color: "white",
-                      textAlign: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
-                    {CurrencyFormat(product.price)} {product.price}
+                    <Box>
+                      <img
+                        src={product.image}
+                        alt="producto"
+                        style={{
+                          width: "100%",
+                          maxWidth: "230px",
+                          height: "230px",
+                          objectFit: "contain",
+                          margin: "0 auto",
+                          display: "block",
+                        }}
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        width: "120px",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        backgroundColor: "black",
+                        padding: "10px",
+                        borderRadius: "25px 0 0 25px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                    >
+                      {CurrencyFormat(product.price)} {product.price}
+                    </Box>
                   </Box>
-                </Box>
-                <Box
-                  sx={{
-                    marginTop: "20px",
-                    width: "100%",
-                    height: "90px",
-                    fontSize: "20px",
-                    textAlign: "center",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: generalBackGroundColor,
-                    borderRadius: "45px",
-                    color: "white",
-                    fontWeight: "bold",
-                    textShadow: "0px 0px 5px black",
-                    boxShadow: 5,
-                    fontFamily: "arial",
-                  }}
-                >
-                  {product.special_offer.toUpperCase()}
-                </Box>
-              </CardContent>
-            </Card>
+                  <Box
+                    sx={{
+                      marginTop: "20px",
+                      width: "100%",
+                      height: "90px",
+                      fontSize: "20px",
+                      textAlign: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: generalBackGroundColor,
+                      borderRadius: "45px",
+                      color: "white",
+                      fontWeight: "bold",
+                      textShadow: "0px 0px 5px black",
+                      boxShadow: 5,
+                      fontFamily: "arial",
+                    }}
+                  >
+                    {product.special_offer.toUpperCase()}
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
           ))}
         </Slider>
       </Box>

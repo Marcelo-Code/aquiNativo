@@ -24,3 +24,7 @@
 .offerCard {
   background: linear-gradient(to right, #ffffff 0%, #6bcebf 50%, #ffffff 100%);
 }
+
+.custom-slider {
+  width: 100%;
+}
