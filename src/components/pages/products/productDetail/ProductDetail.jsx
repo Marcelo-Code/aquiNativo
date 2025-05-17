@@ -52,8 +52,9 @@ export const ProductDetail = ({
             marginTop: "50px",
             fontSize: "20px",
             borderRadius: "50px",
-            textShadow: "2px 2px 2px black",
+            textShadow: "0px 0px 5px black",
             boxShadow: "0px 0px 10px black",
+            fontWeight: "bold",
           }}
         >
           {product.special_offer.toUpperCase()}
