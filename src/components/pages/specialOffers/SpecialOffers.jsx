@@ -8,6 +8,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { generalBackGroundColor } from "../../../utils/helpers";
 import { CurrencyFormat } from "../../common/currencyFormat/CurrencyFormat";
+import { currencyFormat } from "../../common/currencyFormat/CurrencyFormatContainer";
 
 export const SpecialOffers = (specialOffersProps) => {
   const { offers, handleProductDetail } = specialOffersProps;
@@ -143,17 +144,17 @@ export const SpecialOffers = (specialOffersProps) => {
                     </Box>
                     <Box
                       sx={{
-                        width: "120px",
+                        width: "140px",
                         fontSize: "20px",
                         fontWeight: "bold",
                         backgroundColor: "black",
-                        padding: "10px",
+                        padding: "5px",
                         borderRadius: "25px 0 0 25px",
                         color: "white",
                         textAlign: "center",
                       }}
                     >
-                      {CurrencyFormat(product.price)} {product.price}
+                      {currencyFormat(product.price)}
                     </Box>
                   </Box>
                   <Box

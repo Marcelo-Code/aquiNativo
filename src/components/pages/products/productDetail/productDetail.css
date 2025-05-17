@@ -1,16 +1,84 @@
-.actions {
-  .cardActions {
-    opacity: 0;
-    transform: translateY(400px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+.tarjeta {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  padding: 16px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.productCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: center;
+}
+
+.productCardImage img,
+.productImage {
+  width: 120%;
+  max-width: 250px;
+  height: auto;
+  object-fit: cover;
+}
+
+.productCardInfo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.productCardInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.productCardActions {
+  width: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.productActionsContent {
+  width: 100%;
+}
+
+.productCounter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  padding: 4px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 60%;
+  margin: auto;
+}
+
+/* Responsivo */
+@media screen and (max-width: 400px) {
+  .productCard {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .productCardImage,
+  .productCardInfo {
+    grid-column: 1;
+  }
+
+  .productCardImage img {
+    max-width: 100%;
+    margin: auto;
   }
 }
