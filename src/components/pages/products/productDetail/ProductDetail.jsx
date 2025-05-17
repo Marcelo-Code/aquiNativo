@@ -34,19 +34,46 @@ export const ProductDetail = ({
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Nuestras ofertas</Box>
-      <Box className="productCardContainer">
+      <Box
+        sx={{
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            padding: "20px",
+            backgroundColor: generalBackGroundColor,
+            textAlign: "center",
+            width: "80%",
+            maxWidth: "600px",
+            margin: "auto",
+            color: "white",
+            marginTop: "50px",
+            fontSize: "20px",
+            borderRadius: "50px",
+            textShadow: "2px 2px 2px black",
+            boxShadow: "0px 0px 10px black",
+          }}
+        >
+          {product.special_offer.toUpperCase()}
+        </Box>
+      </Box>
+      <Box sx={{ marginTop: "40px" }} className="productCardContainer">
         <Box className="productCard">
           <Box className="productCardImage">
             <img src={product.image} alt={product.name} />
           </Box>
           <Box className="productCardInfo">
-            <ul style={{ textAlign: "left", lineHeight: "20px" }}>
-              <li>{product.categories.name}</li>
-              <li>{product.description}</li>
-              <li style={{ fontSize: "20px", fontWeight: "bold" }}>
-                {currencyFormat(product.price)}
-              </li>
-            </ul>
+            <Box>
+              <ul style={{ textAlign: "left", lineHeight: "20px" }}>
+                <li>{product.categories.name}</li>
+                <li>{product.description}</li>
+                <li style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  {currencyFormat(product.price)}
+                </li>
+              </ul>
+            </Box>
             <Box className="productCardActions">
               <Box className="productActionsContent">
                 <Box className="productCounter">
@@ -87,8 +114,10 @@ export const ProductDetail = ({
               </Box>
             </Box>
           </Box>
+          <Box className="productCardBackAction">
+            <BackButtonContainer />
+          </Box>
         </Box>
-        <BackButtonContainer />
       </Box>
     </Box>
   );

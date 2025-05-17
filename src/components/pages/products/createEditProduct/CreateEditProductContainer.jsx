@@ -71,8 +71,6 @@ export const CreateEditProductContainer = () => {
 
     const updatedFormData = { ...formData, [name]: value };
 
-    console.log(updatedFormData);
-
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
   };
@@ -115,7 +113,6 @@ export const CreateEditProductContainer = () => {
 
   // Función para manejar la carga de archivos
   const handleFileChange = async (event) => {
-    console.log("Archivo seleccionado");
     const file = event.target.files[0];
     if (file) {
       const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -142,7 +139,7 @@ export const CreateEditProductContainer = () => {
           type: "image/webp",
         });
 
-        console.log("Imagen comprimida y convertida a WebP:", webpFile);
+        // console.log("Imagen comprimida y convertida a WebP:", webpFile);
 
         await uploadImage(webpFile, documentName, formData);
         const { data } = await getProduct(formData.id);
@@ -192,9 +189,10 @@ export const CreateEditProductContainer = () => {
     setIsLoadingButton(true);
     setCreatedProduct(false);
 
-    const request = productId ? updateProduct : createProduct;
+    delete formData.brands;
+    delete formData.categories;
 
-    console.log(formData);
+    const request = productId ? updateProduct : createProduct;
 
     try {
       const response = await request(formData);
@@ -210,8 +208,6 @@ export const CreateEditProductContainer = () => {
       const action = productId ? "actualizado" : "creado";
       successToastifyAlert(`Producto ${action} con éxito`);
       setModifiedFlag(false);
-
-      console.log(response);
 
       if (!productId) {
         // setFormData(response.data);
