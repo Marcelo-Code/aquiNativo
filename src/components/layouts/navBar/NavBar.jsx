@@ -1,4 +1,4 @@
-import { Badge, Box, IconButton, Tooltip } from "@mui/material";
+import { Badge, Box, IconButton, Tooltip, Typography } from "@mui/material";
 import { Icons } from "../../../assets/Icons";
 import "./navbar.css";
 import { BurguerMenuContainer } from "../../common/burguerMenu/BurguerMenuContainer";
@@ -18,11 +18,15 @@ export const NavBar = (navBarProps) => {
       sx={{ backgroundColor: generalBackGroundColor }}
     >
       <BurguerMenuContainer />
-      {/* <Box className="logo"></Box> */}
       <Link style={{ textDecoration: "none" }} to="/">
-        <Box className="titleLogo">
-          NATIVO
-          <img src={"/images/leaf.png"} width={25} />
+        <Box className="titleLogoContainer">
+          <Box className="titleLogo">
+            <Box sx={{ fontSize: "30px" }}>NATIVO</Box>
+            <Box sx={{ fontSize: "10px" }}>ALMACEN NATURAL</Box>
+          </Box>
+          <Box>
+            <img src={"/images/leaf.png"} width={25} />
+          </Box>
         </Box>
       </Link>
 

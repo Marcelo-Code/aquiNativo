@@ -27,13 +27,22 @@
   font-family: "pestoFresco";
 }
 
+.titleLogoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .titleLogo {
   display: flex;
   align-items: center;
   font-family: "bell";
-  font-size: 30px;
   /* text-shadow: 0 0 10px black; */
   color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .logged {
