@@ -22,11 +22,7 @@ export const NavBar = (navBarProps) => {
       <Link style={{ textDecoration: "none" }} to="/">
         <Box className="titleLogo">
           NATIVO
-          <img
-            src={"/images/leaf.png"}
-            style={{ paddingBottom: "5px" }}
-            width={25}
-          />
+          <img src={"/images/leaf.png"} width={25} />
         </Box>
       </Link>
 
@@ -35,9 +31,10 @@ export const NavBar = (navBarProps) => {
           badgeContent={totalProductsInCart}
           showZero={true}
           sx={{
+            marginTop: "7px",
             "& .MuiBadge-badge": {
               backgroundColor: "black",
-              color: "white", // opcional, para el número
+              color: "white",
             },
           }}
         >
