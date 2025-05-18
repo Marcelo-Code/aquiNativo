@@ -19,14 +19,16 @@ export const NavBar = (navBarProps) => {
     >
       <BurguerMenuContainer />
       {/* <Box className="logo"></Box> */}
-      <Box className="titleLogo">
-        NATIVO
-        <img
-          src={"/images/leaf.png"}
-          style={{ paddingBottom: "3px" }}
-          width={50}
-        />
-      </Box>
+      <Link style={{ textDecoration: "none" }} to="/">
+        <Box className="titleLogo">
+          NATIVO
+          <img
+            src={"/images/leaf.png"}
+            style={{ paddingBottom: "5px" }}
+            width={25}
+          />
+        </Box>
+      </Link>
 
       <Tooltip title="Carrito" placement="top-end" arrow>
         <Badge
