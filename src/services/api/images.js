@@ -89,6 +89,8 @@ export const deleteImage = async (documentName, formData) => {
       [documentName]: "",
     };
 
+    console.log(updatedRecord);
+
     await updateProduct(updatedRecord);
 
     console.log("Archivo eliminado correctamente:", fileName);

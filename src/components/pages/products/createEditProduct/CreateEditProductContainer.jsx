@@ -139,8 +139,6 @@ export const CreateEditProductContainer = () => {
           type: "image/webp",
         });
 
-        // console.log("Imagen comprimida y convertida a WebP:", webpFile);
-
         await uploadImage(webpFile, documentName, formData);
         const { data } = await getProduct(formData.id);
         setFormData(data[0]);

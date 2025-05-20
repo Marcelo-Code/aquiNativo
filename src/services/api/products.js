@@ -92,7 +92,8 @@ export const getProduct = async (productId) => {
 
 export const updateProduct = async (updatedProduct) => {
   try {
-    const { id, ...fieldsToUpdate } = updatedProduct;
+    //brands y categories son propiedades que la tabla products no tiene
+    const { id, brands, categories, ...fieldsToUpdate } = updatedProduct;
 
     const { data, error } = await supabaseClient
       .from("products")
