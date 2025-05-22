@@ -109,6 +109,7 @@ export const ProductsList = (productsListProps) => {
                         }}
                       >
                         <IconButton
+                          type="button"
                           aria-label="remove product"
                           onClick={() =>
                             removeProduct(product, setFilteredProducts)
@@ -119,6 +120,7 @@ export const ProductsList = (productsListProps) => {
                         </IconButton>
                         <Box>{product.counter}</Box>
                         <IconButton
+                          type="button"
                           aria-label="add product"
                           onClick={() =>
                             addProduct(product, setFilteredProducts)

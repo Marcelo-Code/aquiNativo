@@ -1,4 +1,4 @@
-import { Box, Button, Card } from "@mui/material";
+import { Box, Button, Card, CircularProgress } from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import "./purchaseOrderList.css";
 import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
@@ -7,14 +7,17 @@ import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatCon
 import { dateFormat, generalBackGroundColor } from "../../../../utils/helpers";
 import { Link } from "react-router-dom";
 import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
+import { SwitchEditionMode } from "../../../common/switchEditionMode/SwitchEditionMode";
 
 export const PurchaseOrderList = (purchaseOrdersListProps) => {
-  const { filteredOrders, ...generalBarContainerProps } =
-    purchaseOrdersListProps;
+  const {
+    filteredOrders,
+    handleChangeStatus,
+    statusIsLoading,
+    ...generalBarContainerProps
+  } = purchaseOrdersListProps;
 
   const iconStyle = { fontSize: "25px", verticalAlign: "middle" };
-
-  console.log(filteredOrders);
 
   return (
     <Box className="generalContainer">
@@ -27,7 +30,7 @@ export const PurchaseOrderList = (purchaseOrdersListProps) => {
         {(recordsToShow) => (
           <Box className="generalList">
             {recordsToShow.map((record) => (
-              <Card sx={{ minWidth: 275, height: 300 }} key={record.id}>
+              <Card sx={{ minWidth: 275, height: 350 }} key={record.id}>
                 <Box
                   sx={{
                     p: 2,
@@ -37,6 +40,29 @@ export const PurchaseOrderList = (purchaseOrdersListProps) => {
                     justifyContent: "center",
                   }}
                 >
+                  <Box
+                    className="itemStyle"
+                    sx={{
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    {statusIsLoading === record.id ? (
+                      <CircularProgress
+                        size={38}
+                        sx={{
+                          marginRight: "35px",
+                          color: generalBackGroundColor,
+                        }}
+                      />
+                    ) : (
+                      <SwitchEditionMode
+                        id={record.id}
+                        onChange={() => handleChangeStatus(record.id)}
+                        sx={{ marginRight: "15px" }}
+                      />
+                    )}
+                    <b>{record.status.toUpperCase()}</b>
+                  </Box>
                   <Box className="itemStyle">
                     <Icons.ShoppingCartIcon sx={iconStyle} />
                     <b>Número: </b> {record.id}

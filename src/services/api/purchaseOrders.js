@@ -85,6 +85,7 @@ export const createPurchaseOrder = async (cart, buyer, totalPrice) => {
         buyer_phone_number: buyer.buyer_phone_number,
         buyer_email: buyer.buyer_email,
         total_price: totalPrice,
+        status: "Pendiente",
       })
       .select()
       .single();
@@ -155,6 +156,34 @@ export const createPurchaseOrderRPC = async (cart, buyer, totalPrice) => {
   } catch (error) {
     throw new Error(
       error?.message || "Error al crear la orden desde el backend"
+    );
+  }
+};
+
+export const updatePurchaseOrderStatus = async (orderId) => {
+  try {
+    const { data, error } = await supabaseClient
+      .from("purchase_orders")
+      .select()
+      .eq("id", orderId)
+      .single();
+
+    if (error) throw error;
+
+    const currentStatus = data.status;
+    const newStatus =
+      currentStatus === "pendiente" ? "finalizado" : "pendiente";
+
+    //Actualizar con el nuevo estado
+    const { error: updateError } = await supabaseClient
+      .from("purchase_orders")
+      .update({ status: newStatus })
+      .eq("id", orderId);
+
+    if (updateError) throw updateError;
+  } catch (error) {
+    throw new Error(
+      error?.message || "Error al actualizar el estado de la orden"
     );
   }
 };

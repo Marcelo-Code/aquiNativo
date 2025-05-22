@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Pagination as MuiPagination } from "@mui/material"; // ✅ renombramos el de MUI
+import { useEffect, useState } from "react";
 import { CustomPagination } from "./CustomPagination";
 
 export const PaginationContainer = ({ items, itemsPerPage = 10, children }) => {
   const [page, setPage] = useState(1);
 
-  //Resetear página si cambia la lista de items
+  //Resetear página si cambia la longitud de la lista de items filtrados
   useEffect(() => {
     setPage(1);
-  }, [items]);
+  }, [items.length]);
 
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const startIndex = (page - 1) * itemsPerPage;
