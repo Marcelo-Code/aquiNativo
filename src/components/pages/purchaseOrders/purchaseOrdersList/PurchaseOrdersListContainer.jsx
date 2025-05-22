@@ -8,6 +8,8 @@ import {
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import { FIELDS_TO_SEARCH, SORT_OPTIONS } from "./filtersPurchaseOrdersList";
+import { errorToastifyAlert } from "../../../../utils/alerts";
+import { useConfirm } from "../../../../context/ConfirmContext";
 
 export const PurchaseOrdersListContainer = () => {
   const [orders, setOrders] = useState([]);
@@ -15,6 +17,7 @@ export const PurchaseOrdersListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [statusIsLoading, setStatusIsLoading] = useState(null);
   const [error, setError] = useState(null);
+  // const confirm = useConfirm();
 
   const handleGetOrderDetails = async (orderId) => {
     const response = await getPurchaseOrdersItems(orderId);
@@ -22,6 +25,12 @@ export const PurchaseOrdersListContainer = () => {
   };
 
   const handleChangeStatus = async (orderId) => {
+    // const isConfirmed = await confirm(
+    //   `¿Querés cambiar el estado de la orden de compra ${orderId}?`
+    // );
+
+    // if (!isConfirmed) return;
+
     try {
       setStatusIsLoading(orderId);
       await updatePurchaseOrderStatus(orderId);
@@ -38,7 +47,7 @@ export const PurchaseOrdersListContainer = () => {
         )
       );
     } catch (error) {
-      console.error("Error al actualizar status:", error);
+      errorToastifyAlert(error.message || "Ocurrió un error inesperado");
     } finally {
       setStatusIsLoading(null);
     }
