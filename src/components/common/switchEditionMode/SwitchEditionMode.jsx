@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
+import { buttonColor, generalBackGroundColor } from "../../../utils/helpers";
 
 export const SwitchEditionMode = styled(Switch)(({ theme }) => ({
   padding: 8,
@@ -31,5 +32,11 @@ export const SwitchEditionMode = styled(Switch)(({ theme }) => ({
     width: 16,
     height: 16,
     margin: 2,
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: generalBackGroundColor, // Turquesa por ejemplo
+  },
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: buttonColor, // Color del thumb cuando está activado
   },
 }));
