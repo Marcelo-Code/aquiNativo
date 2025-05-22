@@ -58,6 +58,7 @@ export const PurchaseOrderList = (purchaseOrdersListProps) => {
                       <SwitchEditionMode
                         id={record.id}
                         onChange={() => handleChangeStatus(record.id)}
+                        checked={record.status === "finalizado"}
                         sx={{ marginRight: "15px" }}
                       />
                     )}
