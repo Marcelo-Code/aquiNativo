@@ -26,75 +26,83 @@ export const PurchaseOrdersItemsList = (purchaseOrdersItemsListProps) => {
         <b>Telefono: </b> {order.buyer_phone}
         <b>Email: </b> {order.buyer_email}
       </Box>
-
       <Box
-        style={{
-          overflowX: "auto",
-          width: "100%",
+        sx={{
+          margin: "10px",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
         }}
       >
-        <table
+        <Box
           style={{
-            borderCollapse: "collapse",
-            border: `1px solid ${generalBackGroundColor}`,
+            overflowX: "auto",
             width: "100%",
-            maxWidth: "710px",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <thead style={{ backgroundColor: generalBackGroundColor }}>
-            <tr>
-              <th style={{ padding: "5px" }}>Producto</th>
-              <th style={{ padding: "5px" }}>Cantidad</th>
-              <th style={{ padding: "5px" }}>Precio</th>
-              <th style={{ padding: "5px" }}>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td style={{ paddingLeft: "15px", minWidth: "120px" }}>
-                  {item.products.description}
+          <table
+            style={{
+              borderCollapse: "collapse",
+              border: `1px solid ${generalBackGroundColor}`,
+              width: "100%",
+              maxWidth: "710px",
+            }}
+          >
+            <thead style={{ backgroundColor: generalBackGroundColor }}>
+              <tr>
+                <th style={{ padding: "5px" }}>Producto</th>
+                <th style={{ padding: "5px" }}>Cantidad</th>
+                <th style={{ padding: "5px" }}>Precio</th>
+                <th style={{ padding: "5px" }}>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ paddingLeft: "15px", minWidth: "120px" }}>
+                    {item.products.description}
+                  </td>
+                  <td style={{ textAlign: "center", padding: "5px" }}>
+                    {item.quantity}
+                  </td>
+                  <td
+                    style={{
+                      textAlign: "right",
+                      padding: "5px",
+                      minWidth: "115px",
+                    }}
+                  >
+                    {currencyFormat(item.price)}
+                  </td>
+                  <td
+                    style={{
+                      textAlign: "right",
+                      padding: "5px",
+                      minWidth: "115px",
+                    }}
+                  >
+                    {" "}
+                    {currencyFormat(item.price * item.quantity)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
+              <tr>
+                <td style={{ textAlign: "center", padding: "5px" }} colSpan={3}>
+                  <b>Total: </b>
                 </td>
-                <td style={{ textAlign: "center", padding: "5px" }}>
-                  {item.quantity}
-                </td>
-                <td
-                  style={{
-                    textAlign: "right",
-                    padding: "5px",
-                    minWidth: "115px",
-                  }}
-                >
-                  {currencyFormat(item.price)}
-                </td>
-                <td
-                  style={{
-                    textAlign: "right",
-                    padding: "5px",
-                    minWidth: "115px",
-                  }}
-                >
-                  {" "}
-                  {currencyFormat(item.price * item.quantity)}
+                <td style={{ textAlign: "right", padding: "5px" }}>
+                  {currencyFormat(order.total_price)}
                 </td>
               </tr>
-            ))}
-          </tbody>
-          <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
-            <tr>
-              <td style={{ textAlign: "center", padding: "5px" }} colSpan={3}>
-                <b>Total: </b>
-              </td>
-              <td style={{ textAlign: "right", padding: "5px" }}>
-                {currencyFormat(order.total_price)}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+            </tfoot>
+          </table>
+        </Box>
+        <BackButtonContainer />
       </Box>
-      <BackButtonContainer />
     </Box>
   );
 };
