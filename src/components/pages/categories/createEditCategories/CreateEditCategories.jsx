@@ -1,26 +1,7 @@
-import {
-  Box,
-  CircularProgress,
-  FormGroup,
-  IconButton,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, FormGroup, TextField } from "@mui/material";
 import { Icons } from "../../../../assets/Icons";
-import { OptionSelect } from "../../../common/optionSelect/OptionSelect";
 import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
-import {
-  buttonColor,
-  deleteColor,
-  generalBackGroundColor,
-} from "../../../../utils/helpers";
-import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
-import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
-
-import { Dialog, DialogContent } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
 
 export const CreateEditCategories = (createEditProps) => {
   const {
@@ -46,8 +27,6 @@ export const CreateEditCategories = (createEditProps) => {
     gap: "10px",
     width: "90%",
   };
-
-  console.log(formData);
 
   return (
     <Box className="generalContainer">

@@ -6,7 +6,7 @@ import { generalBackGroundColor } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
 
 export const NavBar = (navBarProps) => {
-  const { totalProductsInCart, isLoggedIn, loggedUser } = navBarProps;
+  const { totalProductsInCart, isLoggedIn, loggedUser, alerts } = navBarProps;
   const navBarIcon = {
     fontSize: "30px",
     color: "white",
@@ -45,6 +45,26 @@ export const NavBar = (navBarProps) => {
           <Link to="/cart">
             <IconButton size="small">
               <Icons.ShoppingCartIcon sx={navBarIcon} />
+            </IconButton>
+          </Link>
+        </Badge>
+      </Tooltip>
+
+      <Tooltip title="Ordenes pendientes" placement="top-end" arrow>
+        <Badge
+          badgeContent={alerts}
+          showZero={true}
+          sx={{
+            marginTop: "7px",
+            "& .MuiBadge-badge": {
+              backgroundColor: "black",
+              color: "white",
+            },
+          }}
+        >
+          <Link to="/purchaseOrders">
+            <IconButton size="small">
+              <Icons.NotificationsActiveIcon sx={navBarIcon} />
             </IconButton>
           </Link>
         </Badge>

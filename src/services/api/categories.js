@@ -25,7 +25,8 @@ export const getCategory = async (categoryId) => {
     const { data, error } = await supabaseClient
       .from("categories")
       .select("*")
-      .eq("id", categoryId);
+      .eq("id", categoryId)
+      .single();
 
     if (error) throw error;
 

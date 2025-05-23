@@ -60,3 +60,18 @@ export const SORT_OPTIONS = [
     name: "total_price",
   },
 ];
+
+const STATUS_OPTIONS_1 = [
+  { value: "all", label: "Todos" },
+  { value: "pendiente", label: "Pendiente" },
+  { value: "finalizado", label: "Finalizado" },
+];
+
+export const FILTER_OPTIONS = [
+  {
+    name: "status",
+    label: "Estado",
+    options: STATUS_OPTIONS_1,
+    placeholder: "Seleccioná un estado",
+  },
+];

@@ -41,6 +41,17 @@ export const sanitizeFileName = (name) => {
     .replace(/[^\w.-]/g, "_");
 };
 
+//Función para limpiar un nombre, elimina los acentos y carácteres especiales y pasarlo a mayúsculas
+export const sanitizeName = (name) => {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w.-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+};
+
 export const dateFormat = (date) => {
   const formattedDate = new Date(date).toLocaleDateString("es-AR", {
     day: "2-digit",

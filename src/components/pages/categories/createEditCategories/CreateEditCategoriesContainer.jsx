@@ -3,6 +3,7 @@ import "../../../../assets/css/generalStyles.css";
 import { useParams } from "react-router-dom";
 import {
   createCategory,
+  getCategories,
   getCategory,
   updateCategory,
 } from "../../../../services/api/categories";
@@ -12,12 +13,13 @@ import {
   errorToastifyAlert,
   successToastifyAlert,
 } from "../../../../utils/alerts";
-import { handleError } from "../../../../utils/helpers";
+import { handleError, sanitizeName } from "../../../../utils/helpers";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { CreateEditCategories } from "./CreateEditCategories";
 
 export const CreateEditCategoriesContainer = () => {
   const [formData, setFormData] = useState({});
+  const [categories, setCategories] = useState([]);
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,14 +33,10 @@ export const CreateEditCategoriesContainer = () => {
   //Obtiene el id del producto para su edición
   const { categoryId } = useParams();
 
-  console.log(categoryId);
-
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    const updatedFormData = { ...formData, [name]: value };
-
-    console.log(updatedFormData);
+    const updatedFormData = { ...formData, [name]: sanitizeName(value) };
 
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
@@ -46,11 +44,22 @@ export const CreateEditCategoriesContainer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //Validaciones de marcas
+    const exist = categories.some(
+      (category) => category.name === formData.name
+    );
+
+    if (exist) {
+      errorToastifyAlert("Ya existe una categoría con ese nombre");
+      return;
+    }
+
+    console.log("cargando");
+
     setIsLoadingButton(true);
 
     const request = categoryId ? updateCategory : createCategory;
-
-    console.log(formData);
 
     try {
       const response = await request(formData);
@@ -74,20 +83,26 @@ export const CreateEditCategoriesContainer = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    console.log("Cargando datos...");
     Promise.all([
       categoryId ? getCategory(categoryId) : Promise.resolve({ data: [null] }),
+      getCategories(),
     ])
-      .then(([categoryResponse]) => {
+      .then(([categoryResponse, categoriesResponse]) => {
         //Validaciones de marcas
+        if (categoriesResponse.status !== 200) {
+          handleError(categoriesResponse);
+        }
+
         if (categoryResponse.status !== 200 && categoryId) {
           handleError(categoryResponse);
         }
         if (categoryId) {
-          setFormData(categoryResponse.data[0]);
+          setFormData(categoryResponse.data);
         } else {
           setFormData(formDataInitialState);
         }
+
+        setCategories(categoriesResponse.data);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
@@ -106,9 +121,6 @@ export const CreateEditCategoriesContainer = () => {
     console.log(errorContainerProps);
     return <ErrorContainer {...errorContainerProps} />;
   }
-
-  console.log(formData);
-  console.log(categoryId);
 
   const createEditProps = {
     handleGoBack,

@@ -8,17 +8,19 @@ import {
   errorToastifyAlert,
   successToastifyAlert,
 } from "../../../../utils/alerts";
-import { handleError } from "../../../../utils/helpers";
+import { handleError, sanitizeName } from "../../../../utils/helpers";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { CreateEditBrand } from "./CreateEditBrands";
 import {
   createBrand,
   getBrand,
+  getBrands,
   updateBrand,
 } from "../../../../services/api/brands";
 
 export const CreateEditBrandsContainer = () => {
   const [formData, setFormData] = useState({});
+  const [brands, setBrands] = useState([]);
   const [modifiedFlag, setModifiedFlag] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +37,7 @@ export const CreateEditBrandsContainer = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    const updatedFormData = { ...formData, [name]: value };
+    const updatedFormData = { ...formData, [name]: sanitizeName(value) };
 
     console.log(updatedFormData);
 
@@ -45,6 +47,14 @@ export const CreateEditBrandsContainer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const exist = brands.some((brand) => brand.name === formData.name);
+
+    if (exist) {
+      errorToastifyAlert("Ya existe una marca con ese nombre");
+      return;
+    }
+
     setIsLoadingButton(true);
 
     const request = brandId ? updateBrand : createBrand;
@@ -75,17 +85,22 @@ export const CreateEditBrandsContainer = () => {
     setIsLoading(true);
     Promise.all([
       brandId ? getBrand(brandId) : Promise.resolve({ data: [null] }),
+      getBrands(),
     ])
-      .then(([brandResponse]) => {
+      .then(([brandResponse, brandsResponse]) => {
         //Validaciones de marcas
+        if (brandsResponse.status !== 200) {
+          handleError(brandsResponse);
+        }
         if (brandResponse.status !== 200 && brandId) {
           handleError(brandResponse);
         }
         if (brandId) {
-          setFormData(brandResponse.data[0]);
+          setFormData(brandResponse.data);
         } else {
           setFormData(formDataInitialState);
         }
+        setBrands(brandsResponse.data);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);

@@ -3,7 +3,7 @@ import { NavBar } from "./NavBar";
 import { GeneralContext } from "../../../context/GeneralContext";
 
 export const NavBarContainer = () => {
-  const { cart, isLoggedIn, loggedUser } = useContext(GeneralContext);
+  const { cart, isLoggedIn, loggedUser, alerts } = useContext(GeneralContext);
 
   const totalProductsInCart = cart.reduce(
     (acc, item) => acc + item.quantity,
@@ -14,6 +14,7 @@ export const NavBarContainer = () => {
     totalProductsInCart,
     isLoggedIn,
     loggedUser,
+    alerts,
   };
 
   return <NavBar {...navBarProps} />;

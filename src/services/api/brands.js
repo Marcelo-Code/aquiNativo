@@ -24,7 +24,8 @@ export const getBrand = async (brandId) => {
     const { data, error } = await supabaseClient
       .from("brands")
       .select("*")
-      .eq("id", brandId);
+      .eq("id", brandId)
+      .single();
 
     if (error) throw error;
 

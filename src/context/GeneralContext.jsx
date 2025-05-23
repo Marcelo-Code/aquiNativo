@@ -2,6 +2,10 @@
 import { createContext, useEffect, useState } from "react";
 import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
 import { useNavigate } from "react-router-dom";
+import {
+  getPurchaseOrders,
+  listenForNewOrders,
+} from "../services/api/purchaseOrders";
 
 export const GeneralContext = createContext();
 
@@ -36,6 +40,33 @@ export const GeneralContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  const [alerts, setAlerts] = useState([]);
+  const [updateAlerts, setUpdateAlerts] = useState(false);
+
+  //Función para escuchar nuevos pedidos
+  useEffect(() => {
+    const channel = listenForNewOrders(() => {
+      setUpdateAlerts((prev) => !prev);
+    });
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, []);
+
+  //Función para obtener las alertas
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPurchaseOrders();
+      const filtered = response.data.filter(
+        (item) => item.status === "pendiente"
+      );
+      setAlerts(filtered.length);
+    };
+
+    fetchData();
+  }, [updateAlerts]);
 
   //Hook para los datos del comprador
   const [buyerData, setBuyerData] = useState({});
@@ -193,6 +224,8 @@ export const GeneralContextProvider = ({ children }) => {
     loggedUser,
     setLoggedUser,
     existingProductInCart,
+    alerts,
+    setUpdateAlerts,
   };
 
   return (
