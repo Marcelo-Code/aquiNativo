@@ -45,6 +45,8 @@ export const GeneralContextProvider = ({ children }) => {
 
   //Función para escuchar nuevos pedidos
   useEffect(() => {
+    if (!isLoggedIn) return;
+
     const bellAlert = new Audio("/sounds/bellAlert.mp3");
 
     const channel = supabaseClient
