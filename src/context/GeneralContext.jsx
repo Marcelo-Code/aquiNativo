@@ -57,6 +57,8 @@ export const GeneralContextProvider = ({ children }) => {
 
         (payload) => {
           console.log("Nueva orden recibida", payload.new);
+          const bellAlert = new Audio("/sounds/bellAlert.mp3");
+          bellAlert.play();
           successToastifyAlert("¡Nueva orden recibida!");
           setUpdateAlerts((prev) => !prev);
           setUpdateOrderList((prev) => !prev);
