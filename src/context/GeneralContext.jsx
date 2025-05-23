@@ -44,6 +44,7 @@ export const GeneralContextProvider = ({ children }) => {
 
   const [alerts, setAlerts] = useState([]);
   const [updateAlerts, setUpdateAlerts] = useState(false);
+  const [updateOrderList, setUpdateOrderList] = useState(false);
 
   //Función para escuchar nuevos pedidos
   useEffect(() => {
@@ -60,6 +61,7 @@ export const GeneralContextProvider = ({ children }) => {
           console.log("Nueva orden recibida", payload.new);
           successToastifyAlert("¡Nueva orden recibida!");
           setUpdateAlerts(!updateAlerts);
+          setUpdateOrderList(!updateOrderList);
         }
       )
       .subscribe();
@@ -241,6 +243,8 @@ export const GeneralContextProvider = ({ children }) => {
     existingProductInCart,
     alerts,
     setUpdateAlerts,
+    updateAlerts,
+    updateOrderList,
   };
 
   return (

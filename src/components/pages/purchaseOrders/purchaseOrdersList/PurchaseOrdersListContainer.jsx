@@ -22,7 +22,7 @@ export const PurchaseOrdersListContainer = () => {
   const [statusIsLoading, setStatusIsLoading] = useState(null);
   const [error, setError] = useState(null);
 
-  const { setUpdateAlerts } = useContext(GeneralContext);
+  const { setUpdateAlerts, updateOrderList } = useContext(GeneralContext);
 
   const handleGetOrderDetails = async (orderId) => {
     const response = await getPurchaseOrdersItems(orderId);
@@ -67,7 +67,7 @@ export const PurchaseOrdersListContainer = () => {
         setError(error.message || "Ocurrió un error inesperado");
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [updateOrderList]);
 
   if (isLoading) return <LoadingContainer />;
   if (error) return <ErrorContainer error={error} />;
