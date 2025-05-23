@@ -50,6 +50,8 @@ export const GeneralContextProvider = ({ children }) => {
       setUpdateAlerts((prev) => !prev);
     });
 
+    successToastifyAlert("¡Nueva orden recibida!");
+
     return () => {
       channel.unsubscribe();
     };
@@ -63,6 +65,7 @@ export const GeneralContextProvider = ({ children }) => {
         (item) => item.status === "pendiente"
       );
       setAlerts(filtered.length);
+      console.log(filtered);
     };
 
     fetchData();

@@ -202,7 +202,6 @@ export const listenForNewOrders = () => {
         table: "purchase_orders",
       },
       (payload) => {
-        successToastifyAlert("¡Nueva orden recibida!");
         console.log("Nueva orden recibida", payload.new);
       }
     )
