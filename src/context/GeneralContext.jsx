@@ -102,7 +102,6 @@ export const GeneralContextProvider = ({ children }) => {
         (item) => item.status === "pendiente"
       );
       setAlerts(filtered.length);
-      console.log(filtered.length);
     };
 
     fetchData();

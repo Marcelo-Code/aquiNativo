@@ -5,7 +5,7 @@ export const getPurchaseOrders = async () => {
     const { data, error } = await supabaseClient
       .from("purchase_orders")
       .select("*")
-      .order("date", { ascending: true });
+      .order("id", { ascending: false });
 
     if (error) throw error;
 

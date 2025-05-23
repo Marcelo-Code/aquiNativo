@@ -24,7 +24,7 @@ export const LoginContainer = () => {
       if (response.status === 200) {
         // Espera a que checkAuth termine y controle si el usuario está activo
         await checkAuth(setIsLoggedIn, setLoggedUser);
-        navigate("/");
+        navigate("/updateProducts");
       } else {
         handleError(response);
       }
