@@ -29,6 +29,10 @@ import { SpecialOffersContainer } from "./components/pages/specialOffers/Special
 import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
 
 function App() {
+  if (!localStorage.getItem("client_id")) {
+    localStorage.setItem("client_id", crypto.randomUUID());
+  }
+
   return (
     <>
       <GeneralContextProvider>

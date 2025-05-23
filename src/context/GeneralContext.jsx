@@ -45,6 +45,9 @@ export const GeneralContextProvider = ({ children }) => {
 
   //Función para escuchar nuevos pedidos
   useEffect(() => {
+    const bellAlert = new Audio("/sounds/bellAlert.mp3");
+    const myClientId = localStorage.getItem("client_id");
+
     const channel = supabaseClient
       .channel("custom-ordenes-channel")
       .on(
@@ -56,12 +59,16 @@ export const GeneralContextProvider = ({ children }) => {
         },
 
         (payload) => {
-          console.log("Nueva orden recibida", payload.new);
-          const bellAlert = new Audio("/sounds/bellAlert.mp3");
-          bellAlert.play();
-          successToastifyAlert("¡Nueva orden recibida!");
+          const incomingClientId = payload.new.client_id;
           setUpdateAlerts((prev) => !prev);
-          setUpdateOrderList((prev) => !prev);
+          if (incomingClientId !== myClientId) {
+            console.log("Nueva orden recibida", payload.new);
+            bellAlert
+              .play()
+              .catch((err) => console.warn("Error al reproducir sonido:", err));
+            successToastifyAlert("¡Nueva orden recibida!");
+            setUpdateOrderList((prev) => !prev);
+          }
         }
       )
       // Escuchar actualizaciones (como cambios de status)
@@ -73,14 +80,16 @@ export const GeneralContextProvider = ({ children }) => {
           table: "purchase_orders",
         },
         (payload) => {
-          console.log("🟡 Orden actualizada:", payload.new);
-          if (payload.old.status !== payload.new.status) {
-            successToastifyAlert(
-              `Estado de orden actualizado a: ${payload.new.status}`
-            );
-          }
-          setUpdateAlerts((prev) => !prev);
+          const incomingClientId = payload.new.client_id;
           setUpdateOrderList((prev) => !prev);
+          if (incomingClientId !== myClientId) {
+            if (payload.old.status !== payload.new.status) {
+              successToastifyAlert(
+                `Estado de orden actualizado a: ${payload.new.status}`
+              );
+            }
+            setUpdateAlerts((prev) => !prev);
+          }
         }
       )
       .subscribe();
@@ -98,7 +107,6 @@ export const GeneralContextProvider = ({ children }) => {
         (item) => item.status === "pendiente"
       );
       setAlerts(filtered.length);
-      console.log(filtered);
     };
 
     fetchData();
