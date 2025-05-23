@@ -5,7 +5,20 @@ import {
   hoverButtonColor,
 } from "../../../../utils/helpers";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
-import { Box, Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from "@mui/material";
 import { Icons } from "../../../../assets/Icons";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
 import { ButtonGroupContainer } from "../../../common/buttonGroup/ButtonGroupContainer";
@@ -60,116 +73,96 @@ export const CartList = (cartListProps) => {
             justifyContent: "center",
           }}
         >
-          <table
-            style={{
-              borderCollapse: "collapse",
-              border: `1px solid ${generalBackGroundColor}`,
-              width: "100%",
-              maxWidth: "700px",
-              margin: "20px",
-            }}
-          >
-            <thead style={{ backgroundColor: generalBackGroundColor }}>
-              <tr>
-                <th style={{ padding: "5px" }}>Descripción</th>
-                <th style={{ padding: "5px" }}>Cantidad</th>
-                <th>Precio</th>
-                <th style={{ padding: "5px" }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((product) => (
-                <tr key={product.id}>
-                  <td
-                    style={{
-                      minWidth: "120px",
-                      WrapText: "wrap",
-                      textAlign: "justify",
-                      verticalAlign: "middle",
-                      paddingLeft: "15px",
-                    }}
+          <TableContainer sx={{ width: "auto" }} component={Paper}>
+            <Table sx={{ width: "auto" }} aria-label="simple table">
+              <TableHead>
+                <TableRow
+                  style={{
+                    backgroundColor: generalBackGroundColor,
+                  }}
+                >
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: "200px", whiteSpace: "nowrap" }}
                   >
-                    {product.description}
-                  </td>
-                  <td
-                    style={{
-                      padding: "5px",
-                      textAlign: "center",
-                    }}
+                    Producto
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Cantidad
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Precio
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Subtotal
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cart.map((item) => (
+                  <TableRow
+                    key={item.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <Box
-                      sx={{
-                        border: "1px solid black",
-                        padding: "4px",
-                        borderRadius: "20px",
-                        width: "100px",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        backgroundColor: "rgba(255, 255, 255, 0.5)",
-                      }}
-                    >
-                      <IconButton
-                        aria-label="remove product"
-                        onClick={() => removeProduct(product)}
-                        sx={addRemoveButtonStyle}
+                    <TableCell component="th" scope="row">
+                      {item.description}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Box
+                        sx={{
+                          border: "1px solid black",
+                          padding: "4px",
+                          borderRadius: "20px",
+                          width: "100px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          backgroundColor: "rgba(255, 255, 255, 0.5)",
+                        }}
                       >
-                        <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
-                      </IconButton>
-                      <Box>{product.quantity}</Box>
-                      <IconButton
-                        aria-label="add product"
-                        onClick={() => addProduct(product)}
-                        sx={addRemoveButtonStyle}
-                      >
-                        <Icons.AddIcon sx={{ fontSize: "20px" }} />
-                      </IconButton>
-                    </Box>
-                  </td>
-                  <td
-                    style={{
-                      textAlign: "right",
-                      minWidth: "115px",
-                      verticalAlign: "middle",
-                    }}
+                        <IconButton
+                          aria-label="remove product"
+                          onClick={() => removeProduct(item)}
+                          sx={addRemoveButtonStyle}
+                        >
+                          <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
+                        </IconButton>
+                        <Box>{item.quantity}</Box>
+                        <IconButton
+                          aria-label="add product"
+                          onClick={() => addProduct(item)}
+                          sx={addRemoveButtonStyle}
+                        >
+                          <Icons.AddIcon sx={{ fontSize: "20px" }} />
+                        </IconButton>
+                      </Box>
+                    </TableCell>
+                    <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                      {currencyFormat(item.price)}
+                    </TableCell>
+                    <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                      {currencyFormat(item.price * item.quantity)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell
+                    colSpan={3}
+                    align="right"
+                    style={{ fontWeight: "bold" }}
                   >
-                    {currencyFormat(product.price * product.quantity, "15px")}
-                  </td>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "5px",
-                    }}
+                    Total
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    style={{ whiteSpace: "nowrap", fontWeight: "bold" }}
                   >
-                    <Tooltip
-                      title="Eliminar producto"
-                      placement="top-end"
-                      arrow
-                    >
-                      <IconButton
-                        onClick={() => removeProductFromCart(product)}
-                      >
-                        <Icons.DeleteIcon
-                          color="error"
-                          sx={{ fontSize: "30px" }}
-                        />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
-              <tr>
-                <td style={{ padding: "5px", textAlign: "center" }} colSpan={2}>
-                  <b>Total:</b>
-                </td>
-                <td style={{ padding: "5px", textAlign: "right" }}>
-                  {currencyFormat(totalPrice)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+                    {currencyFormat(totalPrice)}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
         <ButtonGroupContainer {...buttonGroupContainerProps} />
       </Box>

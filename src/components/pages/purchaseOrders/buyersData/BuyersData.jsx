@@ -1,4 +1,17 @@
-import { Box, Button, FormGroup, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormGroup,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
 import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
@@ -196,74 +209,71 @@ export const BuyersData = (buyerDataProps) => {
           </Box>
 
           <Box
-            style={{
+            sx={{
               overflowX: "auto",
               width: "100%",
               display: "flex",
               justifyContent: "center",
             }}
           >
-            <table
-              style={{
-                borderCollapse: "collapse",
-                border: `1px solid ${generalBackGroundColor}`,
-                width: "100%",
-                maxWidth: "710px",
-              }}
-            >
-              <thead style={{ backgroundColor: generalBackGroundColor }}>
-                <tr>
-                  <th style={{ padding: "5px" }}>Producto</th>
-                  <th style={{ padding: "5px" }}>Cantidad</th>
-                  <th style={{ padding: "5px" }}>Precio</th>
-                  <th style={{ padding: "5px" }}>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody>
-                {createdPurchaseOrder.cart.map((item) => (
-                  <tr key={item.id}>
-                    <td style={{ paddingLeft: "15px", minWidth: "120px" }}>
-                      {item.description}
-                    </td>
-                    <td style={{ textAlign: "center", padding: "5px" }}>
-                      {item.quantity}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "right",
-                        padding: "5px",
-                        minWidth: "115px",
-                      }}
-                    >
-                      {currencyFormat(item.price)}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "right",
-                        padding: "5px",
-                        minWidth: "115px",
-                      }}
-                    >
-                      {" "}
-                      {currencyFormat(item.price * item.quantity)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
-                <tr>
-                  <td
-                    style={{ textAlign: "center", padding: "5px" }}
-                    colSpan={3}
+            <TableContainer sx={{ width: "auto" }} component={Paper}>
+              <Table sx={{ width: "auto" }} aria-label="simple table">
+                <TableHead>
+                  <TableRow
+                    style={{
+                      backgroundColor: generalBackGroundColor,
+                    }}
                   >
-                    <b>Total: </b>
-                  </td>
-                  <td style={{ textAlign: "right", padding: "5px" }}>
-                    {currencyFormat(createdPurchaseOrder.totalPrice)}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+                    <TableCell
+                      align="center"
+                      style={{ minWidth: "200px", whiteSpace: "nowrap" }}
+                    >
+                      Producto
+                    </TableCell>
+                    <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                      Cantidad
+                    </TableCell>
+                    <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                      Precio
+                    </TableCell>
+                    <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                      Subtotal
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {createdPurchaseOrder.cart.map((item) => (
+                    <TableRow
+                      key={item.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {item.description}
+                      </TableCell>
+                      <TableCell align="center">{item.quantity}</TableCell>
+                      <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                        {currencyFormat(item.price)}
+                      </TableCell>
+                      <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                        {currencyFormat(item.price * item.quantity)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell
+                      colSpan={3}
+                      align="right"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell align="right" style={{ fontWeight: "bold" }}>
+                      {currencyFormat(createdPurchaseOrder.totalPrice)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
           <Box
             sx={{

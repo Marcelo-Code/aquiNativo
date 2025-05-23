@@ -3,6 +3,16 @@ import "../../../../assets/css/generalStyles.css";
 import { generalBackGroundColor } from "../../../../utils/helpers";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { BackButtonContainer } from "../../../common/backButton/BackButtonContainer";
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableHead,
+  Paper,
+} from "@mui/material";
+
 export const PurchaseOrdersItemsList = (purchaseOrdersItemsListProps) => {
   const { items, order } = purchaseOrdersItemsListProps;
 
@@ -42,64 +52,64 @@ export const PurchaseOrdersItemsList = (purchaseOrdersItemsListProps) => {
             justifyContent: "center",
           }}
         >
-          <table
-            style={{
-              borderCollapse: "collapse",
-              border: `1px solid ${generalBackGroundColor}`,
-              width: "100%",
-              maxWidth: "710px",
-            }}
-          >
-            <thead style={{ backgroundColor: generalBackGroundColor }}>
-              <tr>
-                <th style={{ padding: "5px" }}>Producto</th>
-                <th style={{ padding: "5px" }}>Cantidad</th>
-                <th style={{ padding: "5px" }}>Precio</th>
-                <th style={{ padding: "5px" }}>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id}>
-                  <td style={{ paddingLeft: "15px", minWidth: "120px" }}>
-                    {item.products.description}
-                  </td>
-                  <td style={{ textAlign: "center", padding: "5px" }}>
-                    {item.quantity}
-                  </td>
-                  <td
-                    style={{
-                      textAlign: "right",
-                      padding: "5px",
-                      minWidth: "115px",
-                    }}
+          <TableContainer sx={{ width: "auto" }} component={Paper}>
+            <Table sx={{ width: "auto" }} aria-label="simple table">
+              <TableHead>
+                <TableRow
+                  style={{
+                    backgroundColor: generalBackGroundColor,
+                  }}
+                >
+                  <TableCell
+                    align="center"
+                    style={{ minWidth: "200px", whiteSpace: "nowrap" }}
                   >
-                    {currencyFormat(item.price)}
-                  </td>
-                  <td
-                    style={{
-                      textAlign: "right",
-                      padding: "5px",
-                      minWidth: "115px",
-                    }}
+                    Producto
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Cantidad
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Precio
+                  </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Subtotal
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {items.map((item) => (
+                  <TableRow
+                    key={item.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    {" "}
-                    {currencyFormat(item.price * item.quantity)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot style={{ border: `1px solid ${generalBackGroundColor}` }}>
-              <tr>
-                <td style={{ textAlign: "center", padding: "5px" }} colSpan={3}>
-                  <b>Total: </b>
-                </td>
-                <td style={{ textAlign: "right", padding: "5px" }}>
-                  {currencyFormat(order.total_price)}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+                    <TableCell component="th" scope="row">
+                      {item.products.description}
+                    </TableCell>
+                    <TableCell align="center">{item.quantity}</TableCell>
+                    <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                      {currencyFormat(item.price)}
+                    </TableCell>
+                    <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                      {currencyFormat(item.price * item.quantity)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow>
+                  <TableCell
+                    colSpan={3}
+                    align="right"
+                    style={{ fontWeight: "bold" }}
+                  >
+                    Total
+                  </TableCell>
+                  <TableCell align="right" style={{ fontWeight: "bold" }}>
+                    {currencyFormat(order.total_price)}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
         <BackButtonContainer />
       </Box>
