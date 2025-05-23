@@ -30,45 +30,49 @@ export const NavBar = (navBarProps) => {
         </Box>
       </Link>
 
-      <Tooltip title="Carrito" placement="top-end" arrow>
-        <Badge
-          badgeContent={totalProductsInCart}
-          showZero={true}
-          sx={{
-            marginTop: "7px",
-            "& .MuiBadge-badge": {
-              backgroundColor: "black",
-              color: "white",
-            },
-          }}
-        >
-          <Link to="/cart">
-            <IconButton size="small">
-              <Icons.ShoppingCartIcon sx={navBarIcon} />
-            </IconButton>
-          </Link>
-        </Badge>
-      </Tooltip>
+      {!isLoggedIn && (
+        <Tooltip title="Carrito" placement="top-end" arrow>
+          <Badge
+            badgeContent={totalProductsInCart}
+            showZero={true}
+            sx={{
+              marginTop: "7px",
+              "& .MuiBadge-badge": {
+                backgroundColor: "black",
+                color: "white",
+              },
+            }}
+          >
+            <Link to="/cart">
+              <IconButton size="small">
+                <Icons.ShoppingCartIcon sx={navBarIcon} />
+              </IconButton>
+            </Link>
+          </Badge>
+        </Tooltip>
+      )}
 
-      <Tooltip title="Ordenes pendientes" placement="top-end" arrow>
-        <Badge
-          badgeContent={alerts}
-          showZero={true}
-          sx={{
-            marginTop: "7px",
-            "& .MuiBadge-badge": {
-              backgroundColor: "black",
-              color: "white",
-            },
-          }}
-        >
-          <Link to="/purchaseOrders">
-            <IconButton size="small">
-              <Icons.NotificationsActiveIcon sx={navBarIcon} />
-            </IconButton>
-          </Link>
-        </Badge>
-      </Tooltip>
+      {isLoggedIn && (
+        <Tooltip title="Ordenes pendientes" placement="top-end" arrow>
+          <Badge
+            badgeContent={alerts}
+            showZero={true}
+            sx={{
+              marginTop: "7px",
+              "& .MuiBadge-badge": {
+                backgroundColor: "black",
+                color: "white",
+              },
+            }}
+          >
+            <Link to="/purchaseOrders">
+              <IconButton size="small">
+                <Icons.NotificationsActiveIcon sx={navBarIcon} />
+              </IconButton>
+            </Link>
+          </Badge>
+        </Tooltip>
+      )}
 
       {isLoggedIn ? (
         <Box className="logged">{loggedUser ? loggedUser : "User"}</Box>

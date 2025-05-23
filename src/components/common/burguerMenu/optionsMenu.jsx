@@ -21,16 +21,16 @@ export const adminOptions = [
     option: "Marcas",
     link: `/brands`,
   },
-  {
-    icon: <Icons.LocalOfferIcon />,
-    option: "Ofertas",
-    link: "/",
-  },
-  {
-    icon: <Icons.InventoryIcon />,
-    option: "Productos",
-    link: "/products",
-  },
+  // {
+  //   icon: <Icons.LocalOfferIcon />,
+  //   option: "Ofertas",
+  //   link: "/",
+  // },
+  // {
+  //   icon: <Icons.InventoryIcon />,
+  //   option: "Productos",
+  //   link: "/products",
+  // },
   {
     icon: <Icons.ReceiptIcon />,
     option: "Ordenes de compra",
