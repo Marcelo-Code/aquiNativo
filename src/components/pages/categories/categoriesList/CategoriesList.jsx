@@ -49,6 +49,7 @@ export const CategoriesList = (categoriesListProps) => {
           </Box>
         )}
       </PaginationContainer>
+      <BackButtonContainer />
     </Box>
   );
 };

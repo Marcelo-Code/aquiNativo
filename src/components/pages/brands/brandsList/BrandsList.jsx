@@ -46,6 +46,7 @@ export const BrandsList = (brandsListProps) => {
           </Box>
         )}
       </PaginationContainer>
+      <BackButtonContainer />
     </Box>
   );
 };
