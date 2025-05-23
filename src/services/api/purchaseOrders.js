@@ -191,21 +191,22 @@ export const updatePurchaseOrderStatus = async (orderId) => {
 };
 
 //websocket para recibir las nuevas ordenes en tiempo real
-export const listenForNewOrders = () => {
-  const channel = supabaseClient
-    .channel("custom-ordenes-channel")
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "purchase_orders",
-      },
-      (payload) => {
-        console.log("Nueva orden recibida", payload.new);
-      }
-    )
-    .subscribe();
+// export const listenForNewOrders = () => {
+//   const channel = supabaseClient
+//     .channel("custom-ordenes-channel")
+//     .on(
+//       "postgres_changes",
+//       {
+//         event: "INSERT",
+//         schema: "public",
+//         table: "purchase_orders",
+//       },
+//       (payload) => {
+//         console.log("Nueva orden recibida", payload.new);
+//         successToastifyAlert("¡Nueva orden recibida!");
+//       }
+//     )
+//     .subscribe();
 
-  return channel;
-};
+//   return channel;
+// };

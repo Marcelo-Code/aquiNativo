@@ -6,6 +6,7 @@ import {
   getPurchaseOrders,
   listenForNewOrders,
 } from "../services/api/purchaseOrders";
+import { supabaseClient } from "../services/config/config";
 
 export const GeneralContext = createContext();
 
@@ -46,10 +47,22 @@ export const GeneralContextProvider = ({ children }) => {
 
   //Función para escuchar nuevos pedidos
   useEffect(() => {
-    const channel = listenForNewOrders(() => {
-      setUpdateAlerts((prev) => !prev);
-      successToastifyAlert("¡Nueva orden recibida!");
-    });
+    const channel = supabaseClient
+      .channel("custom-ordenes-channel")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "purchase_orders",
+        },
+        (payload) => {
+          console.log("Nueva orden recibida", payload.new);
+          successToastifyAlert("¡Nueva orden recibida!");
+          setUpdateAlerts(!updateAlerts);
+        }
+      )
+      .subscribe();
 
     return () => {
       channel.unsubscribe();
