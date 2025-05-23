@@ -48,9 +48,8 @@ export const GeneralContextProvider = ({ children }) => {
   useEffect(() => {
     const channel = listenForNewOrders(() => {
       setUpdateAlerts((prev) => !prev);
+      successToastifyAlert("¡Nueva orden recibida!");
     });
-
-    successToastifyAlert("¡Nueva orden recibida!");
 
     return () => {
       channel.unsubscribe();
