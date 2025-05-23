@@ -2,10 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
 import { useNavigate } from "react-router-dom";
-import {
-  getPurchaseOrders,
-  listenForNewOrders,
-} from "../services/api/purchaseOrders";
+import { getPurchaseOrders } from "../services/api/purchaseOrders";
 import { supabaseClient } from "../services/config/config";
 
 export const GeneralContext = createContext();
