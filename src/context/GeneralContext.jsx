@@ -46,7 +46,6 @@ export const GeneralContextProvider = ({ children }) => {
   //Función para escuchar nuevos pedidos
   useEffect(() => {
     const bellAlert = new Audio("/sounds/bellAlert.mp3");
-    const myClientId = localStorage.getItem("client_id");
 
     const channel = supabaseClient
       .channel("custom-ordenes-channel")
@@ -59,16 +58,12 @@ export const GeneralContextProvider = ({ children }) => {
         },
 
         (payload) => {
-          const incomingClientId = payload.new.client_id;
           setUpdateAlerts((prev) => !prev);
-          if (incomingClientId !== myClientId) {
-            console.log("Nueva orden recibida", payload.new);
-            bellAlert
-              .play()
-              .catch((err) => console.warn("Error al reproducir sonido:", err));
-            successToastifyAlert("¡Nueva orden recibida!");
-            setUpdateOrderList((prev) => !prev);
-          }
+          bellAlert
+            .play()
+            .catch((err) => console.warn("Error al reproducir sonido:", err));
+          successToastifyAlert("¡Nueva orden recibida!");
+          setUpdateOrderList((prev) => !prev);
         }
       )
       // Escuchar actualizaciones (como cambios de status)
@@ -80,15 +75,12 @@ export const GeneralContextProvider = ({ children }) => {
           table: "purchase_orders",
         },
         (payload) => {
-          const incomingClientId = payload.new.client_id;
-          setUpdateOrderList((prev) => !prev);
-          if (incomingClientId !== myClientId) {
-            if (payload.old.status !== payload.new.status) {
-              successToastifyAlert(
-                `Estado de orden actualizado a: ${payload.new.status}`
-              );
-            }
+          if (payload.old.status !== payload.new.status) {
+            setUpdateOrderList((prev) => !prev);
             setUpdateAlerts((prev) => !prev);
+            successToastifyAlert(
+              `Estado de orden actualizado a: ${payload.new.status}`
+            );
           }
         }
       )

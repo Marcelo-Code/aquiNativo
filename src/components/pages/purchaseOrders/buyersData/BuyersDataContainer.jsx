@@ -1,5 +1,8 @@
 import { useContext, useState } from "react";
-import { createPurchaseOrderRPC } from "../../../../services/api/purchaseOrders";
+import {
+  createPurchaseOrder,
+  createPurchaseOrderRPC,
+} from "../../../../services/api/purchaseOrders";
 import {
   errorToastifyAlert,
   successToastifyAlert,
@@ -43,7 +46,7 @@ export const BuyersDataContainer = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    createPurchaseOrderRPC(cart, formData, totalPrice)
+    createPurchaseOrder(cart, formData, totalPrice)
       .then((response) => {
         console.log(response);
         successToastifyAlert(response.message);

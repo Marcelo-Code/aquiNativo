@@ -23,16 +23,11 @@ import { CreateEditCategoriesContainer } from "./components/pages/categories/cre
 import { BrandsListContainer } from "./components/pages/brands/brandsList/BrandsListContainer";
 import { CreateEditBrandsContainer } from "./components/pages/brands/createEditBrands/CreateEditBrandsContainer";
 import { UsersListContainer } from "./components/pages/users/usersList/UsersListContainer";
-import { Create } from "@mui/icons-material";
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
 
 function App() {
-  if (!localStorage.getItem("client_id")) {
-    localStorage.setItem("client_id", crypto.randomUUID());
-  }
-
   return (
     <>
       <GeneralContextProvider>
