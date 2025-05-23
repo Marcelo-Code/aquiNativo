@@ -4,7 +4,6 @@ import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
 import { useNavigate } from "react-router-dom";
 import { getPurchaseOrders } from "../services/api/purchaseOrders";
 import { supabaseClient } from "../services/config/config";
-import { preview } from "vite";
 
 export const GeneralContext = createContext();
 
