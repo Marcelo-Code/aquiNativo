@@ -4,6 +4,7 @@ import { errorToastifyAlert, successToastifyAlert } from "../utils/alerts";
 import { useNavigate } from "react-router-dom";
 import { getPurchaseOrders } from "../services/api/purchaseOrders";
 import { supabaseClient } from "../services/config/config";
+import { preview } from "vite";
 
 export const GeneralContext = createContext();
 
@@ -54,11 +55,31 @@ export const GeneralContextProvider = ({ children }) => {
           schema: "public",
           table: "purchase_orders",
         },
+
         (payload) => {
           console.log("Nueva orden recibida", payload.new);
           successToastifyAlert("¡Nueva orden recibida!");
-          setUpdateAlerts(!updateAlerts);
-          setUpdateOrderList(!updateOrderList);
+          setUpdateAlerts((prev) => !prev);
+          setUpdateOrderList((prev) => !prev);
+        }
+      )
+      // Escuchar actualizaciones (como cambios de status)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "purchase_orders",
+        },
+        (payload) => {
+          console.log("🟡 Orden actualizada:", payload.new);
+          if (payload.old.status !== payload.new.status) {
+            successToastifyAlert(
+              `Estado de orden actualizado a: ${payload.new.status}`
+            );
+          }
+          setUpdateAlerts((prev) => !prev);
+          setUpdateOrderList((prev) => !prev);
         }
       )
       .subscribe();
