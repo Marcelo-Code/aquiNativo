@@ -85,7 +85,7 @@ export const createPurchaseOrder = async (cart, buyer, totalPrice) => {
         buyer_phone_number: buyer.buyer_phone_number,
         buyer_email: buyer.buyer_email,
         total_price: totalPrice,
-        status: "Pendiente",
+        status: "pendiente",
       })
       .select()
       .single();

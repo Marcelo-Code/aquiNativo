@@ -66,6 +66,7 @@ export const GeneralContextProvider = ({ children }) => {
             .catch((err) => console.warn("Error al reproducir sonido:", err));
           successToastifyAlert("¡Nueva orden recibida!");
           setUpdateOrderList((prev) => !prev);
+          setUpdateAlerts((prev) => !prev);
         }
       )
       // Escuchar actualizaciones (como cambios de status)
@@ -101,6 +102,7 @@ export const GeneralContextProvider = ({ children }) => {
         (item) => item.status === "pendiente"
       );
       setAlerts(filtered.length);
+      console.log(filtered.length);
     };
 
     fetchData();
