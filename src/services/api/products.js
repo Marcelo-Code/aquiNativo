@@ -49,20 +49,10 @@ export const getActiveProducts = async () => {
 
     if (error) throw error;
 
-    // Transformar los datos para que cada categoría tenga { category_id, name }
-    const products = data.map((product) => ({
-      ...product,
-      products_categories: product.products_categories.map((pc) => ({
-        id: pc.id,
-        category_id: pc.category_id,
-        name: pc.categories.name,
-      })),
-    }));
-
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      products,
+      data,
     };
   } catch (error) {
     return {

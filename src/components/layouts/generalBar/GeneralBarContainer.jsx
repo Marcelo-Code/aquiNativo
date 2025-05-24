@@ -2,6 +2,34 @@ import { useState } from "react";
 import { GeneralBar } from "./GeneralBar";
 import { ChipsBarContainer } from "./bars/chipsBar/ChipsBarContainer";
 
+// Función genérica para filtrar propiedades anidadas, incluyendo arrays
+function deepMatch(record, pathArray, value) {
+  if (!record) return false;
+
+  const key = pathArray[0];
+  const restPath = pathArray.slice(1);
+
+  const currentVal = record[key];
+
+  if (currentVal === undefined) return false;
+
+  if (restPath.length === 0) {
+    // En el último nivel, si es array, chequeo si alguno coincide
+    if (Array.isArray(currentVal)) {
+      return currentVal.some((item) => item === value);
+    }
+    return currentVal == value;
+  }
+
+  if (Array.isArray(currentVal)) {
+    // Si es array, busco recursivamente en cada elemento
+    return currentVal.some((item) => deepMatch(item, restPath, value));
+  }
+
+  // Si es objeto, sigo bajando
+  return deepMatch(currentVal, restPath, value);
+}
+
 export const GeneralBarContainer = (generalBarContainerProps) => {
   const {
     enableSearchFilterBar = true,
@@ -24,7 +52,7 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
   const [filters, setFilters] = useState({});
   const [sortOption, setSortOption] = useState("none");
 
-  // Configura dinámicamente FILTER_CONFIGS en base a FILTER_OPTIONS
+  // Construir configs para filtros con valor actual o "all"
   const FILTER_CONFIGS = FILTER_OPTIONS.map((options) => ({
     ...options,
     value: filters[options.name] || "all",
@@ -39,26 +67,27 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
     const keywords = lowerQuery.split(" ").filter(Boolean);
 
     let result = records.filter((record) => {
-      // Búsqueda
+      // Filtrado por búsqueda
       const matchesSearch = keywords.every((word) =>
         FIELDS_TO_SEARCH.some((getField) =>
           (getField(record) || "").toLowerCase().includes(word)
         )
       );
 
-      // Filtros
+      // Filtrado por filtros seleccionados
       const matchesAllFilters = Object.entries(newFilters).every(
         ([key, value]) => {
+          if (value === "all") return true;
+
           const path = key.split(".");
-          const recordValue = path.reduce((acc, k) => acc?.[k], record);
-          return value === "all" || recordValue == value;
+          return deepMatch(record, path, value);
         }
       );
 
       return matchesSearch && matchesAllFilters;
     });
 
-    // Ordenamiento
+    // Ordenar resultado si se seleccionó opción distinta a "none"
     if (newSort !== "none") {
       const sortConfig = SORT_OPTIONS.find((opt) => opt.value === newSort);
       if (sortConfig) {

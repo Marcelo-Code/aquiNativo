@@ -84,6 +84,7 @@ export const ProductsList = (productsListProps) => {
                         alignItems: "center",
                         fontSize: "20px",
                         backgroundColor: "rgba(0, 0, 0, 0.1)",
+                        textAlign: "center",
                       }}
                     >
                       Producto sin imagen
@@ -94,7 +95,7 @@ export const ProductsList = (productsListProps) => {
                   <Typography
                     variant="h5"
                     component="div"
-                    sx={{ textAlign: "center" }}
+                    sx={{ textAlign: "center", marginTop: "20px" }}
                   >
                     {product.brands.name}
                   </Typography>
@@ -102,12 +103,14 @@ export const ProductsList = (productsListProps) => {
                   <Typography
                     variant="subtitle2"
                     component="div"
-                    sx={{ textAlign: "left", paddingLeft: "10px" }}
+                    sx={{
+                      paddingLeft: "10px",
+                    }}
                   >
-                    {product.products_categories.map((category) => (
+                    {product.products_categories.map((category, index) => (
                       <Box
+                        key={index}
                         className="categoryBox"
-                        key={category.id}
                         sx={{
                           backgroundColor: generalBackGroundColor,
                           borderRadius: "20px",
@@ -128,7 +131,11 @@ export const ProductsList = (productsListProps) => {
                   <Typography
                     variant="subtitle2"
                     component="div"
-                    sx={{ textAlign: "left", paddingLeft: "10px" }}
+                    sx={{
+                      textAlign: "justify",
+                      paddingLeft: "10px",
+                      paddingRight: "10px",
+                    }}
                   >
                     {product.description}
                   </Typography>
