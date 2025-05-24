@@ -30,8 +30,7 @@ export const Footer = () => {
       <Box className="footerTitle">NATIVO</Box>
 
       <Box className="footerSocialMedia">
-        Seguinos en nuestras const [state, dispatch] = useReducer(first, second,
-        third)
+        Seguinos en nuestras redes
         <IconButton>
           <Icons.InstagramIcon sx={{ color: "black", fontSize: "1.5em" }} />
         </IconButton>
