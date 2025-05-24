@@ -50,8 +50,6 @@ export const CreateEditProduct = (createEditProductProps) => {
     isLoadingButton,
   };
 
-  console.log(formData);
-
   const elementStyle = {
     display: "flex",
     alignItems: "center",
@@ -61,8 +59,6 @@ export const CreateEditProduct = (createEditProductProps) => {
   };
 
   const [openImageDialog, setOpenImageDialog] = useState(false);
-
-  console.log(formData.categoriesArray);
 
   return (
     <Box className="generalContainer">

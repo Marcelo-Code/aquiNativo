@@ -1,5 +1,5 @@
 import { bucketName, supabaseClient } from "../config/config";
-import { updateProduct } from "./products";
+import { updateProduct, updateProductWithCategoriesArray } from "./products";
 
 //Funcion para subir un archivo
 export const uploadImage = async (
@@ -9,8 +9,6 @@ export const uploadImage = async (
   //   setUploadingDocumentName,
 ) => {
   //   setUploadingDocumentName(documentName);
-
-  console.log(formData);
 
   try {
     if (!file || !file.name) {
@@ -55,7 +53,7 @@ export const uploadImage = async (
       };
 
       //Actualiza el registro correspondiente
-      const response = await updateProduct(updatedRecord);
+      const response = await updateProductWithCategoriesArray(updatedRecord);
       return response;
     }
   } catch (error) {
@@ -91,7 +89,7 @@ export const deleteImage = async (documentName, formData) => {
 
     console.log(updatedRecord);
 
-    await updateProduct(updatedRecord);
+    await updateProductWithCategoriesArray(updatedRecord);
 
     console.log("Archivo eliminado correctamente:", fileName);
     return { success: true, file: fileName };

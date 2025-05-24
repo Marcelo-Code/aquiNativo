@@ -102,13 +102,14 @@ export const CreateEditProductContainer = () => {
 
     setIsLoadingImage(true);
     // Llama a la función para eliminar el archivo
+    delete formData.brands;
     deleteImage(documentName, formData)
       .then((response) => {
         console.log(response);
         return getProduct(formData.id);
       })
       .then((response) => {
-        setFormData(response.data[0]);
+        setFormData(response.data);
         console.log("Producto actualizado:", response.data);
       })
       .catch((error) => console.log(error))
@@ -143,9 +144,11 @@ export const CreateEditProductContainer = () => {
           type: "image/webp",
         });
 
+        delete formData.brands;
+
         await uploadImage(webpFile, documentName, formData);
         const { data } = await getProduct(formData.id);
-        setFormData(data[0]);
+        setFormData(data);
         console.log("Producto actualizado:", data);
       } catch (error) {
         console.error("Error al procesar la imagen:", error);
@@ -188,8 +191,6 @@ export const CreateEditProductContainer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
 
     if (!formData.categoriesArray || formData.categoriesArray.length === 0) {
       setCategoryArrayError(true);
@@ -257,8 +258,6 @@ export const CreateEditProductContainer = () => {
           throw new Error(`Error al obtener marcas: ${errorMessage}`);
         }
 
-        console.log(productResponse);
-
         //Validaciones de categorias
         if (categoriesResponse.status !== 200) {
           const errorMessage =
@@ -302,6 +301,8 @@ export const CreateEditProductContainer = () => {
   }, [productId]);
 
   if (isLoading) return <LoadingContainer />;
+
+  console.log(formData);
 
   if (error) {
     const errorContainerProps = {
