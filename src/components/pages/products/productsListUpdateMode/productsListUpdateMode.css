@@ -1,8 +1,8 @@
 .updateCard {
   width: 250px;
-  height: 450px;
+  min-height: 500px;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .cardMedia {

@@ -92,12 +92,15 @@ export const SpecialOffers = (specialOffersProps) => {
                   },
                 }}
               >
-                <CardContent
+                {/* <CardContent> */}
+                <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
+                    alignItems: "center",
                     width: "100%",
+                    height: "100%",
                     padding: 0,
                     margin: 0,
                   }}
@@ -105,8 +108,8 @@ export const SpecialOffers = (specialOffersProps) => {
                   <Box
                     sx={{
                       width: "100%",
-                      height: "60px",
-                      fontSize: "20px",
+                      minHeight: "60px",
+                      fontSize: "15px",
                       textAlign: "center",
                       display: "flex",
                       justifyContent: "center",
@@ -117,14 +120,16 @@ export const SpecialOffers = (specialOffersProps) => {
                       boxShadow: 5,
                       zIndex: 2,
                       textShadow: "0px 0px 5px black",
+                      padding: "10px",
                     }}
                   >
                     {product.description}
                   </Box>
                   <Box
                     sx={{
+                      width: "100%",
                       display: "flex",
-                      justifyContent: "center",
+                      justifyContent: "space-between",
                       alignItems: "center",
                     }}
                   >
@@ -134,10 +139,9 @@ export const SpecialOffers = (specialOffersProps) => {
                         alt="producto"
                         style={{
                           width: "100%",
-                          maxWidth: "230px",
-                          height: "230px",
+                          maxWidth: "200px",
+                          maxHeight: "200px",
                           objectFit: "contain",
-                          margin: "0 auto",
                           display: "block",
                         }}
                       />
@@ -152,6 +156,7 @@ export const SpecialOffers = (specialOffersProps) => {
                         borderRadius: "25px 0 0 25px",
                         color: "white",
                         textAlign: "center",
+                        marginLeft: "10px",
                       }}
                     >
                       {currencyFormat(product.price)}
@@ -178,7 +183,8 @@ export const SpecialOffers = (specialOffersProps) => {
                   >
                     {product.special_offer.toUpperCase()}
                   </Box>
-                </CardContent>
+                </Box>
+                {/* </CardContent> */}
               </Card>
             </Box>
           ))}

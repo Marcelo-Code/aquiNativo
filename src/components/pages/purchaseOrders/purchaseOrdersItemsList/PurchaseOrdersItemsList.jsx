@@ -103,7 +103,10 @@ export const PurchaseOrdersItemsList = (purchaseOrdersItemsListProps) => {
                   >
                     Total
                   </TableCell>
-                  <TableCell align="right" style={{ fontWeight: "bold" }}>
+                  <TableCell
+                    align="right"
+                    style={{ fontWeight: "bold", whiteSpace: "nowrap" }}
+                  >
                     {currencyFormat(order.total_price)}
                   </TableCell>
                 </TableRow>

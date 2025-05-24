@@ -56,7 +56,13 @@ export const ProductsList = (productsListProps) => {
                 className="card"
                 key={product.id}
               >
-                <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
                   {product.image ? (
                     <CardMedia
                       className="cardMedia"
@@ -155,7 +161,7 @@ export const ProductsList = (productsListProps) => {
                       </Button>
                     </Box>
                   </CardActions>
-                  <CardContent
+                  <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -173,21 +179,29 @@ export const ProductsList = (productsListProps) => {
                     <Typography
                       variant="subtitle2"
                       component="div"
-                      sx={{ textAlign: "left" }}
+                      sx={{ textAlign: "left", paddingLeft: "10px" }}
                     >
                       {product.categories.name}
                     </Typography>
 
-                    <Typography variant="subtitle2" component="div">
+                    <Typography
+                      variant="subtitle2"
+                      component="div"
+                      sx={{ textAlign: "left", paddingLeft: "10px" }}
+                    >
                       {product.description}
                     </Typography>
 
                     {product.special_offer?.trim() && (
-                      <Typography variant="subtitle2" component="div">
+                      <Typography
+                        variant="subtitle2"
+                        component="div"
+                        sx={{ textAlign: "left", paddingLeft: "10px" }}
+                      >
                         Oferta {product.special_offer}
                       </Typography>
                     )}
-                  </CardContent>
+                  </Box>
                   <Typography
                     variant="h6"
                     component="div"

@@ -50,109 +50,138 @@ export const ProductsListUpdateMode = (productsListProps) => {
                     </IconButton>
                   </Tooltip>
                 </CardActions>
-                <Box>
-                  {product.image ? (
-                    <CardMedia
-                      className="cardMedia"
-                      component="img"
-                      image={`${product.image}?t=${Date.now()}`}
-                      alt="producto"
-                      sx={{
-                        width: "100%",
-                        height: "250px",
-                        objectFit: "contain",
-                        margin: "0 auto",
-                        display: "block",
-                      }}
-                    />
-                  ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box>
+                    {product.image ? (
+                      <Box
+                        className="cardMedia"
+                        sx={{
+                          marginTop: 0,
+                          width: "100%",
+                          height: "250px",
+                          position: "relative", // necesario para posicionar la marca de agua
+                          overflow: "hidden",
+                        }}
+                      >
+                        <img
+                          src={`${product.image}?t=${Date.now()}`}
+                          alt="producto"
+                          style={{ width: "100%", maxHeight: "250px" }}
+                        />
+                        {/* Marca al agua, mensaje de inactividad */}
+                        {!product.active && (
+                          <Box
+                            sx={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              backgroundColor: "rgba(0,0,0,0.4)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              color: "white",
+                              fontWeight: "bold",
+                              fontSize: "20px",
+                              zIndex: 1,
+                            }}
+                          >
+                            PRODUCTO INACTIVO
+                          </Box>
+                        )}
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          height: "250px",
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "20px",
+                          backgroundColor: "rgba(0, 0, 0, 0.3)",
+                        }}
+                      >
+                        Producto sin imagen
+                      </Box>
+                    )}
+
                     <Box
                       sx={{
-                        height: "250px",
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "20px",
-                        backgroundColor: "rgba(0, 0, 0, 0.3)",
+                        textAlign: "left",
+                        paddingLeft: "10px",
+                        marginTop: "10px",
                       }}
-                    >
-                      Producto sin imagen
-                    </Box>
-                  )}
-                  {/* Marca al agua, mensaje de inactividad */}
-                  {!product.active && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "250px",
-                        backgroundColor: "rgba(0,0,0,0.4)",
-                        display: "flex",
-                        justifyContent: "center",
-                        paddingTop: "60px",
-                        alignItems: "start",
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "20px",
-                        zIndex: 1,
-                      }}
-                    >
-                      PRODUCTO INACTIVO
-                    </Box>
-                  )}
-                  <CardContent
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "110px",
-                    }}
-                  >
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left" }}
                     >
                       <b>Marca: </b>
                       {product.brands.name}
-                    </Typography>
+                    </Box>
 
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left" }}
+                    <Box
+                      sx={{
+                        textAlign: "left",
+                        paddingLeft: "10px",
+                        marginTop: "10px",
+                      }}
                     >
+                      {" "}
                       <b>Categoria: </b>
                       {product.categories.name}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left" }}
+                    </Box>
+                    <Box
+                      sx={{
+                        textAlign: "left",
+                        paddingLeft: "10px",
+                        marginTop: "10px",
+                      }}
                     >
+                      {" "}
                       <b>Código: </b> {product.id}
-                    </Typography>
+                    </Box>
 
-                    <Typography variant="subtitle2" component="div">
+                    <Box
+                      sx={{
+                        textAlign: "left",
+                        paddingLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {" "}
                       <b>Descripción: </b>
                       {product.description}
-                    </Typography>
-                    <Typography variant="subtitle2" component="div">
+                    </Box>
+                    <Box
+                      sx={{
+                        textAlign: "left",
+                        paddingLeft: "10px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {" "}
                       <b>Oferta: </b>
                       {product.special_offer
                         ? product.special_offer
                         : "sin oferta"}
-                    </Typography>
-                  </CardContent>
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{ textAlign: "center", marginTop: "40px" }}
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "20px",
+                      padding: "10px",
+                    }}
                   >
                     {currencyFormat(product.price)}
-                  </Typography>
+                  </Box>
                 </Box>
               </Card>
             ))}
