@@ -38,8 +38,8 @@ export const CartList = (cartListProps) => {
     height: 28,
     color: "white",
     backgroundColor: buttonColor,
-    "&:hover": {
-      backgroundColor: hoverButtonColor,
+    "&:active": {
+      backgroundColor: generalBackGroundColor + " !important",
     },
   };
 
@@ -96,6 +96,9 @@ export const CartList = (cartListProps) => {
                   <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
                     Subtotal
                   </TableCell>
+                  <TableCell align="center" style={{ whiteSpace: "nowrap" }}>
+                    Subtotal
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,6 +146,17 @@ export const CartList = (cartListProps) => {
                     <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
                       {currencyFormat(item.price * item.quantity)}
                     </TableCell>
+                    <TableCell align="right" style={{ whiteSpace: "nowrap" }}>
+                      <IconButton
+                        aria-label="add product"
+                        onClick={() => removeProductFromCart(item)}
+                      >
+                        <Icons.DeleteIcon
+                          color="error"
+                          sx={{ fontSize: "30px" }}
+                        />
+                      </IconButton>{" "}
+                    </TableCell>
                   </TableRow>
                 ))}
                 <TableRow>
@@ -159,6 +173,10 @@ export const CartList = (cartListProps) => {
                   >
                     {currencyFormat(totalPrice)}
                   </TableCell>
+                  <TableCell
+                    align="right"
+                    style={{ whiteSpace: "nowrap", fontWeight: "bold" }}
+                  ></TableCell>
                 </TableRow>
               </TableBody>
             </Table>

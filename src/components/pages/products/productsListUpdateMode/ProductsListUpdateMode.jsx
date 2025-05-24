@@ -135,7 +135,7 @@ export const ProductsListUpdateMode = (productsListProps) => {
                     >
                       {" "}
                       <b>Categoria: </b>
-                      {product.categories.name}
+                      {/* {product.categories.name} */}
                     </Box>
                     <Box
                       sx={{

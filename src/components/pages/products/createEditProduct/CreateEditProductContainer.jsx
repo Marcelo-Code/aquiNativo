@@ -8,8 +8,10 @@ import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import {
   createProduct,
+  createProductWithCategoriesArray,
   getProduct,
   updateProduct,
+  updateProductWithCategoriesArray,
 } from "../../../../services/api/products";
 import {
   errorToastifyAlert,
@@ -28,12 +30,14 @@ export const CreateEditProductContainer = () => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [categoryArrayError, setCategoryArrayError] = useState(false);
+
   const formDataInitialState = {
     description: "",
     brand_id: "",
-    category_id: "",
     price: "",
     special_offer: "",
+    categoriesArray: [],
   };
 
   const PRODUCT_STATUS = [
@@ -174,7 +178,7 @@ export const CreateEditProductContainer = () => {
           },
           "image/webp",
           0.8
-        ); // calidad 0.8
+        );
       };
 
       reader.onerror = reject;
@@ -184,13 +188,25 @@ export const CreateEditProductContainer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(formData);
+
+    if (!formData.categoriesArray || formData.categoriesArray.length === 0) {
+      setCategoryArrayError(true);
+      return;
+    } else {
+      setCategoryArrayError(false);
+    }
+
     setIsLoadingButton(true);
     setCreatedProduct(false);
 
     delete formData.brands;
     delete formData.categories;
 
-    const request = productId ? updateProduct : createProduct;
+    const request = productId
+      ? updateProductWithCategoriesArray
+      : createProductWithCategoriesArray;
 
     try {
       const response = await request(formData);
@@ -200,7 +216,11 @@ export const CreateEditProductContainer = () => {
           typeof response.error === "string"
             ? response.error
             : JSON.stringify(response.error);
-        throw new Error(`${response.message}: ${errorMessage}`);
+        throw new Error(
+          `${response?.message ?? "Error sin mensaje"}: ${
+            errorMessage ?? "Detalles no disponibles"
+          }`
+        );
       }
 
       const action = productId ? "actualizado" : "creado";
@@ -208,11 +228,7 @@ export const CreateEditProductContainer = () => {
       setModifiedFlag(false);
 
       if (!productId) {
-        // setFormData(response.data);
         setCreatedProduct(true);
-      } else {
-        // const refreshed = await getProduct(productId);
-        // setFormData(refreshed.data);
       }
 
       setModifiedFlag(false);
@@ -241,7 +257,7 @@ export const CreateEditProductContainer = () => {
           throw new Error(`Error al obtener marcas: ${errorMessage}`);
         }
 
-        console.log(productResponse.status);
+        console.log(productResponse);
 
         //Validaciones de categorias
         if (categoriesResponse.status !== 200) {
@@ -262,17 +278,19 @@ export const CreateEditProductContainer = () => {
         }
 
         setBrands(brandsResponse.data);
-        setCategories(categoriesResponse.data);
+
+        setCategories(
+          categoriesResponse.data.map((category) => ({
+            category_id: category.id,
+            name: category.name,
+          }))
+        );
 
         if (productId) {
-          setFormData(productResponse.data[0]);
+          setFormData(productResponse.data);
         } else {
           setFormData(formDataInitialState);
         }
-
-        console.log(brandsResponse);
-        console.log(categoriesResponse);
-        console.log(productResponse);
       })
       .catch((error) => {
         console.error("Error en la carga de datos:", error);
@@ -284,6 +302,7 @@ export const CreateEditProductContainer = () => {
   }, [productId]);
 
   if (isLoading) return <LoadingContainer />;
+
   if (error) {
     const errorContainerProps = {
       error: error.message,
@@ -309,6 +328,7 @@ export const CreateEditProductContainer = () => {
     isLoadingImage,
     productId,
     PRODUCT_STATUS,
+    categoryArrayError,
   };
 
   return <CreateEditProduct {...createEditProductProps} />;

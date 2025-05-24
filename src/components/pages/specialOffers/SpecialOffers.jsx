@@ -134,18 +134,26 @@ export const SpecialOffers = (specialOffersProps) => {
                     }}
                   >
                     <Box>
-                      <img
+                      <Box
+                        component="img"
                         src={product.image}
                         alt="producto"
-                        style={{
-                          width: "100%",
-                          maxWidth: "200px",
-                          maxHeight: "200px",
-                          objectFit: "contain",
-                          display: "block",
+                        sx={{
+                          width: "200px",
+                          height: "auto",
+                          objectFit: "cover",
+                          WebkitMaskImage:
+                            "radial-gradient(circle, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%)",
+                          WebkitMaskSize: "100% 100%",
+                          WebkitMaskRepeat: "no-repeat",
+                          maskImage:
+                            "radial-gradient(circle, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%)",
+                          maskSize: "100% 100%",
+                          maskRepeat: "no-repeat",
                         }}
                       />
                     </Box>
+
                     <Box
                       sx={{
                         width: "140px",

@@ -74,44 +74,44 @@ export const ProductDetail = ({
                 </li>
               </ul>
             </Box>
-            <Box className="productCardActions">
-              <Box className="productActionsContent">
-                <Box className="productCounter">
-                  <IconButton
-                    sx={addRemoveButtonStyle}
-                    aria-label="remove product"
-                    onClick={() => removeProduct()}
-                  >
-                    <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
-                  </IconButton>
-                  <Box>{counter}</Box>
-                  <IconButton
-                    sx={addRemoveButtonStyle}
-                    aria-label="add product"
-                    onClick={() => addProduct()}
-                  >
-                    <Icons.AddIcon sx={{ fontSize: "20px" }} />
-                  </IconButton>
-                </Box>
-                <Button
-                  aria-label="add to cart"
-                  startIcon={<Icons.AddShoppingCartIcon />}
-                  size="small"
-                  fullWidth
-                  onClick={() => addProductToCart(product, counter)}
-                  sx={{
-                    marginTop: 2,
-                    width: "100%",
-                    backgroundColor: buttonColor,
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: hoverButtonColor,
-                    },
-                  }}
+          </Box>
+          <Box className="productCardActions">
+            <Box className="productActionsContent">
+              <Box className="productCounter">
+                <IconButton
+                  sx={addRemoveButtonStyle}
+                  aria-label="remove product"
+                  onClick={() => removeProduct()}
                 >
-                  Agregar
-                </Button>
+                  <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
+                </IconButton>
+                <Box>{counter}</Box>
+                <IconButton
+                  sx={addRemoveButtonStyle}
+                  aria-label="add product"
+                  onClick={() => addProduct()}
+                >
+                  <Icons.AddIcon sx={{ fontSize: "20px" }} />
+                </IconButton>
               </Box>
+              <Button
+                aria-label="add to cart"
+                startIcon={<Icons.AddShoppingCartIcon />}
+                size="small"
+                fullWidth
+                onClick={() => addProductToCart(product, counter)}
+                sx={{
+                  marginTop: 2,
+                  width: "100%",
+                  backgroundColor: buttonColor,
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: hoverButtonColor,
+                  },
+                }}
+              >
+                Agregar
+              </Button>
             </Box>
           </Box>
           <Box className="productCardBackAction">

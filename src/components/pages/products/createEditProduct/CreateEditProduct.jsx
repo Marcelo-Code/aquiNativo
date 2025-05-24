@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   CircularProgress,
   FormGroup,
@@ -40,6 +41,7 @@ export const CreateEditProduct = (createEditProductProps) => {
     isLoadingImage,
     productId,
     PRODUCT_STATUS,
+    categoryArrayError,
   } = createEditProductProps;
 
   const formButtonGroupContainerProps = {
@@ -47,6 +49,8 @@ export const CreateEditProduct = (createEditProductProps) => {
     modifiedFlag,
     isLoadingButton,
   };
+
+  console.log(formData);
 
   const elementStyle = {
     display: "flex",
@@ -57,6 +61,8 @@ export const CreateEditProduct = (createEditProductProps) => {
   };
 
   const [openImageDialog, setOpenImageDialog] = useState(false);
+
+  console.log(formData.categoriesArray);
 
   return (
     <Box className="generalContainer">
@@ -196,15 +202,57 @@ export const CreateEditProduct = (createEditProductProps) => {
                 </Box>
                 <Box sx={elementStyle}>
                   <Icons.DescriptionIcon />
-                  <OptionSelect
-                    getOptionLabel={(option) => `${option.name}`}
-                    name="category_id"
-                    placeholder="Seleccionar categoría"
-                    clients={categories}
-                    value={formData.category_id}
-                    onChange={handleChange}
-                    label={"Categoría"}
-                    required
+                  <Autocomplete
+                    multiple
+                    fullWidth
+                    options={categories}
+                    getOptionLabel={(option) => option.name}
+                    value={formData.categoriesArray}
+                    onChange={(event, newValue) =>
+                      handleChange({
+                        target: {
+                          name: "categoriesArray",
+                          value: newValue,
+                        },
+                      })
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Categoría"
+                        placeholder=""
+                        error={categoryArrayError}
+                        helperText={
+                          categoryArrayError
+                            ? "Debe seleccionar al menos una categoría"
+                            : ""
+                        }
+                      />
+                    )}
+                    sx={{
+                      backgroundColor: "white",
+                      "& .MuiOutlinedInput-root": {
+                        minHeight: "40px", // Altura mínima
+                        padding: "2px !important",
+
+                        "& fieldset": {
+                          borderColor: "gray", // borde normal
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "black", // al pasar mouse
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: `${generalBackGroundColor}`, // al enfocar
+                        },
+                      },
+                      "& label": {
+                        top: "-5px",
+                        color: "gray", // color normal
+                      },
+                      "& label.Mui-focused": {
+                        color: `${buttonColor}`, // color al enfocar
+                      },
+                    }}
                   />
                 </Box>
                 <Box sx={elementStyle}>

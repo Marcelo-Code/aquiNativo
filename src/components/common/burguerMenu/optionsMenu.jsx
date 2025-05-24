@@ -26,11 +26,11 @@ export const adminOptions = [
   //   option: "Ofertas",
   //   link: "/",
   // },
-  // {
-  //   icon: <Icons.InventoryIcon />,
-  //   option: "Productos",
-  //   link: "/products",
-  // },
+  {
+    icon: <Icons.InventoryIcon />,
+    option: "Productos",
+    link: "/products",
+  },
   {
     icon: <Icons.ReceiptIcon />,
     option: "Ordenes de compra",

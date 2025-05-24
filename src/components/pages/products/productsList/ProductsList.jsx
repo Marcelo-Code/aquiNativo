@@ -49,20 +49,16 @@ export const ProductsList = (productsListProps) => {
       <Box className="generalSubTitle">{`${filteredProducts.length} productos disponibles`}</Box>
       <PaginationContainer items={filteredProducts} itemsPerPage={10}>
         {(recordsToShow) => (
-          <Box className="generalList">
+          <Box className="generalList" sx={{ alignItems: "stretch" }}>
             {recordsToShow.map((product) => (
               <Card
-                sx={{ boxShadow: "0px 0px 10px black" }}
+                sx={{
+                  boxShadow: "0px 0px 10px black",
+                }}
                 className="card"
                 key={product.id}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <Box className="cardImage">
                   {product.image ? (
                     <CardMedia
                       className="cardMedia"
@@ -72,13 +68,14 @@ export const ProductsList = (productsListProps) => {
                       sx={{
                         width: "100%",
                         height: "250px",
-                        objectFit: "contain",
+                        // objectFit: "contain",
                         margin: "0 auto",
                         display: "block",
                       }}
                     />
                   ) : (
                     <Box
+                      className="imagePlaceholder"
                       sx={{
                         height: "250px",
                         width: "100%",
@@ -92,124 +89,134 @@ export const ProductsList = (productsListProps) => {
                       Producto sin imagen
                     </Box>
                   )}
-                  <CardActions className="cardActions">
-                    <Box
-                      sx={{
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          border: "1px solid black",
-                          padding: "4px",
-                          borderRadius: "20px",
-                          width: "60%",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        }}
-                      >
-                        <IconButton
-                          type="button"
-                          aria-label="remove product"
-                          onClick={() =>
-                            removeProduct(product, setFilteredProducts)
-                          }
-                          sx={addRemoveButtonStyle}
-                        >
-                          <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
-                        </IconButton>
-                        <Box>{product.counter}</Box>
-                        <IconButton
-                          type="button"
-                          aria-label="add product"
-                          onClick={() =>
-                            addProduct(product, setFilteredProducts)
-                          }
-                          sx={addRemoveButtonStyle}
-                        >
-                          <Icons.AddIcon sx={{ fontSize: "20px" }} />
-                        </IconButton>
-                      </Box>
-                      <Button
-                        onClick={() =>
-                          addProductToCart(
-                            product,
-                            filteredProducts,
-                            setFilteredProducts
-                          )
-                        }
-                        aria-label="add to cart"
-                        startIcon={<Icons.AddShoppingCartIcon />}
-                        size="small"
-                        fullWidth
-                        sx={{
-                          marginTop: 2,
-                          backgroundColor: buttonColor,
-                          color: "white",
-                          "&:active": {
-                            backgroundColor: hoverButtonColor,
-                          },
-                        }}
-                      >
-                        Agregar
-                      </Button>
-                    </Box>
-                  </CardActions>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "110px",
-                    }}
+                </Box>
+                <Box className="cardText">
+                  <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{ textAlign: "center" }}
                   >
-                    <Typography
-                      variant="h5"
-                      component="div"
-                      sx={{ textAlign: "center" }}
-                    >
-                      {product.brands.name}
-                    </Typography>
+                    {product.brands.name}
+                  </Typography>
 
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      {product.categories.name}
-                    </Typography>
-
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      {product.description}
-                    </Typography>
-
-                    {product.special_offer?.trim() && (
-                      <Typography
-                        variant="subtitle2"
-                        component="div"
-                        sx={{ textAlign: "left", paddingLeft: "10px" }}
+                  <Typography
+                    variant="subtitle2"
+                    component="div"
+                    sx={{ textAlign: "left", paddingLeft: "10px" }}
+                  >
+                    {product.products_categories.map((category) => (
+                      <Box
+                        className="categoryBox"
+                        key={category.id}
+                        sx={{
+                          backgroundColor: generalBackGroundColor,
+                          borderRadius: "20px",
+                          padding: "5px 15px 5px 15px",
+                          width: "auto",
+                          margin: "2px",
+                          display: "inline-block",
+                          color: "white",
+                          textShadow: "0px 0px 10px black",
+                          fontSize: "12px",
+                        }}
                       >
-                        Oferta {product.special_offer}
-                      </Typography>
-                    )}
-                  </Box>
+                        {category.categories.name}
+                      </Box>
+                    ))}
+                  </Typography>
+
+                  <Typography
+                    variant="subtitle2"
+                    component="div"
+                    sx={{ textAlign: "left", paddingLeft: "10px" }}
+                  >
+                    {product.description}
+                  </Typography>
+
+                  {product.special_offer?.trim() && (
+                    <Typography
+                      variant="subtitle2"
+                      component="div"
+                      sx={{ textAlign: "left", paddingLeft: "10px" }}
+                    >
+                      Oferta {product.special_offer}
+                    </Typography>
+                  )}
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ textAlign: "center", marginTop: "30px" }}
+                    sx={{ textAlign: "center", margin: "30px" }}
                   >
                     {currencyFormat(product.price)}
                   </Typography>
                 </Box>
+                <CardActions className="cardActions">
+                  <Box
+                    sx={{
+                      width: "250px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        border: "1px solid black",
+                        padding: "4px",
+                        borderRadius: "20px",
+                        width: "60%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      }}
+                    >
+                      <IconButton
+                        type="button"
+                        aria-label="remove product"
+                        onClick={() =>
+                          removeProduct(product, setFilteredProducts)
+                        }
+                        sx={addRemoveButtonStyle}
+                      >
+                        <Icons.RemoveIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                      <Box>{product.counter}</Box>
+                      <IconButton
+                        type="button"
+                        aria-label="add product"
+                        onClick={() => addProduct(product, setFilteredProducts)}
+                        sx={addRemoveButtonStyle}
+                      >
+                        <Icons.AddIcon sx={{ fontSize: "20px" }} />
+                      </IconButton>
+                    </Box>
+                    <Button
+                      onClick={() =>
+                        addProductToCart(
+                          product,
+                          filteredProducts,
+                          setFilteredProducts
+                        )
+                      }
+                      aria-label="add to cart"
+                      startIcon={<Icons.AddShoppingCartIcon />}
+                      size="small"
+                      fullWidth
+                      sx={{
+                        marginTop: 2,
+                        backgroundColor: buttonColor,
+                        color: "white",
+                        "&:active": {
+                          backgroundColor: hoverButtonColor,
+                        },
+                      }}
+                    >
+                      Agregar
+                    </Button>
+                  </Box>
+                </CardActions>
               </Card>
             ))}
           </Box>

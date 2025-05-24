@@ -5,7 +5,16 @@ export const getProducts = async () => {
   try {
     const { data, error } = await supabaseClient
       .from("products")
-      .select("*, categories: category_id(name), brands: brand_id(name)")
+      .select(
+        `
+    *,
+    brands: brand_id(name),
+    products_categories (
+      category_id,
+      categories(id, name)
+    )
+  `
+      )
       .order("description", { ascending: true });
 
     if (error) throw error;
@@ -24,13 +33,37 @@ export const getActiveProducts = async () => {
   try {
     const { data, error } = await supabaseClient
       .from("products")
-      .select("*, categories: category_id(name), brands: brand_id(name)")
+      .select(
+        `
+        *,
+        brands:brand_id(name),
+        products_categories(
+          product_id,
+          category_id,
+          categories:category_id(name)
+        )
+      `
+      )
       .eq("active", true)
       .order("description", { ascending: true });
 
     if (error) throw error;
 
-    return { status: 200, message: "registros obtenidos con éxito", data };
+    // Transformar los datos para que cada categoría tenga { category_id, name }
+    const products = data.map((product) => ({
+      ...product,
+      products_categories: product.products_categories.map((pc) => ({
+        id: pc.id,
+        category_id: pc.category_id,
+        name: pc.categories.name,
+      })),
+    }));
+
+    return {
+      status: 200,
+      message: "registros obtenidos con éxito",
+      products,
+    };
   } catch (error) {
     return {
       status: 500,
@@ -68,18 +101,83 @@ export const createProduct = async (product) => {
   }
 };
 
+export const createProductWithCategoriesArray = async (productData) => {
+  try {
+    const { categoriesArray, ...productDataToInsert } = productData;
+
+    // 1. Insertar nuevo producto
+    const { data: insertedProduct, error: insertProductError } =
+      await supabaseClient
+        .from("products")
+        .insert(productDataToInsert)
+        .select("id") // se obtiene el ID generado automáticamente
+        .single();
+
+    if (insertProductError) throw insertProductError;
+
+    const productId = insertedProduct.id;
+
+    // Preparar relaciones producto-categoría
+    const relations = categoriesArray.map((category) => ({
+      product_id: productId,
+      category_id: category.category_id,
+    }));
+
+    // Insertar relaciones
+    const { error: insertRelationsError } = await supabaseClient
+      .from("products_categories")
+      .insert(relations);
+
+    if (insertRelationsError) throw insertRelationsError;
+
+    return {
+      status: 200,
+      message: "Producto creado con éxito",
+      productId,
+    };
+  } catch (error) {
+    console.error("Error al crear producto y categorías:", error);
+    return { status: 500, error: error.message };
+  }
+};
+
 export const getProduct = async (productId) => {
   try {
-    const { data, error } = await supabaseClient
+    const { data: productData, error: productError } = await supabaseClient
       .from("products")
-      .select("*, categories: category_id(name), brands: brand_id(name)")
-      .eq("id", productId);
-    if (error) throw error;
+      .select("*, brands: brand_id(name)")
+      .eq("id", productId)
+      .single();
+
+    if (productError) throw productError;
+
+    // Obtener categorías relacionadas al producto
+    const { data: categoriesData, error: categoriesError } =
+      await supabaseClient
+        .from("products_categories")
+        .select(
+          `
+          product_id,
+          category_id,
+          categories:category_id(name)
+        `
+        )
+        .eq("product_id", productId);
+
+    if (categoriesError) throw categoriesError;
+
+    const categoriesArray = categoriesData.map((item) => ({
+      category_id: item.category_id,
+      name: item.categories.name,
+    }));
 
     return {
       status: 200,
       message: "Registro obtenido con éxito",
-      data,
+      data: {
+        ...productData,
+        categoriesArray,
+      },
     };
   } catch (error) {
     return {
@@ -104,10 +202,6 @@ export const updateProduct = async (updatedProduct) => {
 
     successToastifyAlert(`Producto actualizado con éxito`);
 
-    console.log(id);
-
-    console.log(data);
-
     return {
       status: 200,
       message: "Registro actualizado con éxito",
@@ -121,5 +215,48 @@ export const updateProduct = async (updatedProduct) => {
       message: "Error al actualizar registro",
       error: error.message,
     };
+  }
+};
+
+export const updateProductWithCategoriesArray = async (productData) => {
+  try {
+    const { id, categoriesArray, ...productDataToUpdate } = productData;
+    // Actualizar el producto
+    const { error: updateError } = await supabaseClient
+      .from("products")
+      .update(productDataToUpdate)
+      .eq("id", id);
+
+    if (updateError) throw updateError;
+
+    // Eliminar relaciones (producto categoría) actuales
+    const { error: deleteError } = await supabaseClient
+      .from("products_categories")
+      .delete()
+      .eq("product_id", id);
+
+    if (deleteError) throw deleteError;
+
+    // Insertar nuevas relaciones (producto categoría)
+    const newRelations = categoriesArray.map((category) => ({
+      product_id: id,
+      category_id: category.category_id,
+    }));
+
+    console.log(newRelations);
+
+    const { error: insertError } = await supabaseClient
+      .from("products_categories")
+      .insert(newRelations);
+
+    if (insertError) throw insertError;
+
+    return {
+      status: 200,
+      message: "Registro actualizado con éxito",
+    };
+  } catch (error) {
+    console.error("Error updating product and categories:", error);
+    return { success: false, error };
   }
 };
