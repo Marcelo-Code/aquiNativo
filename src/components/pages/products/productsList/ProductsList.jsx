@@ -106,9 +106,9 @@ export const ProductsList = (productsListProps) => {
                       sx={{
                         backgroundColor: generalBackGroundColor,
                         borderRadius: "20px",
-                        padding: "5px 15px 5px 15px",
+                        padding: "2px 10px 2px 10px",
                         width: "auto",
-                        margin: "2px",
+                        margin: "1px",
                         display: "inline-block",
                         color: "white",
                         textShadow: "0px 0px 10px black",
@@ -122,9 +122,12 @@ export const ProductsList = (productsListProps) => {
                 </Typography>
                 <Box className="cardText">
                   <Typography
-                    variant="h5"
+                    variant="h6"
                     component="div"
-                    sx={{ textAlign: "center", marginTop: "20px" }}
+                    sx={{
+                      textAlign: "center",
+                      marginTop: "10px",
+                    }}
                   >
                     {product.brands.name}
                   </Typography>

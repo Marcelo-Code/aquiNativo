@@ -84,14 +84,21 @@ export const ProductsListUpdateModeContainer = () => {
   );
 
   //Array de opciones de filtros por categoria
-  const STATUS_OPTIONS_2 = useMemo(
-    () =>
-      getUniqueSortedOptions(products, "categories.name", {
-        value: "all",
-        label: "Todas las categorías",
-      }),
-    [products]
-  );
+  //Array de opciones de filtros por categoria
+  const STATUS_OPTIONS_2 = useMemo(() => {
+    const categoryNames = new Set();
+
+    products.forEach((product) => {
+      product.products_categories?.forEach((pc) => {
+        const name = pc.categories?.name;
+        if (name) categoryNames.add(name);
+      });
+    });
+
+    return Array.from(categoryNames)
+      .sort()
+      .map((name) => ({ value: name, label: name }));
+  }, [products]);
 
   const STATUS_OPTIONS_3 = [
     { value: true, label: "Productos activos" },
@@ -150,7 +157,7 @@ export const ProductsListUpdateModeContainer = () => {
       placeholder: "Seleccioná una marca",
     },
     {
-      name: "categories.name",
+      name: "products_categories.categories.name",
       label: "Categoría",
       options: STATUS_OPTIONS_2,
       placeholder: "Seleccioná una categoría",
@@ -165,8 +172,10 @@ export const ProductsListUpdateModeContainer = () => {
   //Array de campos a buscar
   const FIELDS_TO_SEARCH = [
     (r) => r.description,
-    (r) => r.categories.name,
     (r) => r.brands.name,
+    (r) =>
+      r.products_categories?.map((pc) => pc.categories?.name ?? "").join(" ") ??
+      "",
   ];
 
   const generalBarContainerProps = {
