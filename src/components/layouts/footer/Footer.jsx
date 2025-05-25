@@ -1,8 +1,9 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, CircularProgress, IconButton } from "@mui/material";
 import { generalBackGroundColor } from "../../../utils/helpers";
 import "./footer.css";
 import { Icons } from "../../../assets/Icons";
-export const Footer = () => {
+export const Footer = (footerProps) => {
+  const { data, isLoading } = footerProps;
   return (
     <Box
       className="footerContainer"
@@ -23,10 +24,23 @@ export const Footer = () => {
           zIndex: 2,
         }}
       >
-        <IconButton>
-          <Icons.WhatsAppIcon sx={{ color: "white", fontSize: "1.5em" }} />
-        </IconButton>
+        {isLoading ? (
+          <CircularProgress sx={{ color: "white" }} />
+        ) : (
+          <IconButton>
+            <a
+              href={`https://wa.me/${data.phone_number}?text=${data.whatsapp_presentation}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icons.WhatsAppIcon
+                sx={{ color: "white", fontSize: "1.5em", marginTop: "5px" }}
+              />
+            </a>
+          </IconButton>
+        )}
       </Box>
+
       <Box className="footerTitle">NATIVO</Box>
 
       <Box className="footerSocialMedia">

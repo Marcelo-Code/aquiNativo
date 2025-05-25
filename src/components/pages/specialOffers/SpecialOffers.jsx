@@ -75,7 +75,7 @@ export const SpecialOffers = (specialOffersProps) => {
               display="flex"
               justifyContent="center"
               mt={5}
-              mb={3}
+              mb={5}
             >
               <Card
                 key={index}

@@ -67,7 +67,6 @@ export const ProductDetail = ({
           <Box className="productCardInfo">
             <Box>
               <ul style={{ textAlign: "center", lineHeight: "20px" }}>
-                <li>{product.categories.name}</li>
                 <li>{product.description}</li>
                 <li style={{ fontSize: "20px", fontWeight: "bold" }}>
                   {currencyFormat(product.price)}

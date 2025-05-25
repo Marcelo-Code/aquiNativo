@@ -10,17 +10,47 @@ import {
 } from "../../../utils/alerts";
 import { GeneralContext } from "../../../context/GeneralContext";
 import { getLoggedInUserData } from "../../../services/api/users";
+import { getData, updateData } from "../../../services/api/data";
+import { handleError } from "../../../utils/helpers";
 
 export const SettingsContainer = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [data, setData] = useState({});
   const [settingsError, setSettingsError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
+  const [isLoadingDataButton, setIsLoadingDataButton] = useState(false);
   const [totalSize, setTotalSize] = useState({});
   const [loggedUserData, setLoggedUserData] = useState({});
+  const [modifiedFlag, setModifiedFlag] = useState(false);
 
   const { handleGoBack } = useContext(GeneralContext);
+
+  const handleDataSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoadingDataButton(true);
+
+    updateData(data)
+      .then((dataResponse) => {
+        if (dataResponse.status !== 200) handleError(dataResponse);
+        successToastifyAlert("Datos actualizados");
+      })
+      .catch((error) => {
+        settingsError(error);
+        errorToastifyAlert("Error al actualizar los datos");
+      })
+      .finally(() => {
+        setIsLoadingDataButton(false);
+        setModifiedFlag(false);
+      });
+  };
+
+  const handleDataChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+    if (!modifiedFlag) setModifiedFlag(true);
+  };
 
   //Función para actualizar la contraseña
   const handleUpdatePassword = async (e) => {
@@ -50,12 +80,14 @@ export const SettingsContainer = () => {
   //Función para obtener el tamaño total
   useEffect(() => {
     setIsLoading(true);
-    Promise.all([getTotalStorageAndDbSize(), getLoggedInUserData()])
-      .then(([totalSizeResponse, userResponse]) => {
+    Promise.all([getTotalStorageAndDbSize(), getLoggedInUserData(), getData()])
+      .then(([totalSizeResponse, userResponse, dataResponse]) => {
         const totalSizeData = totalSizeResponse.data;
         const userResponseData = userResponse.data;
+        const dataResponseData = dataResponse.data;
         setTotalSize(totalSizeData);
         setLoggedUserData(userResponseData);
+        setData(dataResponseData);
       })
       .catch((error) => {
         setSettingsError(error.message);
@@ -83,7 +115,13 @@ export const SettingsContainer = () => {
     isLoadingButton,
     handleGoBack,
     loggedUserData,
+    data,
+    handleDataChange,
+    handleDataSubmit,
+    isLoadingDataButton,
+    modifiedFlag,
   };
 
+  console.log(data);
   return <Settings {...settingsProps} />;
 };

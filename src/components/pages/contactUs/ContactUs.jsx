@@ -2,7 +2,9 @@ import { Box } from "@mui/material";
 import "../../../assets/css/generalStyles.css";
 import { Icons } from "../../../assets/Icons";
 
-export const ContactUs = () => {
+export const ContactUs = (contactUsProps) => {
+  const { data } = contactUsProps;
+
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">Contactanos</Box>
@@ -10,14 +12,14 @@ export const ContactUs = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
           marginTop: "15px",
-          verticalAlign: "middle",
           gap: "8px",
         }}
       >
-        <Icons.QueryBuilderIcon /> lunes a sábado XX:XX a XX:XX
+        <Icons.QueryBuilderIcon /> {data.business_hours}
       </Box>
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -28,19 +30,23 @@ export const ContactUs = () => {
       >
         <Icons.AlternateEmailIcon />
         <a href={`mailto:aquinativo@gmail.com`}>aquinativo@gmail.com</a>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
           marginTop: "15px",
-          verticalAlign: "middle",
           gap: "8px",
         }}
       >
         <Icons.WhatsAppIcon />
-        <a href={`https://wa.me/`} target="_blank" rel="noopener noreferrer">
-          5493364195215
+        <a
+          href={`https://wa.me/${data.phone_number}?text=${data.whatsapp_presentation}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {data.phone_number}
         </a>
       </Box>
       <Box

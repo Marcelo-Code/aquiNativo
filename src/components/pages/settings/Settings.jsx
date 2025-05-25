@@ -1,4 +1,10 @@
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormGroup,
+  TextField,
+} from "@mui/material";
 import "../../../assets/css/generalStyles.css";
 import "./settings.css";
 import { DonutChart } from "../../common/donutChart/DonutChart";
@@ -8,6 +14,7 @@ import {
   generalBackGroundColor,
   normalizeName,
 } from "../../../utils/helpers";
+import { FormButtonGroupContainer } from "../../common/formButtonGroup/FormButtonGroupContainer";
 export const Settings = (settingsProps) => {
   const {
     totalSize,
@@ -19,7 +26,18 @@ export const Settings = (settingsProps) => {
     isLoadingButton,
     handleGoBack,
     loggedUserData,
+    data,
+    handleDataChange,
+    handleDataSubmit,
+    isLoadingDataButton,
+    modifiedFlag,
   } = settingsProps;
+
+  const formButtonGroupContainerProps = {
+    handleGoBack,
+    modifiedFlag,
+    isLoadingButton: isLoadingDataButton,
+  };
 
   return (
     <Box className="generalContainer">
@@ -161,6 +179,106 @@ export const Settings = (settingsProps) => {
             Volver
           </Button>
         </Box>
+        <Box className="generalSubTitle" sx={{ marginTop: "10px" }}>
+          Actualizar datos
+        </Box>
+        <form onSubmit={(e) => handleDataSubmit(e)}>
+          <FormGroup>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TextField
+                margin="normal"
+                required
+                id="phoneNumber"
+                label="Número de celular"
+                name="phone_number"
+                type="text"
+                autoFocus
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray", // color normal
+                    "&.Mui-focused": {
+                      color: buttonColor, // color al enfocar
+                    },
+                  },
+                }}
+                value={data.phone_number}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="business_hours"
+                label="Horarios de atencion"
+                type="text"
+                multiline
+                rows={3}
+                id="business_hours"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray", // color normal
+                    "&.Mui-focused": {
+                      color: buttonColor, // color al enfocar
+                    },
+                  },
+                }}
+                value={data.business_hours}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="whatsapp_presentation"
+                label="Texto de presentación de whatsapp"
+                type="text"
+                multiline
+                rows={3}
+                id="whatsapp_presentation"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray", // color normal
+                    "&.Mui-focused": {
+                      color: buttonColor, // color al enfocar
+                    },
+                  },
+                }}
+                value={data.whatsapp_presentation}
+                onChange={(e) => handleDataChange(e)}
+              />
+              <FormButtonGroupContainer {...formButtonGroupContainerProps} />
+            </Box>
+          </FormGroup>
+        </form>
       </Box>
     </Box>
   );

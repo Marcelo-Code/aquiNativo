@@ -68,7 +68,7 @@ export const ProductDetailContainer = () => {
         if (productDetailResponse.status !== 200) {
           handleError(productDetailResponse);
         }
-        const productDetailResponseData = productDetailResponse.data[0];
+        const productDetailResponseData = productDetailResponse.data;
         setProduct(productDetailResponseData);
       })
       .catch((error) => {
