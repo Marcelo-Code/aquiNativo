@@ -58,6 +58,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 
 export const Icons = {
   PersonAddIcon,
@@ -120,4 +121,5 @@ export const Icons = {
   QueryBuilderIcon,
   SettingsIcon,
   LocalOfferIcon,
+  DoNotDisturbIcon,
 };

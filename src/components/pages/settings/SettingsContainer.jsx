@@ -122,6 +122,5 @@ export const SettingsContainer = () => {
     modifiedFlag,
   };
 
-  console.log(data);
   return <Settings {...settingsProps} />;
 };

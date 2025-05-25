@@ -9,6 +9,7 @@ import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
 import { useConfirm } from "../../../../context/ConfirmContext";
 import { successToastifyAlert } from "../../../../utils/alerts";
 import { useNavigate } from "react-router-dom";
+import { ProductsListUpdateModeCopy } from "./ProductsListUpdateMode copy";
 
 export const ProductsListUpdateModeContainer = () => {
   const [products, setProducts] = useState([]);
@@ -200,5 +201,6 @@ export const ProductsListUpdateModeContainer = () => {
     handleDeleteProduct,
     handleUpdateProduct,
   };
-  return <ProductsListUpdateMode {...productsListProps} />;
+  // return <ProductsListUpdateMode {...productsListProps} />;
+  return <ProductsListUpdateModeCopy {...productsListProps} />;
 };

@@ -26,6 +26,7 @@ import { UsersListContainer } from "./components/pages/users/usersList/UsersList
 import { CreateEditUserContainer } from "./components/pages/users/createEditUser/CreateEditUserContainer";
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
+import { NotFoundContainer } from "./components/pages/notFound/NotFoundContainer";
 
 function App() {
   return (
@@ -63,7 +64,7 @@ function App() {
               element={<UpdatePasswordContainer />}
             />
             {/* 404 */}
-            <Route path="*" element={<div>404</div>} />
+            <Route path="*" element={<NotFoundContainer />} />
             {/* Rutas protegidas para el admin */}
             {/* Lista de usuarios */}
             <Route

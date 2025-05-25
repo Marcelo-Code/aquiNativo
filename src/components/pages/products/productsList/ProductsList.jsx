@@ -110,8 +110,7 @@ export const ProductsList = (productsListProps) => {
                         width: "auto",
                         margin: "1px",
                         display: "inline-block",
-                        color: "white",
-                        textShadow: "0px 0px 10px black",
+                        color: "black",
                         fontSize: "12px",
                         textWrap: "nowrap",
                       }}
