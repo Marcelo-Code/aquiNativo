@@ -68,9 +68,10 @@ export const ProductsList = (productsListProps) => {
                       sx={{
                         width: "100%",
                         height: "250px",
-                        // objectFit: "contain",
+                        objectFit: "cover",
                         margin: "0 auto",
                         display: "block",
+                        backgroundColor: "white",
                       }}
                     />
                   ) : (
@@ -91,6 +92,34 @@ export const ProductsList = (productsListProps) => {
                     </Box>
                   )}
                 </Box>
+                <Typography
+                  variant="subtitle2"
+                  component="div"
+                  className="categoryBox"
+                  sx={{
+                    paddingLeft: "10px",
+                  }}
+                >
+                  {product.products_categories.map((category, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        backgroundColor: generalBackGroundColor,
+                        borderRadius: "20px",
+                        padding: "5px 15px 5px 15px",
+                        width: "auto",
+                        margin: "2px",
+                        display: "inline-block",
+                        color: "white",
+                        textShadow: "0px 0px 10px black",
+                        fontSize: "12px",
+                        textWrap: "nowrap",
+                      }}
+                    >
+                      {category.categories.name}
+                    </Box>
+                  ))}
+                </Typography>
                 <Box className="cardText">
                   <Typography
                     variant="h5"
@@ -98,34 +127,6 @@ export const ProductsList = (productsListProps) => {
                     sx={{ textAlign: "center", marginTop: "20px" }}
                   >
                     {product.brands.name}
-                  </Typography>
-
-                  <Typography
-                    variant="subtitle2"
-                    component="div"
-                    sx={{
-                      paddingLeft: "10px",
-                    }}
-                  >
-                    {product.products_categories.map((category, index) => (
-                      <Box
-                        key={index}
-                        className="categoryBox"
-                        sx={{
-                          backgroundColor: generalBackGroundColor,
-                          borderRadius: "20px",
-                          padding: "5px 15px 5px 15px",
-                          width: "auto",
-                          margin: "2px",
-                          display: "inline-block",
-                          color: "white",
-                          textShadow: "0px 0px 10px black",
-                          fontSize: "12px",
-                        }}
-                      >
-                        {category.categories.name}
-                      </Box>
-                    ))}
                   </Typography>
 
                   <Typography
