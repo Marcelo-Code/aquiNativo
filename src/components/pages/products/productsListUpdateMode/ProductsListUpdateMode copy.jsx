@@ -45,12 +45,16 @@ export const ProductsListUpdateModeCopy = ({
               <Card
                 key={product.id}
                 sx={{
-                  maxWidth: 400,
+                  maxWidth: "400px",
+                  minWidth: "300px",
+                  minHeight: "300px",
                   position: "relative",
                   overflow: "hidden",
                   transition: "box-shadow 0.2s ease-in-out",
+                  boxShadow: 3,
+
                   "&:hover": {
-                    boxShadow: 3,
+                    boxShadow: 5,
                     "& .edit-button": {
                       opacity: 1,
                       left: "80px",
@@ -62,10 +66,17 @@ export const ProductsListUpdateModeCopy = ({
                   sx={{
                     p: 0,
                     "&:last-child": { pb: 0 },
+                    height: "100%",
                   }}
                 >
                   <Box
-                    sx={{ display: "flex", alignItems: "center", gap: 2, p: 2 }}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                      p: 2,
+                      height: "100%",
+                    }}
                   >
                     {/* Product Image - Small thumbnail */}
                     <Box
