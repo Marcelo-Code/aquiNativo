@@ -116,9 +116,17 @@ export const ProductsListUpdateModeCopy2 = ({
                           />
                         )}
                       </StyledTableCell>
-                      <StyledTableCell component="th" scope="row">
+                      <StyledTableCell
+                        align="center"
+                        component="th"
+                        scope="row"
+                      >
                         <img
-                          src={`${product.image}?t=${Date.now()}`}
+                          src={
+                            product.image
+                              ? `${product.image}?t=${Date.now()}`
+                              : "/images/logo2.png"
+                          }
                           alt={product.description || "Producto"}
                           style={{ width: "70px", height: "auto" }}
                         />
@@ -141,7 +149,7 @@ export const ProductsListUpdateModeCopy2 = ({
                       <StyledTableCell align="center">
                         {product.products_categories.map((category) => (
                           <Chip
-                            key={category.id}
+                            key={category.categories.name}
                             label={category.categories.name}
                             size="small"
                             sx={{
