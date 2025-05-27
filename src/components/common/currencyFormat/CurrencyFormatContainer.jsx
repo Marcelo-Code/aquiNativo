@@ -1,6 +1,10 @@
 import { CurrencyFormat } from "./CurrencyFormat";
 
-export const currencyFormat = (number, fontSize = "15px") => {
+export const currencyFormat = (
+  number,
+  lineThrough = false,
+  fontSize = "15px"
+) => {
   const [intPart, decimalPart] = new Intl.NumberFormat("es-AR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -9,6 +13,7 @@ export const currencyFormat = (number, fontSize = "15px") => {
     .split(",");
 
   const currencyFormatProps = {
+    lineThrough,
     intPart,
     decimalPart,
     fontSize,

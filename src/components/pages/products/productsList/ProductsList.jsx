@@ -59,38 +59,23 @@ export const ProductsList = (productsListProps) => {
                 key={product.id}
               >
                 <Box className="cardImage">
-                  {product.image ? (
-                    <CardMedia
-                      className="cardMedia"
-                      component="img"
-                      image={`${product.image}?t=${Date.now()}`}
-                      alt="producto"
-                      sx={{
-                        width: "100%",
-                        height: "250px",
-                        objectFit: "cover",
-                        margin: "0 auto",
-                        display: "block",
-                        backgroundColor: "white",
-                      }}
-                    />
-                  ) : (
-                    <Box
-                      className="imagePlaceholder"
-                      sx={{
-                        height: "250px",
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "20px",
-                        backgroundColor: "rgba(0, 0, 0, 0.1)",
-                        textAlign: "center",
-                      }}
-                    >
-                      Producto sin imagen
-                    </Box>
-                  )}
+                  <CardMedia
+                    component="img"
+                    image={
+                      product.image
+                        ? `${product.image}?t=${Date.now()}`
+                        : "/images/logo2.png"
+                    }
+                    alt="producto"
+                    sx={{
+                      width: product.image ? "100%" : "80%",
+                      height: product.image ? "250px" : "80%",
+                      objectFit: "cover",
+                      margin: product.image ? "0 auto" : "20px auto",
+                      display: "block",
+                      backgroundColor: "white",
+                    }}
+                  />
                 </Box>
                 <Typography
                   variant="subtitle2"
@@ -147,15 +132,27 @@ export const ProductsList = (productsListProps) => {
                     <Typography
                       variant="subtitle2"
                       component="div"
-                      sx={{ textAlign: "left", paddingLeft: "10px" }}
+                      sx={{ textAlign: "center", marginTop: "15px" }}
                     >
                       Oferta {product.special_offer}
+                    </Typography>
+                  )}
+                  {product.previous_price && (
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{ textAlign: "center" }}
+                    >
+                      {currencyFormat(product.previous_price, true)}
                     </Typography>
                   )}
                   <Typography
                     variant="h6"
                     component="div"
-                    sx={{ textAlign: "center", margin: "30px" }}
+                    sx={{
+                      textAlign: "center",
+                      marginBottom: "15px",
+                    }}
                   >
                     {currencyFormat(product.price)}
                   </Typography>

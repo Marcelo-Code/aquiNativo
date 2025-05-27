@@ -1,9 +1,15 @@
 export const CurrencyFormat = (currencyFormatProps) => {
-  const { intPart, decimalPart, fontSize } = currencyFormatProps;
+  const { intPart, decimalPart, fontSize, lineThrough } = currencyFormatProps;
   return (
     <span>
       <span style={{ color: "gray" }}>$ </span>
-      {intPart}
+      <span
+        style={{
+          textDecoration: lineThrough ? "line-through" : "none",
+        }}
+      >
+        {intPart}
+      </span>
       <sup
         style={{ fontSize: `${fontSize}`, marginLeft: "2px", color: "gray" }}
       >

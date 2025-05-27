@@ -45,9 +45,15 @@ export const Footer = (footerProps) => {
 
       <Box className="footerSocialMedia">
         Seguinos en nuestras redes
-        <IconButton>
-          <Icons.InstagramIcon sx={{ color: "black", fontSize: "1.5em" }} />
-        </IconButton>
+        <a
+          href={`https://www.instagram.com/${data.instagram}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconButton>
+            <Icons.InstagramIcon sx={{ color: "black", fontSize: "1.5em" }} />
+          </IconButton>
+        </a>
       </Box>
     </Box>
   );

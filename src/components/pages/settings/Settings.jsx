@@ -275,6 +275,32 @@ export const Settings = (settingsProps) => {
                 value={data.whatsapp_presentation}
                 onChange={(e) => handleDataChange(e)}
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="instagram"
+                label="Instagram"
+                type="text"
+                id="instagram"
+                sx={{
+                  backgroundColor: "white",
+                  width: "300px",
+                  "& .MuiOutlinedInput-root": {
+                    "&.Mui-focused fieldset": {
+                      borderColor: generalBackGroundColor,
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "gray", // color normal
+                    "&.Mui-focused": {
+                      color: buttonColor, // color al enfocar
+                    },
+                  },
+                }}
+                value={data.instagram}
+                onChange={(e) => handleDataChange(e)}
+              />
               <FormButtonGroupContainer {...formButtonGroupContainerProps} />
             </Box>
           </FormGroup>

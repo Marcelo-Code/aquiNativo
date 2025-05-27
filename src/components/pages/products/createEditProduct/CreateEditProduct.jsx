@@ -149,6 +149,44 @@ export const CreateEditProduct = (createEditProductProps) => {
                   <TextField
                     type="number"
                     id="outlined-basic"
+                    label="Precio anterior"
+                    variant="outlined"
+                    name="previous_price"
+                    onChange={handleChange}
+                    value={formData.previous_price}
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true, // ← fuerza el label flotante
+                    }}
+                    sx={{
+                      "& label": {
+                        top: "-5px",
+                        color: "gray", // color normal
+                      },
+                      "& label.Mui-focused": {
+                        color: `${buttonColor}`, // color al enfocar
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        height: 43,
+                        alignItems: "center",
+                        "& fieldset": {
+                          borderColor: "gray", // borde normal
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "black", // hover
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: `${generalBackGroundColor}`, // borde al enfocar
+                        },
+                      },
+                    }}
+                  />
+                </Box>
+                <Box sx={elementStyle}>
+                  <Icons.MonetizationOnIcon />
+                  <TextField
+                    type="number"
+                    id="outlined-basic"
                     label="Precio"
                     variant="outlined"
                     name="price"

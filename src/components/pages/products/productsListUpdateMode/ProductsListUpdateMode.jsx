@@ -2,189 +2,182 @@ import React from "react";
 import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
 import {
   Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   IconButton,
   Tooltip,
   Typography,
+  Chip,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  styled,
+  TableBody,
 } from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import { Icons } from "../../../../assets/Icons";
-
-import "./productsListUpdateMode.css";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { PaginationContainer } from "../../../common/pagination/PaginationContainer";
-import { deleteColor } from "../../../../utils/helpers";
+import { generalBackGroundColor } from "../../../../utils/helpers";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
-export const ProductsListUpdateMode = (productsListProps) => {
-  const {
-    products,
-    handleDeleteProduct,
-    handleUpdateProduct,
-    ...generalBarContainerProps
-  } = productsListProps;
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: generalBackGroundColor,
+    color: "black",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 15,
+  },
+}));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+export const ProductsListUpdateMode = ({
+  products,
+  handleUpdateProduct,
+  ...generalBarContainerProps
+}) => {
   return (
     <Box className="generalContainer">
-      <Box className="generalTitle">Edición de productos</Box>
+      <Typography variant="h5" className="generalTitle">
+        Edición de productos
+      </Typography>
+
       <GeneralBarContainer {...generalBarContainerProps} />
-      <Box className="generalSubTitle">{`${products.length} productos disponibles`}</Box>
+
+      <Typography variant="subtitle1" className="generalSubTitle">
+        {`${products.length} productos disponibles`}
+      </Typography>
+
       <PaginationContainer items={products} itemsPerPage={10}>
         {(recordsToShow) => (
-          <Box className="generalList">
-            {recordsToShow.map((product) => (
-              <Card className="updateCard" key={product.id}>
-                <CardActions className="updateCardActions">
-                  <Tooltip title="Editar producto" placement="top-end" arrow>
-                    <IconButton
-                      onClick={() => {
-                        handleUpdateProduct(product.id);
-                      }}
-                    >
-                      <Icons.EditIcon
-                        sx={{ fontSize: "30px", color: "gray" }}
-                      />
-                    </IconButton>
-                  </Tooltip>
-                </CardActions>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    width: "100%",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box>
-                    {product.image ? (
-                      <Box
-                        className="cardMedia"
-                        sx={{
-                          marginTop: 0,
-                          width: "100%",
-                          height: "250px",
-                          position: "relative", // necesario para posicionar la marca de agua
-                          overflow: "hidden",
-                        }}
+          <Box className="generalList" sx={{ alignItems: "stretch" }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Edición</StyledTableCell>
+                    <StyledTableCell align="center">Estado</StyledTableCell>
+                    <StyledTableCell align="center">Imagen</StyledTableCell>
+                    <StyledTableCell align="center" sx={{ minWidth: 200 }}>
+                      Descripción
+                    </StyledTableCell>
+                    <StyledTableCell align="center" sx={{ minWidth: 200 }}>
+                      Oferta
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      Precio anterior
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Precio</StyledTableCell>
+                    <StyledTableCell align="center">Código </StyledTableCell>
+                    <StyledTableCell align="center">Marca </StyledTableCell>
+                    <StyledTableCell align="center">Categorías</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {recordsToShow.map((product) => (
+                    <StyledTableRow key={product.id}>
+                      <StyledTableCell component="th" scope="row">
+                        <Tooltip title="Editar producto">
+                          <IconButton
+                            color="primary"
+                            onClick={() => handleUpdateProduct(product.id)}
+                          >
+                            <Icons.EditIcon
+                              sx={{ fontSize: "30px", color: "gray" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      </StyledTableCell>
+                      <StyledTableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                      >
+                        {product.active ? (
+                          <Chip
+                            label="ACTIVO"
+                            size="small"
+                            sx={{
+                              fontSize: "0.75rem",
+                              backgroundColor: "white",
+                              border: "1px solid black",
+                            }}
+                          />
+                        ) : (
+                          <Chip
+                            label="INACTIVO"
+                            color="error"
+                            size="small"
+                            sx={{ fontSize: "0.75rem" }}
+                          />
+                        )}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="center"
+                        component="th"
+                        scope="row"
                       >
                         <img
-                          src={`${product.image}?t=${Date.now()}`}
-                          alt="producto"
-                          style={{ width: "100%", maxHeight: "250px" }}
+                          src={
+                            product.image
+                              ? `${product.image}?t=${Date.now()}`
+                              : "/images/logo2.png"
+                          }
+                          alt={product.description || "Producto"}
+                          style={{ width: "70px", height: "auto" }}
                         />
-                        {/* Marca al agua, mensaje de inactividad */}
-                        {!product.active && (
-                          <Box
-                            sx={{
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              width: "100%",
-                              height: "100%",
-                              backgroundColor: "rgba(0,0,0,0.4)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              color: "white",
-                              fontWeight: "bold",
-                              fontSize: "20px",
-                              zIndex: 1,
-                            }}
-                          >
-                            PRODUCTO INACTIVO
-                          </Box>
-                        )}
-                      </Box>
-                    ) : (
-                      <Box
-                        sx={{
-                          height: "250px",
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: "20px",
-                          backgroundColor: "rgba(0, 0, 0, 0.3)",
-                        }}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {product.description}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {product.special_offer}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="right"
+                        sx={{ textWrap: "nowrap" }}
                       >
-                        Producto sin imagen
-                      </Box>
-                    )}
-
-                    <Box
-                      sx={{
-                        textAlign: "left",
-                        paddingLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      <b>Marca: </b>
-                      {product.brands.name}
-                    </Box>
-
-                    <Box
-                      sx={{
-                        textAlign: "left",
-                        paddingLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {" "}
-                      <b>Categoria: </b>
-                      {/* {product.categories.name} */}
-                    </Box>
-                    <Box
-                      sx={{
-                        textAlign: "left",
-                        paddingLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {" "}
-                      <b>Código: </b> {product.id}
-                    </Box>
-
-                    <Box
-                      sx={{
-                        textAlign: "left",
-                        paddingLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {" "}
-                      <b>Descripción: </b>
-                      {product.description}
-                    </Box>
-                    <Box
-                      sx={{
-                        textAlign: "left",
-                        paddingLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {" "}
-                      <b>Oferta: </b>
-                      {product.special_offer
-                        ? product.special_offer
-                        : "sin oferta"}
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      textAlign: "center",
-                      fontSize: "20px",
-                      padding: "10px",
-                    }}
-                  >
-                    {currencyFormat(product.price)}
-                  </Box>
-                </Box>
-              </Card>
-            ))}
+                        {currencyFormat(product.previous_price)}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        align="right"
+                        sx={{ textWrap: "nowrap" }}
+                      >
+                        {currencyFormat(product.price)}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {product.id}
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
+                        {product.brands.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {product.products_categories.map((category) => (
+                          <Chip
+                            key={category.categories.name}
+                            label={category.categories.name}
+                            size="small"
+                            sx={{
+                              margin: "2px",
+                              backgroundColor: generalBackGroundColor,
+                            }} // opcional: para que no se peguen entre sí
+                          />
+                        ))}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
         )}
       </PaginationContainer>

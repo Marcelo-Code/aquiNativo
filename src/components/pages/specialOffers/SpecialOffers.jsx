@@ -15,6 +15,8 @@ export const SpecialOffers = (specialOffersProps) => {
 
   const slidesToShow = Math.min(offers.length, 3);
 
+  const lineThrough = true;
+
   const settings = {
     dots: true,
     infinite: offers.length > slidesToShow,
@@ -127,6 +129,17 @@ export const SpecialOffers = (specialOffersProps) => {
                   </Box>
                   <Box
                     sx={{
+                      textAlign: "center",
+                      marginBottom: "5px",
+                      marginTop: "5px",
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {product.brands.name}
+                  </Box>
+                  <Box
+                    sx={{
                       width: "100%",
                       display: "flex",
                       justifyContent: "space-between",
@@ -139,7 +152,7 @@ export const SpecialOffers = (specialOffersProps) => {
                         src={product.image}
                         alt="producto"
                         sx={{
-                          width: "200px",
+                          width: "170px",
                           height: "auto",
                           objectFit: "cover",
                           WebkitMaskImage:
@@ -153,21 +166,59 @@ export const SpecialOffers = (specialOffersProps) => {
                         }}
                       />
                     </Box>
+                    <Box>
+                      {product.previous_price && (
+                        <>
+                          <Box
+                            sx={{
+                              textAlign: "center",
+                              marginBottom: "5px",
+                            }}
+                          >
+                            Antes:
+                          </Box>
+                          <Box
+                            sx={{
+                              width: "140px",
+                              fontSize: "20px",
+                              fontWeight: "bold",
+                              backgroundColor: "white",
+                              padding: "5px",
+                              borderRadius: "25px 0 0 25px",
+                              color: "black",
+                              textAlign: "center",
+                              marginLeft: "10px",
+                              border: "1px solid black",
+                              borderRight: "none",
+                            }}
+                          >
+                            {currencyFormat(
+                              product.previous_price,
+                              lineThrough
+                            )}
+                          </Box>
 
-                    <Box
-                      sx={{
-                        width: "140px",
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        backgroundColor: "black",
-                        padding: "5px",
-                        borderRadius: "25px 0 0 25px",
-                        color: "white",
-                        textAlign: "center",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      {currencyFormat(product.price)}
+                          <Box sx={{ textAlign: "center", marginTop: "5px" }}>
+                            Ahora:
+                          </Box>
+                        </>
+                      )}
+                      <Box
+                        sx={{
+                          marginTop: "5px",
+                          width: "140px",
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                          backgroundColor: "black",
+                          padding: "5px",
+                          borderRadius: "25px 0 0 25px",
+                          color: "white",
+                          textAlign: "center",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        {currencyFormat(product.price)}
+                      </Box>
                     </Box>
                   </Box>
                   <Box

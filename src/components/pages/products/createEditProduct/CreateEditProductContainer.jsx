@@ -36,6 +36,7 @@ export const CreateEditProductContainer = () => {
     description: "",
     brand_id: "",
     price: "",
+    previous_price: "",
     special_offer: "",
     categoriesArray: [],
   };
