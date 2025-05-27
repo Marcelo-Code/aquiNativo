@@ -4,10 +4,10 @@ import {
   Button,
   Card,
   CardActions,
-  CardContent,
   CardMedia,
   IconButton,
   Typography,
+  Chip,
 } from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import { Icons } from "../../../../assets/Icons";
@@ -58,7 +58,16 @@ export const ProductsList = (productsListProps) => {
                 className="card"
                 key={product.id}
               >
-                <Box className="cardImage">
+                <Box
+                  className="cardImage"
+                  sx={{
+                    width: "100%",
+                    height: "250px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <CardMedia
                     component="img"
                     image={
@@ -69,53 +78,27 @@ export const ProductsList = (productsListProps) => {
                     alt="producto"
                     sx={{
                       width: product.image ? "100%" : "80%",
-                      height: product.image ? "250px" : "80%",
+                      maxHeight: "100%",
                       objectFit: "cover",
-                      margin: product.image ? "0 auto" : "20px auto",
                       display: "block",
                       backgroundColor: "white",
                     }}
                   />
                 </Box>
-                <Typography
-                  variant="subtitle2"
-                  component="div"
-                  className="categoryBox"
-                  sx={{
-                    paddingLeft: "10px",
-                  }}
-                >
-                  {product.products_categories.map((category, index) => (
-                    <Box
-                      key={index}
+                <Box className="categoryBox">
+                  {product.products_categories.map((category) => (
+                    <Chip
+                      key={category.categories.name}
+                      label={category.categories.name}
                       sx={{
                         backgroundColor: generalBackGroundColor,
-                        borderRadius: "20px",
-                        padding: "2px 10px 2px 10px",
-                        width: "auto",
-                        margin: "1px",
-                        display: "inline-block",
                         color: "black",
-                        fontSize: "12px",
-                        textWrap: "nowrap",
                       }}
-                    >
-                      {category.categories.name}
-                    </Box>
+                    />
                   ))}
-                </Typography>
+                </Box>
+                <Box className="cardTitle">{product.brands.name}</Box>
                 <Box className="cardText">
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{
-                      textAlign: "center",
-                      marginTop: "10px",
-                    }}
-                  >
-                    {product.brands.name}
-                  </Typography>
-
                   <Typography
                     variant="subtitle2"
                     component="div"
