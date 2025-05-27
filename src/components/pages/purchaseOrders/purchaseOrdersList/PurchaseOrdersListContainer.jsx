@@ -63,7 +63,7 @@ export const PurchaseOrdersListContainer = () => {
         setFilteredOrders(response.data);
       })
       .catch((error) => {
-        setError(error.message || "Ocurrió un error inesperado");
+        setError(error);
       })
       .finally(() => setIsLoading(false));
   }, [updateOrderList]);

@@ -4,6 +4,7 @@ import { handleError } from "../../../utils/helpers";
 import { getProducts } from "../../../services/api/products";
 import { LoadingContainer } from "../loading/LoadingContainer";
 import { useNavigate } from "react-router-dom";
+import { ErrorContainer } from "../error/ErrorContainer";
 
 export const SpecialOffersContainer = () => {
   const [offers, setOffers] = useState([]);
@@ -37,6 +38,7 @@ export const SpecialOffersContainer = () => {
       });
   }, []);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
 
   const specialOffersProps = {

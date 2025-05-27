@@ -3,6 +3,7 @@ import { ContactUs } from "./ContactUs";
 import { getData } from "../../../services/api/data";
 import { handleError } from "../../../utils/helpers";
 import { LoadingContainer } from "../loading/LoadingContainer";
+import { ErrorContainer } from "../error/ErrorContainer";
 
 export const ContactUsContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +27,7 @@ export const ContactUsContainer = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
 
   const contactUsProps = { data };

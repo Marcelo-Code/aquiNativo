@@ -20,6 +20,7 @@ import {
 import { deleteImage, uploadImage } from "../../../../services/api/images";
 import { useConfirm } from "../../../../context/ConfirmContext";
 import imageCompression from "browser-image-compression";
+import { handleError } from "../../../../utils/helpers";
 
 export const CreateEditProductContainer = () => {
   const [formData, setFormData] = useState({});
@@ -251,31 +252,14 @@ export const CreateEditProductContainer = () => {
     ])
       .then(([brandsResponse, categoriesResponse, productResponse]) => {
         //Validaciones de marcas
-        if (brandsResponse.status !== 200) {
-          const errorMessage =
-            typeof brandsResponse.error === "string"
-              ? brandsResponse.error
-              : JSON.stringify(brandsResponse.error);
-          throw new Error(`Error al obtener marcas: ${errorMessage}`);
-        }
+        if (brandsResponse.status !== 200) handleError(brandsResponse);
 
         //Validaciones de categorias
-        if (categoriesResponse.status !== 200) {
-          const errorMessage =
-            typeof categoriesResponse.error === "string"
-              ? categoriesResponse.error
-              : JSON.stringify(categoriesResponse.error);
-          throw new Error(`Error al obtener categorías: ${errorMessage}`);
-        }
+        if (categoriesResponse.status !== 200) handleError(categoriesResponse);
 
         // Validaciones de producto (si aplica)
-        if (productId && productResponse.status !== 200) {
-          const errorMessage =
-            typeof productResponse.error === "string"
-              ? productResponse.error
-              : JSON.stringify(productResponse.error);
-          throw new Error(`Error al obtener producto: ${errorMessage}`);
-        }
+        if (productId && productResponse.status !== 200)
+          handleError(productResponse);
 
         setBrands(brandsResponse.data);
 
@@ -301,17 +285,8 @@ export const CreateEditProductContainer = () => {
       });
   }, [productId]);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-
-  console.log(formData);
-
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const createEditProductProps = {
     handleGoBack,

@@ -3,7 +3,7 @@ import { Icons } from "../../../../assets/Icons";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { getProducts } from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
-import { getUniqueSortedOptions } from "../../../../utils/helpers";
+import { getUniqueSortedOptions, handleError } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
 import { ProductsListUpdateMode } from "./ProductsListUpdateMode";
 import { useConfirm } from "../../../../context/ConfirmContext";
@@ -45,13 +45,7 @@ export const ProductsListUpdateModeContainer = () => {
     Promise.all([getProducts()])
       .then(([productsResponse]) => {
         //Captura erores en caso de que existan
-        if (productsResponse.status !== 200) {
-          const errorMessage =
-            typeof productsResponse.error === "string"
-              ? productsResponse.error
-              : JSON.stringify(productsResponse.error);
-          throw new Error(`${productsResponse.message}: ${errorMessage}`);
-        }
+        if (productsResponse.status !== 200) handleError(productsResponse);
         //Agrega el contador de cada producto
         const productsResponseData = productsResponse.data;
         const counteredProducts = productsResponseData.map((product) => ({
@@ -64,7 +58,6 @@ export const ProductsListUpdateModeContainer = () => {
         console.log(productsResponse);
       })
       .catch((error) => {
-        console.error(error);
         setError(error);
       })
       .finally(() => {
@@ -79,7 +72,6 @@ export const ProductsListUpdateModeContainer = () => {
         value: "all",
         label: "Todas las marcas",
       }),
-
     [products]
   );
 
@@ -105,14 +97,8 @@ export const ProductsListUpdateModeContainer = () => {
     { value: false, label: "Productos inactivos" },
   ];
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   //Array de opciones de ordenamiento
   const SORT_OPTIONS = [

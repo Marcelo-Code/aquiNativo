@@ -13,7 +13,7 @@ export const Error = (errorProps) => {
           fontSize: "20px",
         }}
       >
-        {error}
+        {error.message}
       </Box>
     </div>
   );

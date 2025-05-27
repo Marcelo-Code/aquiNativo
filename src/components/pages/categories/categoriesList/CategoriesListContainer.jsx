@@ -6,6 +6,7 @@ import { handleError } from "../../../../utils/helpers";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { Icons } from "../../../../assets/Icons";
 import { useNavigate } from "react-router-dom";
+import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const CategoriesListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,14 +36,8 @@ export const CategoriesListContainer = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const generalBarContainerProps = {
     enableSearchFilterBar: false,

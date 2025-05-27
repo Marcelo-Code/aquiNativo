@@ -71,12 +71,9 @@ export const CreateEditUserContainer = () => {
       const action = userId ? "actualizado" : "creado";
       successToastifyAlert(`Usuario ${action} con éxito`);
       handleGoBack();
-
-      console.log(response);
     } catch (error) {
-      console.error(error);
-      errorToastifyAlert(error.message);
-      setError(error);
+      const action = userId ? "actualizado" : "creado";
+      errorToastifyAlert(`Usuario ${action} con éxito: `, error.message);
     } finally {
       setIsLoadingButton(false);
     }
@@ -106,14 +103,8 @@ export const CreateEditUserContainer = () => {
       });
   }, [userId]);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const createEditProductProps = {
     handleGoBack,

@@ -12,12 +12,13 @@ import { GeneralContext } from "../../../context/GeneralContext";
 import { getLoggedInUserData } from "../../../services/api/users";
 import { getData, updateData } from "../../../services/api/data";
 import { handleError } from "../../../utils/helpers";
+import { Error } from "../error/Error";
 
 export const SettingsContainer = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [data, setData] = useState({});
-  const [settingsError, setSettingsError] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isLoadingDataButton, setIsLoadingDataButton] = useState(false);
@@ -38,8 +39,7 @@ export const SettingsContainer = () => {
         successToastifyAlert("Datos actualizados");
       })
       .catch((error) => {
-        settingsError(error);
-        errorToastifyAlert("Error al actualizar los datos");
+        errorToastifyAlert("Error al actualizar los datos ", error);
       })
       .finally(() => {
         setIsLoadingDataButton(false);
@@ -65,10 +65,10 @@ export const SettingsContainer = () => {
     updatePassword(newPassword)
       .then((response) => {
         if (response.status !== 200) throw new Error(response.message);
-        successToastifyAlert(response.message);
+        successToastifyAlert("Contraseña actualizada");
       })
       .catch((error) => {
-        errorToastifyAlert(error.message);
+        errorToastifyAlert("Error al actualizar la contraseña ", error);
       })
       .finally(() => {
         setIsLoadingButton(false);
@@ -85,25 +85,26 @@ export const SettingsContainer = () => {
         const totalSizeData = totalSizeResponse.data;
         const userResponseData = userResponse.data;
         const dataResponseData = dataResponse.data;
+
+        if (totalSizeResponse.status !== 200) handleError(totalSizeResponse);
+        if (userResponse.status !== 200) handleError(userResponse);
+        if (dataResponse.status !== 200) handleError(dataResponse);
+
         setTotalSize(totalSizeData);
         setLoggedUserData(userResponseData);
         setData(dataResponseData);
       })
       .catch((error) => {
-        setSettingsError(error.message);
+        console.log(error);
+        setError(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
   }, []);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (settingsError) {
-    const errorContainerProps = {
-      error: settingsError.message,
-    };
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const settingsProps = {
     totalSize,

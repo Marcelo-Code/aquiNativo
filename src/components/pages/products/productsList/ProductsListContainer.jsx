@@ -4,7 +4,7 @@ import { ProductsList } from "./ProductsList";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { getActiveProducts } from "../../../../services/api/products";
 import { LoadingContainer } from "../../loading/LoadingContainer";
-import { getUniqueSortedOptions } from "../../../../utils/helpers";
+import { getUniqueSortedOptions, handleError } from "../../../../utils/helpers";
 import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const ProductsListContainer = () => {
@@ -23,13 +23,8 @@ export const ProductsListContainer = () => {
     Promise.all([getActiveProducts()])
       .then(([productsResponse]) => {
         //Captura erores en caso de que existan
-        if (productsResponse.status !== 200) {
-          const errorMessage =
-            typeof productsResponse.error === "string"
-              ? productsResponse.error
-              : JSON.stringify(productsResponse.error);
-          throw new Error(`${productsResponse.message}: ${errorMessage}`);
-        }
+        if (productsResponse.status !== 200) handleError(productsResponse);
+
         //Agrega el contador de cada producto
         const productsResponseData = productsResponse.data;
         const counteredProducts = productsResponseData.map((product) => ({
@@ -51,7 +46,6 @@ export const ProductsListContainer = () => {
   //Array de opciones de filtros por marca
   const STATUS_OPTIONS_1 = useMemo(
     () => getUniqueSortedOptions(products, "brands.name"),
-
     [products]
   );
 
@@ -71,13 +65,8 @@ export const ProductsListContainer = () => {
       .map((name) => ({ value: name, label: name }));
   }, [products]);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   //Array de opciones de ordenamiento
   const SORT_OPTIONS = [

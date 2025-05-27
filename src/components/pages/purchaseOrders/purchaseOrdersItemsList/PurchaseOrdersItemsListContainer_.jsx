@@ -7,6 +7,7 @@ import {
 } from "../../../../services/api/purchaseOrders";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { ErrorContainer } from "../../error/ErrorContainer";
+import { handleError } from "../../../../utils/helpers";
 
 export const PurchaseOrdersItemsListContainer = () => {
   const { purchaseOrderId } = useParams();
@@ -15,15 +16,6 @@ export const PurchaseOrdersItemsListContainer = () => {
   const [order, setOrder] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
-  // Función para manejar errores y mostrar el mensaje adecuado
-  const handleError = (response) => {
-    const errorMessage =
-      typeof response.error === "string"
-        ? response.error
-        : JSON.stringify(response.error);
-    throw new Error(`${response.message}: ${errorMessage}`);
-  };
 
   useEffect(() => {
     setIsLoading(true);

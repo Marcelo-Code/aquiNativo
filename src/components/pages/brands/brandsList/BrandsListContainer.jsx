@@ -5,6 +5,7 @@ import { LoadingContainer } from "../../loading/LoadingContainer";
 import { Icons } from "../../../../assets/Icons";
 import { BrandsList } from "./BrandsList";
 import { useNavigate } from "react-router-dom";
+import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const BrandsListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,14 +35,8 @@ export const BrandsListContainer = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const generalBarContainerProps = {
     enableSearchFilterBar: false,

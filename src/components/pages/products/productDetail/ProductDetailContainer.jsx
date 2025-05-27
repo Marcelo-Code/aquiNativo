@@ -6,6 +6,7 @@ import { handleError } from "../../../../utils/helpers";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { GeneralContext } from "../../../../context/GeneralContext";
 import { successToastifyAlert } from "../../../../utils/alerts";
+import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const ProductDetailContainer = () => {
   const { productId } = useParams();
@@ -79,6 +80,7 @@ export const ProductDetailContainer = () => {
       });
   }, [productId]);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
 
   const productDetailProps = {

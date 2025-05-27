@@ -1,8 +1,5 @@
 import { useContext, useState } from "react";
-import {
-  createPurchaseOrder,
-  createPurchaseOrderRPC,
-} from "../../../../services/api/purchaseOrders";
+import { createPurchaseOrder } from "../../../../services/api/purchaseOrders";
 import {
   errorToastifyAlert,
   successToastifyAlert,
@@ -55,7 +52,6 @@ export const BuyersDataContainer = () => {
       })
       .catch((error) => {
         errorToastifyAlert(error.message || "Ocurrió un error inesperado");
-        console.error(error);
       })
       .finally(() => setIsLoading(false));
   };

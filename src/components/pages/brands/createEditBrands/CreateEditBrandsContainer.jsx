@@ -111,14 +111,8 @@ export const CreateEditBrandsContainer = () => {
       });
   }, [brandId]);
 
+  if (error) return <ErrorContainer error={error} />;
   if (isLoading) return <LoadingContainer />;
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
 
   const createEditBrandProps = {
     handleGoBack,

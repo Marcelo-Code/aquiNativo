@@ -4,6 +4,7 @@ import { LoadingContainer } from "../../loading/LoadingContainer";
 import { useNavigate } from "react-router-dom";
 import { getUsers } from "../../../../services/api/users";
 import { Icons } from "../../../../assets/Icons";
+import { ErrorContainer } from "../../error/ErrorContainer";
 
 export const UsersListContainer = () => {
   //hook para el array de pacientes
@@ -34,16 +35,8 @@ export const UsersListContainer = () => {
       });
   }, []);
 
-  if (isLoading) {
-    return <LoadingContainer />;
-  }
-  if (error) {
-    const errorContainerProps = {
-      error: error.message,
-    };
-    console.log(errorContainerProps);
-    return <ErrorContainer {...errorContainerProps} />;
-  }
+  if (error) return <ErrorContainer error={error} />;
+  if (isLoading) return <LoadingContainer />;
 
   const generalBarContainerProps = {
     enableSearchFilterBar: false,

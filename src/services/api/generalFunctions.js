@@ -17,7 +17,7 @@ export const getTotalStorageAndDbSize = async () => {
     return {
       status: 400,
       message: "Error al obtener el tamaño total",
-      error: error.message,
+      error,
     };
   }
 };

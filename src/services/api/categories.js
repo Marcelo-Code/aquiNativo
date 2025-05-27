@@ -1,4 +1,3 @@
-import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
 export const getCategories = async () => {
