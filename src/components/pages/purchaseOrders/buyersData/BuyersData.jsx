@@ -182,6 +182,9 @@ export const BuyersData = (buyerDataProps) => {
       {Object.keys(createdPurchaseOrder).length !== 0 && (
         <>
           <Box className="generalTitle">¡Gracias por tu compra!</Box>
+          <Box className="generalSubTitle">
+            Envianos tu pedido por whatsapp y te contactaremos a la brevedad
+          </Box>
           <Typography sx={{ textAlign: "center", padding: 2 }}>
             Orden de compra nro: {createdPurchaseOrder.order_id}
           </Typography>

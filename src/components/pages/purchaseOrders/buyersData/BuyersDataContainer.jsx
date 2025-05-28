@@ -62,8 +62,6 @@ export const BuyersDataContainer = () => {
   useEffect(() => {
     if (!createdPurchaseOrder || !createdPurchaseOrder.cart) return;
 
-    console.log(phoneNumber);
-
     const lines = [];
     lines.push(`👋 Hola te envío los detalles de mi compra:\n`);
     lines.push(`🧾 *Orden de compra nro ${createdPurchaseOrder.order_id}*\n`);
@@ -97,11 +95,8 @@ export const BuyersDataContainer = () => {
 
     // ⚠️ Encode only after the string is fully formed
     const message = encodeURIComponent(lines.join("\n"));
-    const number = 543400442773;
-    const number2 = 543364690034;
-    console.log(number, typeof number);
-    console.log(phoneNumber, typeof phoneNumber);
-    const whatsappUrlUpdated = `https://wa.me/${number2}?text=${message}`;
+
+    const whatsappUrlUpdated = `https://wa.me/${phoneNumber}?text=${message}`;
     setWhatsappUrl(whatsappUrlUpdated);
   }, [createdPurchaseOrder, phoneNumber]);
 
