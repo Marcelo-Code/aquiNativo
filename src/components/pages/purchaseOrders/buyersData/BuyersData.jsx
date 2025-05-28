@@ -62,7 +62,7 @@ export const BuyersData = (buyerDataProps) => {
     <Box className="generalContainer">
       {Object.keys(createdPurchaseOrder).length === 0 && (
         <>
-          <Box className="generalTitle">Datos del comprador</Box>
+          <Box className="generalTitle">Dejanos tus datos</Box>
           <form onSubmit={handleSubmit}>
             <FormGroup>
               <Box
