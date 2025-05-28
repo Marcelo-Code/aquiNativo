@@ -36,8 +36,8 @@ export const CreateEditProductContainer = () => {
   const formDataInitialState = {
     description: "",
     brand_id: "",
-    price: "",
-    previous_price: "",
+    price: 0,
+    previous_price: 0,
     special_offer: "",
     categoriesArray: [],
   };
