@@ -62,10 +62,12 @@ export const ProductsList = (productsListProps) => {
                   className="cardImage"
                   sx={{
                     width: "100%",
+                    maxWidth: "250px",
                     height: "250px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    margin: "auto",
                   }}
                 >
                   <CardMedia
@@ -90,14 +92,47 @@ export const ProductsList = (productsListProps) => {
                     <Chip
                       key={category.categories.name}
                       label={category.categories.name}
+                      size="small"
                       sx={{
                         backgroundColor: generalBackGroundColor,
                         color: "black",
+                        fontSize: "10px",
+                        padding: "0px",
                       }}
                     />
                   ))}
                 </Box>
                 <Box className="cardTitle">{product.brands.name}</Box>
+                {product.special_offer?.trim() && (
+                  <Box className="specialOffer">
+                    <Chip
+                      sx={{
+                        textAlign: "center",
+                        marginTop: "15px",
+                        backgroundColor: generalBackGroundColor,
+                        // maxWidth: "200px",
+                        fontSize: "15px",
+                        padding: "8px",
+                        whiteSpace: "normal",
+                        overflowWrap: "break-word",
+                        wordBreak: "break-word",
+                        height: "auto", // 👈 MUY IMPORTANTE
+                        display: "flex", // 👈 Para que el label se expanda
+                      }}
+                      label={
+                        <Box
+                          sx={{
+                            whiteSpace: "normal",
+                            overflowWrap: "break-word",
+                            wordBreak: "break-word",
+                          }}
+                        >
+                          {product.special_offer}
+                        </Box>
+                      }
+                    />
+                  </Box>
+                )}
                 <Box className="cardText">
                   <Typography
                     variant="subtitle2"
@@ -111,15 +146,6 @@ export const ProductsList = (productsListProps) => {
                     {product.description}
                   </Typography>
 
-                  {product.special_offer?.trim() && (
-                    <Typography
-                      variant="subtitle2"
-                      component="div"
-                      sx={{ textAlign: "center", marginTop: "15px" }}
-                    >
-                      Oferta {product.special_offer}
-                    </Typography>
-                  )}
                   {product.previous_price && (
                     <Typography
                       variant="h6"
