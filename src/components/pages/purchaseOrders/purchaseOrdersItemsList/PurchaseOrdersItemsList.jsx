@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import "../../../../assets/css/generalStyles.css";
 import { generalBackGroundColor } from "../../../../utils/helpers";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
@@ -16,12 +16,9 @@ import {
 export const PurchaseOrdersItemsList = (purchaseOrdersItemsListProps) => {
   const { items, order } = purchaseOrdersItemsListProps;
 
-  console.log(items);
-  console.log(order);
-
   return (
     <Box className="generalContainer">
-      <Box className="generalTitle">Detalles order de compra {order.id}</Box>
+      <Box className="generalTitle">Detalles orden de compra {order.id}</Box>
       <Box
         sx={{
           margin: "10px",

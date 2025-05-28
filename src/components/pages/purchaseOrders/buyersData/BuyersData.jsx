@@ -17,6 +17,7 @@ import { buttonColor, generalBackGroundColor } from "../../../../utils/helpers";
 import { FormButtonGroupContainer } from "../../../common/formButtonGroup/FormButtonGroupContainer";
 import { currencyFormat } from "../../../common/currencyFormat/CurrencyFormatContainer";
 import { Icons } from "../../../../assets/Icons";
+import { Link } from "react-router-dom";
 
 export const BuyersData = (buyerDataProps) => {
   const {
@@ -25,8 +26,8 @@ export const BuyersData = (buyerDataProps) => {
     handleSubmit,
     handleGoBack,
     createdPurchaseOrder,
-    totalPrice,
     handleNavigate,
+    whatsappUrl,
   } = buyerDataProps;
 
   const buttonGroupContainerProps = {
@@ -298,30 +299,15 @@ export const BuyersData = (buyerDataProps) => {
                   border: `1px solid white`,
                 },
               }}
+              component="a"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               variant="outlined"
               size="small"
-              startIcon={<Icons.DownloadIcon />}
+              startIcon={<Icons.WhatsAppIcon />}
             >
-              Descargar orden
-            </Button>
-            <Button
-              sx={{
-                width: "100%",
-                maxWidth: "340px",
-                backgroundColor: "white",
-                border: "1px solid black",
-                color: "black",
-                "&:active": {
-                  backgroundColor: generalBackGroundColor,
-                  color: "white",
-                  border: `1px solid white`,
-                },
-              }}
-              variant="outlined"
-              size="small"
-              onClick={() => handleNavigate()}
-            >
-              Inicio
+              Enviar por Whatsapp
             </Button>
           </Box>
         </>
