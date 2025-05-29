@@ -146,7 +146,7 @@ export const ProductsList = (productsListProps) => {
                     {product.description}
                   </Typography>
 
-                  {product.previous_price && (
+                  {product.special_offer && product.previous_price && (
                     <Typography
                       variant="h6"
                       component="div"
