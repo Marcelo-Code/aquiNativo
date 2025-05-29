@@ -110,6 +110,7 @@ export const createPurchaseOrder = async (cart, buyer, totalPrice) => {
       status: 200,
       message: "Orden creada con éxito",
       data: {
+        date,
         order_id: order.id,
         buyer,
         totalPrice,

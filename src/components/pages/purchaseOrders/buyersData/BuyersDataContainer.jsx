@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { createPurchaseOrder } from "../../../../services/api/purchaseOrders";
 import {
   errorToastifyAlert,
@@ -9,6 +9,7 @@ import { GeneralContext } from "../../../../context/GeneralContext";
 import { LoadingContainer } from "../../loading/LoadingContainer";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../../../../services/api/data";
+import html2pdf from "html2pdf.js";
 
 export const BuyersDataContainer = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,22 @@ export const BuyersDataContainer = () => {
   const { cart, clearCart, handleGoBack } = useContext(GeneralContext);
   const [whatsappUrl, setWhatsappUrl] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  const formRef = useRef();
+
+  const downloadPDF = () => {
+    const element = formRef.current;
+    html2pdf()
+      .set({
+        margin: 1,
+        filename: "orden de compra.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .from(element)
+      .save();
+  };
 
   const handleNavigate = () => {
     navigate("/");
@@ -111,6 +128,8 @@ export const BuyersDataContainer = () => {
     totalPrice,
     handleNavigate,
     whatsappUrl,
+    downloadPDF,
+    formRef,
   };
 
   return <BuyersData {...buyersDataProps} />;
