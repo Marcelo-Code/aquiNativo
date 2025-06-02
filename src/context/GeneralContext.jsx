@@ -13,10 +13,12 @@ export const GeneralContextProvider = ({ children }) => {
     return stored === "true";
   });
 
+  //Variables que mantienen los valores de los filtros activos
   const [filters, setFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("none");
 
+  //Variables que mantiene el estado del usuario logueado
   const [loggedUser, setLoggedUser] = useState(() =>
     localStorage.getItem("loggedUser")
   );
