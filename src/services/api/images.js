@@ -1,5 +1,5 @@
 import { bucketName, supabaseClient } from "../config/config";
-import { updateProduct, updateProductWithCategoriesArray } from "./products";
+import { updateProductWithCategoriesArray } from "./products";
 
 //Funcion para subir un archivo
 export const uploadImage = async (

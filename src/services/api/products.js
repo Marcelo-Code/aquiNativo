@@ -100,7 +100,7 @@ export const createProductWithCategoriesArray = async (productData) => {
       await supabaseClient
         .from("products")
         .insert(productDataToInsert)
-        .select("id") // se obtiene el ID generado automáticamente
+        .select("*") // se obtiene el ID generado automáticamente
         .single();
 
     if (insertProductError) throw insertProductError;
@@ -123,7 +123,7 @@ export const createProductWithCategoriesArray = async (productData) => {
     return {
       status: 200,
       message: "Producto creado con éxito",
-      productId,
+      data: { ...insertedProduct, categoriesArray },
     };
   } catch (error) {
     console.error("Error al crear producto y categorías:", error);
@@ -209,6 +209,7 @@ export const updateProduct = async (updatedProduct) => {
 };
 
 export const updateProductWithCategoriesArray = async (productData) => {
+  console.log(productData);
   try {
     const { id, categoriesArray, ...productDataToUpdate } = productData;
     // Actualizar el producto

@@ -232,6 +232,7 @@ export const CreateEditProductContainer = () => {
 
       if (!productId) {
         setCreatedProduct(true);
+        setFormData(response.data);
       }
 
       setModifiedFlag(false);
