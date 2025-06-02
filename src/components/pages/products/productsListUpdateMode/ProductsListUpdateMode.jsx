@@ -1,4 +1,3 @@
-import React from "react";
 import { GeneralBarContainer } from "../../../layouts/generalBar/GeneralBarContainer";
 import {
   Box,

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GeneralBar } from "./GeneralBar";
 import { ChipsBarContainer } from "./bars/chipsBar/ChipsBarContainer";
+import { GeneralContext } from "../../../context/GeneralContext";
 
 // Función genérica para filtrar propiedades anidadas, incluyendo arrays
 function deepMatch(record, pathArray, value) {
@@ -48,15 +49,29 @@ export const GeneralBarContainer = (generalBarContainerProps) => {
   } = generalBarContainerProps;
 
   const [activeBar, setActiveBar] = useState(initialActiveBar);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({});
-  const [sortOption, setSortOption] = useState("none");
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [filters, setFilters] = useState({});
+  // const [sortOption, setSortOption] = useState("none");
+
+  const {
+    filters,
+    setFilters,
+    searchQuery,
+    setSearchQuery,
+    sortOption,
+    setSortOption,
+  } = useContext(GeneralContext);
 
   // Construir configs para filtros con valor actual o "all"
   const FILTER_CONFIGS = FILTER_OPTIONS.map((options) => ({
     ...options,
     value: filters[options.name] || "all",
   }));
+
+  //Mantiene los filtros activos cuando se renderiza el componente
+  useEffect(() => {
+    applyFiltersAndSort(searchQuery, filters, sortOption);
+  }, [records]);
 
   const applyFiltersAndSort = (
     query = searchQuery,

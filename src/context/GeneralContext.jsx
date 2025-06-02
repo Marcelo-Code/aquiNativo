@@ -13,6 +13,10 @@ export const GeneralContextProvider = ({ children }) => {
     return stored === "true";
   });
 
+  const [filters, setFilters] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("none");
+
   const [loggedUser, setLoggedUser] = useState(() =>
     localStorage.getItem("loggedUser")
   );
@@ -267,6 +271,12 @@ export const GeneralContextProvider = ({ children }) => {
     setUpdateAlerts,
     updateAlerts,
     updateOrderList,
+    filters,
+    setFilters,
+    searchQuery,
+    setSearchQuery,
+    sortOption,
+    setSortOption,
   };
 
   return (

@@ -114,16 +114,6 @@ export const ProductsListUpdateModeContainer = () => {
       name: "description",
     },
     {
-      value: "alphabetical-asc-category",
-      label: "Categoría (A-Z)",
-      name: "categories.name",
-    },
-    {
-      value: "alphabetical-desc-category",
-      label: "Categoría (Z-A)",
-      name: "categories.name",
-    },
-    {
       value: "alphabetical-asc-brand",
       label: "Marca (A-Z)",
       name: "brands.name",
