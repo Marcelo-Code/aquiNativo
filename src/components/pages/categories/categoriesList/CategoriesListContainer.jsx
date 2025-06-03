@@ -11,6 +11,7 @@ import { ErrorContainer } from "../../error/ErrorContainer";
 export const CategoriesListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export const CategoriesListContainer = () => {
 
         const categories = categoriesResponse.data;
         setCategories(categories);
+        setFilteredCategories(categories);
       })
       .catch((error) => {
         setError(error);
@@ -45,6 +47,8 @@ export const CategoriesListContainer = () => {
     buttonIcon: <Icons.AddIcon />,
     initialActiveBar: "editionBar",
     to: "/updateCategories/createCategory",
+    records: categories,
+    setFilteredRecords: setFilteredCategories,
   };
 
   const categoriesProps = {

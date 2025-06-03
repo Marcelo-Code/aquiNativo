@@ -10,6 +10,8 @@ import { ErrorContainer } from "../../error/ErrorContainer";
 export const BrandsListContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [brands, setBrands] = useState([]);
+  const [filteredBrands, setFilteredBrands] = useState([]);
+
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ export const BrandsListContainer = () => {
 
         const brandsResponseData = brandsResponse.data;
         setBrands(brandsResponseData);
+        setFilteredBrands(brandsResponseData);
       })
       .catch((error) => {
         setError(error);
@@ -44,6 +47,8 @@ export const BrandsListContainer = () => {
     buttonIcon: <Icons.AddIcon />,
     initialActiveBar: "editionBar",
     to: "/updateBrands/createBrand",
+    records: brands,
+    setFilteredRecords: setFilteredBrands,
   };
 
   const brandsListProps = {
