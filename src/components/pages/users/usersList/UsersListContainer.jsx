@@ -9,6 +9,7 @@ import { ErrorContainer } from "../../error/ErrorContainer";
 export const UsersListContainer = () => {
   //hook para el array de pacientes
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const [error, setError] = useState(null);
 
@@ -28,6 +29,7 @@ export const UsersListContainer = () => {
     getUsers()
       .then((response) => {
         setUsers(response.data);
+        setFilteredUsers(response.data);
       })
       .catch((error) => setError(error))
       .finally(() => {
@@ -44,6 +46,8 @@ export const UsersListContainer = () => {
     buttonIcon: <Icons.AddIcon />,
     initialActiveBar: "editionBar",
     to: "/users/createUser",
+    records: users,
+    setFilteredRecords: setFilteredUsers,
   };
 
   const usersListProps = {
