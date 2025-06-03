@@ -1,11 +1,6 @@
 @font-face {
   font-family: "roboto";
-  src: url("../../../assets/fonts/roboto.ttf");
-}
-
-@font-face {
-  font-family: "novera";
-  src: url("../../../assets/fonts/noveraModern.otf");
+  src: url("/fonts/roboto.ttf");
 }
 
 .slick-dots {

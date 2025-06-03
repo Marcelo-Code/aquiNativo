@@ -1,6 +1,6 @@
 @font-face {
   font-family: "bell";
-  src: url("../../../assets/fonts/bellGothicStdBlack.otf");
+  src: url("/fonts/bellGothicStdBlack.otf");
 }
 
 .footerContainer {

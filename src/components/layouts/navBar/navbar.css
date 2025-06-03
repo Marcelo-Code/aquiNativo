@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: "roboto";
-  src: url("/fonts/Roboto.ttf");
+  src: url("/fonts/roboto.ttf");
 }
 .navBarContainer {
   width: 100%;
@@ -24,7 +24,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
   gap: 10px;
-  font-family: "pestoFresco";
+  font-family: "bell";
 }
 
 .titleLogoContainer {
