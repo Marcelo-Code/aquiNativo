@@ -35,13 +35,15 @@ export const BuyersDataContainer = () => {
     html2pdf()
       .set({
         margin: 1,
-        filename: "orden de compra.pdf",
+        filename: `Nativo_orden_de_compra_${createdPurchaseOrder.order_id}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
       })
       .from(element)
       .save();
+    handleNavigate();
+    clearCart();
   };
 
   const handleNavigate = () => {
@@ -66,7 +68,6 @@ export const BuyersDataContainer = () => {
     Promise.all([getData(), createPurchaseOrder(cart, formData, totalPrice)])
       .then(([dataResponse, orderResponse]) => {
         successToastifyAlert(orderResponse.message);
-        clearCart();
         setCreatedPurchaseOrder(orderResponse.data);
         setPhoneNumber(dataResponse.data.phone_number);
       })
@@ -126,8 +127,6 @@ export const BuyersDataContainer = () => {
     handleChange,
     createdPurchaseOrder,
     totalPrice,
-    handleNavigate,
-    whatsappUrl,
     downloadPDF,
     formRef,
   };

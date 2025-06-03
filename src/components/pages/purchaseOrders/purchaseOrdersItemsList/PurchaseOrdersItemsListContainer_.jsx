@@ -49,8 +49,6 @@ export const PurchaseOrdersItemsListContainer = () => {
   if (isLoading) return <LoadingContainer />;
   if (error) return <ErrorContainer error={error} />;
 
-  console.log(purchaseOrderId);
-
   const purchaseOrdersItemsListProps = {
     items,
     order,

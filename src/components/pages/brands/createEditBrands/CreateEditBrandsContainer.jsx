@@ -39,8 +39,6 @@ export const CreateEditBrandsContainer = () => {
 
     const updatedFormData = { ...formData, [name]: sanitizeName(value) };
 
-    console.log(updatedFormData);
-
     setFormData(updatedFormData);
     if (!modifiedFlag) setModifiedFlag(true);
   };
@@ -58,8 +56,6 @@ export const CreateEditBrandsContainer = () => {
     setIsLoadingButton(true);
 
     const request = brandId ? updateBrand : createBrand;
-
-    console.log(formData);
 
     try {
       const response = await request(formData);

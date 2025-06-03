@@ -55,8 +55,6 @@ export const CreateEditCategoriesContainer = () => {
       return;
     }
 
-    console.log("cargando");
-
     setIsLoadingButton(true);
 
     const request = categoryId ? updateCategory : createCategory;

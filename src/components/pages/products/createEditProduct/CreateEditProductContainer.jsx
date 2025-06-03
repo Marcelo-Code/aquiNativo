@@ -106,13 +106,11 @@ export const CreateEditProductContainer = () => {
     // Llama a la función para eliminar el archivo
     delete formData.brands;
     deleteImage(documentName, formData)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         return getProduct(formData.id);
       })
       .then((response) => {
         setFormData(response.data);
-        console.log("Producto actualizado:", response.data);
       })
       .catch((error) => console.log(error))
       .finally(() => setIsLoadingImage(false));
@@ -151,7 +149,6 @@ export const CreateEditProductContainer = () => {
         await uploadImage(webpFile, documentName, formData);
         const { data } = await getProduct(formData.id);
         setFormData(data);
-        console.log("Producto actualizado:", data);
       } catch (error) {
         console.error("Error al procesar la imagen:", error);
       } finally {

@@ -22,6 +22,7 @@ export const FormButtonGroup = (formButtonGroupProps) => {
     >
       <Box sx={{ width: "100%", maxWidth: "350px" }}>
         <Button
+          aria-label="guardar producto"
           type="submit"
           loading={isLoadingButton}
           startIcon={<Icons.SaveIcon />}
@@ -49,6 +50,7 @@ export const FormButtonGroup = (formButtonGroupProps) => {
       </Box>
       <Box sx={{ width: "100%", maxWidth: "350px" }}>
         <Button
+          aria-label="volver atras"
           onClick={() => handleGoBack(modifiedFlag)}
           size="small"
           fullWidth

@@ -209,7 +209,6 @@ export const updateProduct = async (updatedProduct) => {
 };
 
 export const updateProductWithCategoriesArray = async (productData) => {
-  console.log(productData);
   try {
     const { id, categoriesArray, ...productDataToUpdate } = productData;
     // Actualizar el producto
@@ -233,8 +232,6 @@ export const updateProductWithCategoriesArray = async (productData) => {
       product_id: id,
       category_id: category.category_id,
     }));
-
-    console.log(newRelations);
 
     const { error: insertError } = await supabaseClient
       .from("products_categories")

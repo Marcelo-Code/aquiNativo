@@ -53,8 +53,7 @@ export const UpdatePasswordLoggedInUserContainer = () => {
     // Si la reautenticación fue exitosa, se cambia la contraseña
     setIsLoadingButton(true);
     updateLoggedInUserPassword(newPassword)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         handleGoBack();
       })
       .catch((error) => {

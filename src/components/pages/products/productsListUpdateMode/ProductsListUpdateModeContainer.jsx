@@ -31,8 +31,6 @@ export const ProductsListUpdateModeContainer = () => {
 
     if (isConfirmed) {
       successToastifyAlert("Producto eliminado");
-    } else {
-      console.log("Cancelado");
     }
   };
 
@@ -55,7 +53,6 @@ export const ProductsListUpdateModeContainer = () => {
 
         setProducts(counteredProducts);
         setFilteredProducts(counteredProducts);
-        console.log(productsResponse);
       })
       .catch((error) => {
         setError(error);

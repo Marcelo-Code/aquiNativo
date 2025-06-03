@@ -168,7 +168,7 @@ export const ProductsListUpdateMode = ({
                             sx={{
                               margin: "2px",
                               backgroundColor: generalBackGroundColor,
-                            }} // opcional: para que no se peguen entre sí
+                            }}
                           />
                         ))}
                       </StyledTableCell>

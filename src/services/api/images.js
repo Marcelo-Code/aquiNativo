@@ -87,11 +87,8 @@ export const deleteImage = async (documentName, formData) => {
       [documentName]: "",
     };
 
-    console.log(updatedRecord);
-
     await updateProductWithCategoriesArray(updatedRecord);
 
-    console.log("Archivo eliminado correctamente:", fileName);
     return { success: true, file: fileName };
   } catch (error) {
     console.error("Error al eliminar archivo:", error);

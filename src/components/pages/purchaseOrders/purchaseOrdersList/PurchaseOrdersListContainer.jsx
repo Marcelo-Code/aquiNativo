@@ -25,8 +25,7 @@ export const PurchaseOrdersListContainer = () => {
   const { updateOrderList } = useContext(GeneralContext);
 
   const handleGetOrderDetails = async (orderId) => {
-    const response = await getPurchaseOrdersItems(orderId);
-    console.log(response);
+    await getPurchaseOrdersItems(orderId);
   };
 
   const handleChangeStatus = async (orderId) => {

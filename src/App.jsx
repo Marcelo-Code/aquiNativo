@@ -27,6 +27,7 @@ import { CreateEditUserContainer } from "./components/pages/users/createEditUser
 import { SpecialOffersContainer } from "./components/pages/specialOffers/SpecialOffersContainer";
 import { ProductDetailContainer } from "./components/pages/products/productDetail/ProductDetailContainer";
 import { NotFoundContainer } from "./components/pages/notFound/NotFoundContainer";
+import { ProtectedCheckOutRoute } from "./routes/ProtectedCheckOutRoute";
 
 function App() {
   return (
@@ -184,7 +185,14 @@ function App() {
               }
             />
             {/* Lista de órdenes de compra */}
-            <Route path="/checkout" element={<BuyersDataContainer />} />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedCheckOutRoute>
+                  <BuyersDataContainer />
+                </ProtectedCheckOutRoute>
+              }
+            />
             <Route
               path="/purchaseOrders"
               element={

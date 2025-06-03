@@ -28,8 +28,6 @@ export const CreateEditBrand = (createEditBrandProps) => {
     width: "90%",
   };
 
-  console.log(formData);
-
   return (
     <Box className="generalContainer">
       <Box className="generalTitle">

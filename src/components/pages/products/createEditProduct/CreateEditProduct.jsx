@@ -312,7 +312,6 @@ export const CreateEditProduct = (createEditProductProps) => {
       {/* Contenedor de imagenes */}
       {(createdProduct || productId) && formData && (
         <>
-          {console.log(formData)}
           <Box className="generalTitle">Carga de imagenes</Box>
           {!productId && (
             <Box

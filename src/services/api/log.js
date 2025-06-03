@@ -46,7 +46,6 @@ export const checkAuth = async (setIsloggedIn, setLoggedUser) => {
     if (!data?.session) {
       setIsloggedIn(false);
       setLoggedUser("");
-      console.log("No hay sesion activa");
       return;
     }
 
