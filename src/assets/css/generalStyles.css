@@ -1,6 +1,6 @@
 @font-face {
   font-family: "roboto";
-  src: url("../../../assets/fonts/roboto.ttf") format("truetype");
+  src: url("/fonts/roboto.ttf") format("truetype");
 }
 
 .generalContainer {
