@@ -60,9 +60,8 @@ export const SpecialOffers = (specialOffersProps) => {
 
   return (
     <Box className="generalContainer">
-      <Box className="generalTitle">
-        Gracias por visitar nuestro sitio, estas son nuestras ofertas
-      </Box>
+      <Box className="generalTitle">¡Gracias por visitar nuestro sitio!</Box>
+      <Box className="generalSubTitle">¡Nuestras ofertas para vos!</Box>
 
       <Box
         sx={{
