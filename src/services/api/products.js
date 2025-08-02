@@ -2,24 +2,39 @@ import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
 export const getProducts = async () => {
+  const allProducts = []; // Acumulador de productos
+  const pageSize = 1000;
+  let from = 0;
+
   try {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select(
-        `
-    *,
-    brands: brand_id(name),
-    products_categories (
-      category_id,
-      categories(id, name)
-    )
-  `
-      )
-      .order("description", { ascending: true });
+    while (true) {
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select(
+          `
+            *,
+            brands: brand_id(name),
+            products_categories (
+              category_id,
+              categories(id, name)
+            )
+          `
+        )
+        .range(from, from + pageSize - 1)
+        .order("description", { ascending: true });
 
-    if (error) throw error;
+      if (error) throw error;
+      if (!data || data.length === 0) break; // Ya no hay más
 
-    return { status: 200, message: "registros obtenidos con éxito", data };
+      allProducts.push(...data); // Acumulás los productos
+      from += pageSize; // Avanzás a la siguiente página
+    }
+
+    return {
+      status: 200,
+      message: "registros obtenidos con éxito",
+      data: allProducts, // Acá devolvés todos juntos
+    };
   } catch (error) {
     return {
       status: 500,
@@ -30,29 +45,39 @@ export const getProducts = async () => {
 };
 
 export const getActiveProducts = async () => {
-  try {
-    const { data, error } = await supabaseClient
-      .from("products")
-      .select(
-        `
-        *,
-        brands:brand_id(name),
-        products_categories(
-          product_id,
-          category_id,
-          categories:category_id(name)
-        )
-      `
-      )
-      .eq("active", true)
-      .order("description", { ascending: true });
+  const allProducts = []; // Acumulador
+  const pageSize = 1000;
+  let from = 0;
 
-    if (error) throw error;
+  try {
+    while (true) {
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select(
+          `
+            *,
+            brands: brand_id(name),
+            products_categories (
+              category_id,
+              categories(id, name)
+            )
+          `
+        )
+        .range(from, from + pageSize - 1)
+        .eq("active", true)
+        .order("description", { ascending: true });
+
+      if (error) throw error;
+      if (!data || data.length === 0) break; // Ya no hay más
+
+      allProducts.push(...data); // Acumulás los productos
+      from += pageSize; // Avanzás a la siguiente página
+    }
 
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      data,
+      data: allProducts, // Acá devolvés todos juntos
     };
   } catch (error) {
     return {
