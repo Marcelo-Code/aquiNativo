@@ -2,38 +2,30 @@ import { errorToastifyAlert, successToastifyAlert } from "../../utils/alerts";
 import { supabaseClient } from "../config/config";
 
 export const getProducts = async () => {
-  const allProducts = []; // Acumulador de productos
+  const allProducts = [];
   const pageSize = 1000;
   let from = 0;
 
   try {
     while (true) {
-      const { data, error } = await supabaseClient
+      const { data, error } = supabaseClient
         .from("products")
         .select(
-          `
-            *,
-            brands: brand_id(name),
-            products_categories (
-              category_id,
-              categories(id, name)
-            )
-          `
+          "*, brands: brand_id(name), products_categories (category_id, categories(id, name))"
         )
         .range(from, from + pageSize - 1)
         .order("description", { ascending: true });
 
       if (error) throw error;
-      if (!data || data.length === 0) break; // Ya no hay más
+      if (!data || data.length === 0) break;
 
-      allProducts.push(...data); // Acumulás los productos
-      from += pageSize; // Avanzás a la siguiente página
+      allProducts.push(...data);
+      from += pageSize;
     }
-
     return {
       status: 200,
       message: "registros obtenidos con éxito",
-      data: allProducts, // Acá devolvés todos juntos
+      data: allProducts,
     };
   } catch (error) {
     return {
